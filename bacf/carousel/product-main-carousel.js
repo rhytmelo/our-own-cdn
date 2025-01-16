@@ -65,6 +65,7 @@ const slidesData = [
 // Inject slides dynamically
 const slider = document.getElementById("rhytmelo_slider");
 
+// Create slide elements
 slidesData.forEach(slide => {
     const slideElement = document.createElement("div");
     slideElement.classList.add("rhytmelo_carousel-slide");
@@ -85,17 +86,29 @@ allSlides.forEach(slide => {
     slider.insertBefore(clonedSlide.cloneNode(true), slider.firstChild); // Prepend to the start
 });
 
-// Recalculate slides
-const slides = Array.from(document.querySelectorAll('.rhytmelo_carousel-slide'));
-let currentIndex = allSlides.length; // Start at the first real slide
+// Recalculate slides based on screen width
+function calculateVisibleSlides() {
+    const windowWidth = window.innerWidth;
+    if (windowWidth >= 1024) {
+        return 4; // Desktop
+    } else if (windowWidth >= 768) {
+        return 3; // Tablet
+    } else {
+        return 1; // Mobile
+    }
+}
 
-// Update carousel position
+let visibleSlides = calculateVisibleSlides(); // Default number of visible slides
+
+// Update carousel position based on visible slides
 function updateSliderPosition() {
     const slideWidth = slides[0].offsetWidth + parseFloat(getComputedStyle(slides[0]).marginRight);
     slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
 // Initialize carousel position
+let currentIndex = allSlides.length / 2; // Start at the middle point
+
 updateSliderPosition();
 
 // Navigation Buttons
@@ -107,10 +120,10 @@ nextButton.addEventListener('click', () => {
     currentIndex++;
     slider.style.transition = "transform 0.5s ease-in-out";
     updateSliderPosition();
-    if (currentIndex >= slides.length - allSlides.length) {
+    if (currentIndex >= slides.length - visibleSlides) {
         setTimeout(() => {
             slider.style.transition = "none";
-            currentIndex = allSlides.length;
+            currentIndex = allSlides.length / 2;
             updateSliderPosition();
         }, 500);
     }
@@ -121,10 +134,10 @@ prevButton.addEventListener('click', () => {
     currentIndex--;
     slider.style.transition = "transform 0.5s ease-in-out";
     updateSliderPosition();
-    if (currentIndex < allSlides.length) {
+    if (currentIndex < allSlides.length / 2) {
         setTimeout(() => {
             slider.style.transition = "none";
-            currentIndex = slides.length - allSlides.length - 1;
+            currentIndex = slides.length - visibleSlides - allSlides.length / 2;
             updateSliderPosition();
         }, 500);
     }
@@ -146,7 +159,10 @@ let autoSlideInterval = setInterval(() => {
 });
 
 // Responsive adjustments
-window.addEventListener('resize', updateSliderPosition);
+window.addEventListener('resize', () => {
+    visibleSlides = calculateVisibleSlides(); // Update visible slides based on screen width
+    updateSliderPosition(); // Recalculate position after resize
+});
 
 // Accessibility: ARIA labels for navigation buttons
 if (nextButton) nextButton.setAttribute('aria-label', 'Next Slide');
