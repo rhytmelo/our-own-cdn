@@ -1,0 +1,29 @@
+/**
+* Copyright (c) 2024, Rhytmelo Designs Agency. All rights reserved.
+*
+* This software is proprietary to Rhytmelo Designs Agency. No rights are granted to use, 
+* download, copy, modify, distribute, or otherwise exploit this software in any form, 
+* except as expressly authorized in writing by Rhytmelo Designs Agency.
+*
+* Unauthorized use of this software or any part thereof is strictly prohibited. Any 
+* violations may result in legal action under applicable laws.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+* PURPOSE, OR NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
+* FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR 
+* OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+* DEALINGS IN THE SOFTWARE.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Kanit', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.6;
+}
+.invert-logo {
+    filter: invert(1) brightness(2);
+}
