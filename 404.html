@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record and Record Optical</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+        }
+
+        .record-container {
+            width: 300px;
+            height: 300px;
+            margin: 20px;
+            animation: spin 3s linear infinite;
+        }
+
+        .optical-container {
+            width: 300px;
+            height: 300px;
+            margin: 20px;
+            animation: spin-reverse 5s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin-reverse {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Record SVG -->
+    <div class="record-container">
+        <svg width="100%" height="100%" viewBox="-2 -2 533 533" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true">
+            <defs>
+                <ellipse id="record-path-1" cx="264.510638" cy="264.5" rx="264.510638" ry="264.5"></ellipse>
+            </defs>
+            <g id="record" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="record-bg">
+                    <mask id="record-mask-2" fill="white">
+                        <use xlink:href="#record-path-1"></use>
+                    </mask>
+                    <use id="outer-circle" stroke="#503750" stroke-width="2.7" fill-opacity="0.25" fill="#503750" xlink:href="#record-path-1"></use>
+                    <g id="diagonal-hash" opacity="0.333022388" style="mix-blend-mode:darken" mask="url(#record-mask-2)" fill="#503750">
+                        <!-- Add hash polygons here -->
+                    </g>
+                </g>
+                <ellipse id="middle-circle" stroke="#503750" stroke-width="2.7" fill="#FFCDD2" cx="264.85201" cy="264.841358" rx="97.5085445" ry="97.5046228"></ellipse>
+                <ellipse id="inner-circle" stroke="#503750" stroke-width="2.7" fill-opacity="0.25" fill="#1E3264" cx="264.641943" cy="264.631299" rx="8.22856915" ry="8.22823821"></ellipse>
+                <g id="record-text" transform="translate(246.425532, 217.219388)" fill="#F037A5">
+                    <path d="M0.479174094,96.0638068 L5.33197409,96.0638068 L5.33197409,98.2670068 L7.30477409,98.2670068 L7.30477409,96.0638068 L8.98957409,96.0638068 L8.98957409,94.3214068 L7.30477409,94.3214068 L7.30477409,88.0574068 L4.78477409,88.0574068 L0.479174094,93.9326068 L0.479174094,96.0638068 Z M5.33197409,94.3214068 L2.25037409,94.3214068 L5.33197409,90.0878068 L5.33197409,94.3214068 Z"></path>
+                    <!-- Add more paths -->
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Record Optical SVG -->
+    <div class="optical-container">
+        <svg width="100%" height="100%" viewBox="0 0 533 533" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <circle id="optical-path-1" cx="266.5" cy="266.5" r="266.5"></circle>
+            </defs>
+            <g id="optical" fill="none" fill-rule="evenodd">
+                <g id="optical-bg">
+                    <mask id="optical-mask-2" fill="white">
+                        <use xlink:href="#optical-path-1"></use>
+                    </mask>
+                    <use id="optical-circle" stroke="#1E3264" stroke-width="2.7" fill="#121212" xlink:href="#optical-path-1"></use>
+                    <g id="optical-pattern" opacity="0.3" mask="url(#optical-mask-2)" fill="#FFCDD2">
+                        <!-- Add pattern elements here -->
+                    </g>
+                </g>
+                <circle id="optical-middle-circle" stroke="#503750" stroke-width="2.7" fill="#503750" cx="266.5" cy="266.5" r="97.5"></circle>
+                <circle id="optical-inner-circle" stroke="#503750" stroke-width="2.7" fill="#1E3264" cx="266.5" cy="266.5" r="8.5"></circle>
+                <g id="optical-text" transform="translate(245.5, 230)" fill="#F037A5">
+                    <path d="M..."></path>
+                    <!-- Add text paths -->
+                </g>
+            </g>
+        </svg>
+    </div>
+</body>
+
+</html>
