@@ -80,11 +80,15 @@ slidesData.forEach(slide => {
 // Clone slides for infinite scrolling
 const allSlides = Array.from(slider.children);
 
-allSlides.forEach(slide => {
-    const clonedSlide = slide.cloneNode(true);
-    slider.appendChild(clonedSlide); // Append to the end
-    slider.insertBefore(clonedSlide.cloneNode(true), slider.firstChild); // Prepend to the start
-});
+if (allSlides.length > 0) {
+    allSlides.forEach(slide => {
+        const clonedSlide = slide.cloneNode(true);
+        slider.appendChild(clonedSlide); // Append to the end
+        slider.insertBefore(clonedSlide.cloneNode(true), slider.firstChild); // Prepend to the start
+    });
+} else {
+    console.error("No slides found to clone.");
+}
 
 // Recalculate slides based on screen width
 function calculateVisibleSlides() {
@@ -102,14 +106,18 @@ let visibleSlides = calculateVisibleSlides(); // Default number of visible slide
 
 // Update carousel position based on visible slides
 function updateSliderPosition() {
-    const slideWidth = allSlides[0].offsetWidth + parseFloat(getComputedStyle(allSlides[0]).marginRight);
+    const slides = Array.from(slider.children); // Ensure slides are redefined here
+    if (slides.length === 0) {
+        console.error("No slides available to update.");
+        return;
+    }
+
+    const slideWidth = slides[0].offsetWidth + parseFloat(getComputedStyle(slides[0]).marginRight);
     slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-    console.log('Current Index:', currentIndex);
-    console.log('Transform Value:', `translateX(-${currentIndex * slideWidth}px)`);
 }
 
 // Initialize carousel position
-let currentIndex = allSlides.length / 2; // Start at the middle point
+let currentIndex = 0; // Starting from the first slide
 
 updateSliderPosition();
 
@@ -122,10 +130,10 @@ nextButton.addEventListener('click', () => {
     currentIndex++;
     slider.style.transition = "transform 0.5s ease-in-out";
     updateSliderPosition();
-    if (currentIndex >= slides.length - visibleSlides) {
+    if (currentIndex >= slidesData.length - visibleSlides) {
         setTimeout(() => {
             slider.style.transition = "none";
-            currentIndex = allSlides.length / 2;
+            currentIndex = 0; // Reset to the first slide
             updateSliderPosition();
         }, 500);
     }
@@ -136,10 +144,10 @@ prevButton.addEventListener('click', () => {
     currentIndex--;
     slider.style.transition = "transform 0.5s ease-in-out";
     updateSliderPosition();
-    if (currentIndex < allSlides.length / 2) {
+    if (currentIndex < 0) {
         setTimeout(() => {
             slider.style.transition = "none";
-            currentIndex = slides.length - visibleSlides - allSlides.length / 2;
+            currentIndex = slidesData.length - visibleSlides - 1; // Jump to last slide
             updateSliderPosition();
         }, 500);
     }
