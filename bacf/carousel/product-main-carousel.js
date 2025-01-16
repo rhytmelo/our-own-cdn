@@ -100,11 +100,9 @@ function calculateVisibleSlides() {
 
 let visibleSlides = calculateVisibleSlides(); // Default number of visible slides
 
-console.log('Visible slides: ', visibleSlides);
-
 // Update carousel position based on visible slides
 function updateSliderPosition() {
-    const slideWidth = slides[0].offsetWidth + parseFloat(getComputedStyle(slides[0]).marginRight);
+    const slideWidth = allSlides[0].offsetWidth + parseFloat(getComputedStyle(allSlides[0]).marginRight);
     slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
     console.log('Current Index:', currentIndex);
     console.log('Transform Value:', `translateX(-${currentIndex * slideWidth}px)`);
@@ -112,8 +110,6 @@ function updateSliderPosition() {
 
 // Initialize carousel position
 let currentIndex = allSlides.length / 2; // Start at the middle point
-
-console.log('Initial Current Index:', currentIndex);
 
 updateSliderPosition();
 
@@ -126,10 +122,7 @@ nextButton.addEventListener('click', () => {
     currentIndex++;
     slider.style.transition = "transform 0.5s ease-in-out";
     updateSliderPosition();
-    console.log('After Next Click, Current Index:', currentIndex);
-    
     if (currentIndex >= slides.length - visibleSlides) {
-        console.log('Reached End of Slides, Resetting');
         setTimeout(() => {
             slider.style.transition = "none";
             currentIndex = allSlides.length / 2;
@@ -143,10 +136,7 @@ prevButton.addEventListener('click', () => {
     currentIndex--;
     slider.style.transition = "transform 0.5s ease-in-out";
     updateSliderPosition();
-    console.log('After Prev Click, Current Index:', currentIndex);
-
     if (currentIndex < allSlides.length / 2) {
-        console.log('Reached Start of Slides, Resetting');
         setTimeout(() => {
             slider.style.transition = "none";
             currentIndex = slides.length - visibleSlides - allSlides.length / 2;
@@ -173,7 +163,6 @@ let autoSlideInterval = setInterval(() => {
 // Responsive adjustments
 window.addEventListener('resize', () => {
     visibleSlides = calculateVisibleSlides(); // Update visible slides based on screen width
-    console.log('Screen Resized, New Visible Slides:', visibleSlides);
     updateSliderPosition(); // Recalculate position after resize
 });
 
