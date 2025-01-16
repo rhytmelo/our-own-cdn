@@ -1,35 +1,35 @@
 const teamData = [
     {
         name: "Mukesh Kumar Tyagi",
-        emailName: "Mukesh Tyagi",
+        emailName: "Mukesh",
         role: "CEO & Founder",
         email: "mukesh@nutricrop.co.in",
         image: "https://bacf.org.in/wp-content/uploads/2025/01/IMG_7308.jpg"
     },
     {
         name: "Asha Tyagi",
-        emailName: "Asha Tyagi",
+        emailName: "Asha",
         role: "CTO & Lead Developer",
         email: "asha.tyagi@rhytmelo.com",
         image: "https://bacf.org.in/wp-content/uploads/2025/01/IMG_7309.jpg"
     },
     {
         name: "Ajay Kumar",
-        emailName: "Ajay Kumar",
+        emailName: "Ajay",
         role: "Head of Production",
         email: "ajay@nutricrop.co.in",
         image: "https://media.licdn.com/dms/image/v2/D5622AQES4SteQ6Zv1Q/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1716898956360?e=2147483647&v=beta&t=QoyG4ijlrX_pfx61Ry9hoe3jATdgBefv5gRC0OTjogY"
     },
     {
         name: "Pradeep Chawla",
-        emailName: "Pradeep Chawla",
+        emailName: "Pradeep",
         role: "Head of Marketing",
         email: "pradeep@nutricrop.co.in",
         image: "https://media.licdn.com/dms/image/sync/v2/D5627AQGNerkvblcuwQ/articleshare-shrink_800/articleshare-shrink_800/0/1715152252644?e=2147483647&v=beta&t=gZJGLn3a21AddHzR08w3Pc2gI1fag-6hGYOyQPWo1T0"
     },
     {
         name: "Sunidhi Chaudhary",
-        emailName: "Sunidhi Chaudhary",
+        emailName: "Sunidhi",
         role: "Products Advisor",
         email: "Sunidhi@nutricrop.co.in",
         image: "https://media.licdn.com/dms/image/v2/C4D22AQFRua8GP0BtjA/feedshare-shrink_800/feedshare-shrink_800/0/1668592472630?e=2147483647&v=beta&t=Ahg6YeXpC2Hr8Hx87hZAhdnZerFaI6HaI4OVUmz8SBY"
