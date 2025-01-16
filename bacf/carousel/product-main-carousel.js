@@ -1,4 +1,4 @@
-<script>
+
     // Slide data
     const slidesData = [
         {
@@ -151,4 +151,3 @@
     // Accessibility: ARIA labels for navigation buttons
     nextButton.setAttribute('aria-label', 'Next Slide');
     prevButton.setAttribute('aria-label', 'Previous Slide');
-</script>
