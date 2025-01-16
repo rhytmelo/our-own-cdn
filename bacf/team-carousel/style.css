@@ -126,10 +126,10 @@
         flex-wrap: nowrap;
         overflow-x: auto;
         scroll-behavior: smooth;
-        padding-bottom: 10px; /* Space for smooth scrolling */
-        height: 80vh; /* Set the height to 80% of the viewport */
+        height: 80vh; /* Set height to 80% of the viewport */
         align-items: center; /* Center align the cards vertically */
-        background-color: #fff; /* Keep the background consistent */
+        background-color: #fff; /* Keep background consistent */
+        padding: 0; /* Remove top and bottom padding */
     }
 
     .rhytmelo_team-card {
