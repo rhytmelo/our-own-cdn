@@ -27,7 +27,7 @@
 .rhytmelo_team-section {
     padding: 40px 20px;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 20px;
     overflow-x: auto;
     background-color: #fff;
@@ -37,15 +37,28 @@
 }
 
 .rhytmelo_team-card {
-    flex: 0 0 auto;
-    width: calc(33.333% - 20px);
-    max-width: 300px;
+    flex: 0 0 100%;
+    max-width: calc(100% - 40px);
     text-align: left;
     background-color: #fefefe;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .rhytmelo_team-card {
+        flex: 0 0 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .rhytmelo_team-card {
+        flex: 0 0 calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+    }
 }
 
 .rhytmelo_team-card:hover {
@@ -78,9 +91,10 @@
     color: #087F43;
     text-decoration: none;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
     gap: 8px;
     position: relative;
-    display: inline-block;
 }
 
 .rhytmelo_team-card a::after {
