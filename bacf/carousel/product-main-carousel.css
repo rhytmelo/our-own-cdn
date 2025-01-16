@@ -1,0 +1,112 @@
+<style>
+    .rhytmelo_carousel-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .rhytmelo_carousel-slider {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
+    }
+
+    .rhytmelo_carousel-slide {
+        flex: 0 0 23%;
+        /* Default: Show 4 cards */
+        margin-right: 1%;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1%;
+        transition: all 0.3s ease;
+    }
+
+    .rhytmelo_carousel-slide:hover {
+        background: linear-gradient(45deg, #0a8754, #2b6f3e, #3c7e4c);
+        color: #fff;
+        box-shadow: 0 4px 8px rgba(51, 51, 51, 0.6);
+        filter: brightness(1.2);
+    }
+
+    .rhytmelo_carousel-slide:hover h3,
+    .rhytmelo_carousel-slide:hover a {
+        color: #fff;
+        /* Change text color to white on hover */
+    }
+
+    .rhytmelo_carousel-slide img {
+        width: 100%;
+        aspect-ratio: 5 / 4;
+        display: block;
+    }
+
+    .rhytmelo_carousel-slide h3 {
+        margin: 10px;
+        font-size: 18px;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .rhytmelo_carousel-slide a {
+        display: block;
+        text-decoration: none;
+        color: #0a8754;
+        margin: 10px;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .rhytmelo_carousel-slide a:hover {
+        color: #fff;
+        /* White color on hover */
+    }
+
+    .rhytmelo_carousel-controls {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+    }
+
+    .rhytmelo_carousel-controls button {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: all;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 1200px) {
+        .rhytmelo_carousel-slide {
+            flex: 0 0 31%;
+            /* Show 3 cards */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .rhytmelo_carousel-slide {
+            flex: 0 0 48%;
+            /* Show 2 cards */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .rhytmelo_carousel-slide {
+            flex: 0 0 100%;
+            /* Show 1 card */
+        }
+    }
+</style>
