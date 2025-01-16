@@ -27,7 +27,7 @@
 .rhytmelo_team-section {
     padding: 40px 20px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 20px;
     overflow-x: auto;
     background-color: #fff;
@@ -131,6 +131,76 @@
     background-color: #f1f1f1;
 }
 
+/* CSS for Slider functionality */
+.rhytmelo_team-section {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 20px 0;
+}
+
+/* Smooth snap effect */
+.rhytmelo_team-card {
+    scroll-snap-align: start;
+}
+
+/* Style for next/previous button */
+.rhc-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.3);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.rhc-btn:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.rhc-btn.prev {
+    left: 10px;
+}
+
+.rhc-btn.next {
+    right: 10px;
+}
+
+/* Display minimum 3 cards on desktop and tablet */
+@media (min-width: 768px) {
+    .rhytmelo_team-section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .rhytmelo_team-section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Display only 1 card on mobile */
+@media (max-width: 767px) {
+    .rhytmelo_team-section {
+        display: block;
+    }
+
+    .rhytmelo_team-card {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Style for last card margin adjustment */
 .rhytmelo_team-section>.rhytmelo_team-card:last-child {
     margin-right: 40px;
 }
