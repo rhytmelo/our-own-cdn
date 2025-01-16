@@ -1,3 +1,29 @@
+.rhytmelo_icon-link {
+    font-size: 14px;
+    color: #087F43;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.rhytmelo_icon-link:hover {
+    color: #333333;
+}
+
+.rhytmelo_icon-link svg {
+    width: 16px;
+    height: 16px;
+    fill: #087F43;
+    transition: color 0.3s ease;
+}
+
+.rhytmelo_icon-link:hover svg {
+    fill: #333333;
+}
+
 .rhytmelo_team-section {
     padding: 40px 20px;
     display: flex;
@@ -11,15 +37,28 @@
 }
 
 .rhytmelo_team-card {
-    flex: 0 0 auto;
-    width: calc(33.333% - 20px);
-    max-width: 300px;
+    flex: 0 0 100%;
+    max-width: calc(100% - 40px);
     text-align: left;
     background-color: #fefefe;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .rhytmelo_team-card {
+        flex: 0 0 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .rhytmelo_team-card {
+        flex: 0 0 calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+    }
 }
 
 .rhytmelo_team-card:hover {
@@ -52,9 +91,10 @@
     color: #087F43;
     text-decoration: none;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
     gap: 8px;
     position: relative;
-    display: inline-block;
 }
 
 .rhytmelo_team-card a::after {
@@ -91,7 +131,7 @@
     background-color: #f1f1f1;
 }
 
-/* Responsive slider */
+/* CSS for Slider functionality */
 .rhytmelo_team-section {
     display: flex;
     flex-wrap: nowrap;
@@ -100,18 +140,39 @@
     scroll-padding: 20px 0;
 }
 
-/* Snap alignment */
+/* Smooth snap effect */
 .rhytmelo_team-card {
     scroll-snap-align: start;
 }
 
-/* Minimum 3 cards on desktop and tablet */
+/* Style for next/previous button */
+.rhc-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.3);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.rhc-btn:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.rhc-btn.prev {
+    left: 10px;
+}
+
+.rhc-btn.next {
+    right: 10px;
+}
+
+/* Display minimum 3 cards on desktop and tablet */
 @media (min-width: 768px) {
-    .rhytmelo_team-card {
-        flex: 0 0 calc(33.333% - 20px);
-        max-width: calc(33.333% - 20px);
-    }
-
     .rhytmelo_team-section {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -119,13 +180,7 @@
     }
 }
 
-/* Minimum 3 cards on desktop and tablet */
 @media (min-width: 1024px) {
-    .rhytmelo_team-card {
-        flex: 0 0 calc(33.333% - 20px);
-        max-width: calc(33.333% - 20px);
-    }
-
     .rhytmelo_team-section {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -133,19 +188,19 @@
     }
 }
 
-/* 1 card on mobile */
+/* Display only 1 card on mobile */
 @media (max-width: 767px) {
+    .rhytmelo_team-section {
+        display: block;
+    }
+
     .rhytmelo_team-card {
         width: 100%;
         max-width: 100%;
     }
-
-    .rhytmelo_team-section {
-        display: block;
-    }
 }
 
-/* Last card margin adjustment */
+/* Style for last card margin adjustment */
 .rhytmelo_team-section>.rhytmelo_team-card:last-child {
     margin-right: 40px;
 }
