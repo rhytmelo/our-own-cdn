@@ -121,8 +121,29 @@
     margin-right: 40px;
 }
 @media (max-width: 768px) {
+    .rhytmelo_team-section {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding-bottom: 10px; /* Adds space for better scrolling */
+    }
+
+    .rhytmelo_team-section::-webkit-scrollbar {
+        height: 10px; /* Ensures the scrollbar remains visible */
+    }
+
+    .rhytmelo_team-section::-webkit-scrollbar-thumb {
+        background-color: #087F43; /* Match the scrollbar style with desktop */
+        border-radius: 5px;
+    }
+
+    .rhytmelo_team-section::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
     .rhytmelo_team-card {
-        flex: 0 0 calc(100% - 20px);
-        max-width: calc(100% - 20px);
+        flex: 0 0 calc(80% - 20px); /* Cards take up 80% width for better swipe functionality */
+        max-width: calc(80% - 20px);
     }
 }
