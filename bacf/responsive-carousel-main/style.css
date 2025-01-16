@@ -18,12 +18,12 @@ body {
 /* Carousel Container */
 #indicators-carousel {
     width: 80%;
-    max-width: 800px;
+    max-width: 1600px;
     overflow: hidden;
     position: relative;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    background: #fff;
+    background: #000;
 }
 
 /* Carousel Wrapper */
@@ -48,7 +48,7 @@ body {
 }
 
 .absolute {
-    position: absolute;
+    position: relative;
 }
 
 .w-full {
@@ -85,7 +85,7 @@ body {
 /* Ensuring the images cover the entire width and height while maintaining the aspect ratio */
 .carousel-slide img {
     width: 100%;
-    height: 100%;
+    height: auto !important;
     object-fit: contain; /* Contain the image within the slide while maintaining aspect ratio */
     object-position: center; /* Center the image within the slide */
     border-radius: 20px;
@@ -182,9 +182,25 @@ button[type="button"].active {
 }
 
 /* Responsive Design */
+
+/* For desktop and landscape screens */
+@media (min-width: 769px) {
+    .carousel-slide {
+        aspect-ratio: 16 / 9; /* Set 16:9 aspect ratio for desktop and landscape */
+    }
+}
+
+/* For portrait mobile (height > width) */
+@media (max-width: 768px) and (orientation: portrait) {
+    .carousel-slide {
+        aspect-ratio: 9 / 16; /* Set 9:16 aspect ratio for portrait orientation */
+    }
+}
+
+/* For mobile/landscape screens (less than or equal to 768px wide) */
 @media (max-width: 768px) {
     .carousel-slide {
-        height: 300px; /* Adjust height for smaller screens */
+        aspect-ratio: 16 / 9; /* Keep 16:9 ratio in landscape mode for small devices */
     }
 }
 
