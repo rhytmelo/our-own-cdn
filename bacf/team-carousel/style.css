@@ -120,3 +120,9 @@
 .rhytmelo_team-section>.rhytmelo_team-card:last-child {
     margin-right: 40px;
 }
+@media (max-width: 768px) {
+    .rhytmelo_team-card {
+        flex: 0 0 calc(100% - 20px);
+        max-width: calc(100% - 20px);
+    }
+}
