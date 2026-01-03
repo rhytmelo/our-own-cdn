@@ -21,74 +21,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Defaulter Notification System" /> <!-- The title of your page -->
-    <meta property="og:description" content="Rhytmelo Designs is excited to introduce a new feature to help manage overdue payments." /> <!-- Description of your page -->
-    <meta property="og:image" content="https://defaulter.rhytmelo.com/banner.png" /> <!-- URL to your banner image -->
-    <meta property="og:url" content="https://defaulter.rhytmelo.com" /> <!-- The URL being shared -->
+    <meta property="og:title" content="Rhytmelo CDN | Fast & Reliable Content Delivery Network" />
+    <meta property="og:description" content="Experience blazing-fast content delivery with Rhytmelo's global CDN. Optimize performance, ensure reliability, and reach users worldwide with advanced edge computing technology." />
+    <meta property="og:image" content="https://defaulter.rhytmelo.com/banner.png" />
+    <meta property="og:url" content="https://defaulter.rhytmelo.com" />
     <meta property="og:type" content="website" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <title>Rhytmelo Designs | Defaulter Notification System</title>
+    <meta name="description" content="Explore the powerful Content Delivery Network (CDN) for optimized performance and secure content distribution by Rhytmelo Designs.">
+    <meta name="keywords" content="CDN, content delivery, fast hosting, global distribution, web performance">
+    <title>Rhytmelo CDN | Fast & Reliable Content Delivery Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="eucalyptus.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .feature-card {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
+
+<body class="bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 text-white font-sans">
     <!-- Header -->
-    <header class="bg-gray-800 shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="https://rhytmelo.com/" class="flex items-center space-x-3">
-                <img src="/public/brand/logos/logo-final/pngs/rhytmelo-logo-black.png" alt="Rhytmelo Designs Logo" class="h-10 invert-logo">
+    <header class="bg-gray-900/80 backdrop-blur-md shadow-2xl sticky top-0 z-50 border-b border-cyan-500/20">
+        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="https://cdn.rhytmelo.com/" class="flex items-center space-x-3 group">
+                <img src="/public/brand/logos/logo-final/pngs/rhytmelo-logo-black-iconAsset.png" alt="Rhytmelo Designs Logo" class="h-8 invert-logo group-hover:scale-110 transition">
+                <span class="hidden sm:inline text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400">CDN</span>
             </a>
             <!-- Menu Icon for Mobile and Tablets -->
-            <div class="menu-icon text-white text-base block md:hidden cursor-pointer" onclick="toggleDrawer()">&#9776;</div>
+            <div class="menu-icon text-white text-2xl block md:hidden cursor-pointer hover:text-cyan-400 transition" onclick="toggleDrawer()">&#9776;</div>
             <!-- Drawer Navigation -->
-            <div id="drawer" class="fixed top-0 left-0 w-64 h-full bg-gray-800 shadow-lg transform -translate-x-full transition-transform md:hidden">
-                <button class="text-white text-xl p-4" onclick="toggleDrawer()">&times;</button>
-                <nav class="mt-8">
-                    <ul class="space-y-4 text-center">
-                        <li><a href="https://rhytmelo.com" class="text-white hover:text-cyan-400">Home</a></li>
-                        <li><a href="https://rhytmelo.com/services/" class="text-white hover:text-cyan-400">Services</a></li>
-                        <li><a href="https://rhytmelo.com/contact/" class="text-white hover:text-cyan-400">Contact</a></li>
+            <div id="drawer" class="fixed top-0 left-0 w-64 h-full bg-gray-900/95 backdrop-blur-sm shadow-2xl transform -translate-x-full transition-transform md:hidden z-40 border-r border-cyan-500/20">
+                <button class="text-white text-3xl p-4 hover:text-cyan-400 transition" onclick="toggleDrawer()">&times;</button>
+                <nav class="mt-12">
+                    <ul class="space-y-6 text-center px-4">
+                        <li><a href="https://rhytmelo.com" class="text-white hover:text-cyan-400 transition duration-300 text-lg font-medium">Go Back</a></li>
+                        <li><a href="https://rhytmelo.com/services/" class="text-white hover:text-cyan-400 transition duration-300 text-lg font-medium">Services</a></li>
+                        <li><a href="https://rhytmelo.com/contact/" class="text-white hover:text-cyan-400 transition duration-300 text-lg font-medium">Contact</a></li>
                     </ul>
                 </nav>
             </div>
             <!-- Regular Navigation for Desktop -->
             <nav class="hidden md:flex">
-                <ul class="flex space-x-6">
-                    <li><a href="https://rhytmelo.com" class="text-white hover:text-cyan-400">Home</a></li>
-                    <li><a href="https://rhytmelo.com/services/" class="text-white hover:text-cyan-400">Services</a></li>
-                    <li><a href="https://rhytmelo.com/contact/" class="text-white hover:text-cyan-400">Contact</a></li>
+                <ul class="flex space-x-8">
+                    <li><a href="https://rhytmelo.com" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">Home</a></li>
+                    <li><a href="https://rhytmelo.com/services/" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">Services</a></li>
+                    <li><a href="https://rhytmelo.com/contact/" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Main Section -->
-    <main class="container mx-auto px-6 py-16 text-center">
-        <h1 class="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-blue-500 mb-6">
-            Rhytmelo's CDN
-        </h1>
-        <p class="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed mb-8">
-            Explore the powerful Content Delivery Network (CDN) for optimized performance and secure content distribution by Rhytmelo Designs.
-        </p>
-        <p class="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed mb-8">
-            With our CDN, your content is delivered faster and more reliably to users across the globe, ensuring an enhanced user experience.
-        </p>
-        <p class="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed mb-8">
-            Discover how Rhytmelo CDN can streamline your content delivery and enhance your website's performance.
-        </p>
-        <a href="https://rhytmelo.com" class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-lg font-bold text-white py-3 px-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transform transition">
-            Back to Home
-        </a>
-    </main>
+    <!-- Hero Section -->
+    <section class="hero-gradient relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 right-10 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+            <div class="absolute top-40 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <main class="container mx-auto px-6 py-24 md:py-32 text-center relative z-10">
+            <div class="inline-block mb-6">
+                <span class="px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-cyan-400 text-sm font-semibold">⚡ Next-Generation CDN</span>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight">
+                <span class="gradient-text">Lightning-Fast Content</span>
+                <br>
+                <span class="text-white">Delivered Globally</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-6 leading-relaxed font-light">
+                Experience blazing-fast content delivery with Rhytmelo's global CDN. Optimize performance, ensure reliability, and reach users worldwide.
+            </p>
+
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                With our advanced edge computing technology, your content is cached and delivered from locations nearest to your users, ensuring an enhanced experience every time.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="https://rhytmelo.com" class="cta-button text-lg font-bold text-white py-4 px-10 rounded-xl shadow-xl transform transition duration-300 inline-block">
+                    Back to Home
+                </a>
+                <a href="https://rhytmelo.com/contact/" class="border-2 border-cyan-500/50 text-white hover:bg-cyan-500/10 hover:border-cyan-400 text-lg font-bold py-4 px-10 rounded-xl transition duration-300 inline-block">
+                    Get Started
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 pt-16 border-t border-cyan-500/20">
+                <div class="floating">
+                    <div class="text-4xl font-bold gradient-text mb-2">99.99%</div>
+                    <p class="text-gray-400">Uptime Guarantee</p>
+                </div>
+                <div class="floating" style="animation-delay: 0.2s">
+                    <div class="text-4xl font-bold gradient-text mb-2">150+</div>
+                    <p class="text-gray-400">Global Locations</p>
+                </div>
+                <div class="floating" style="animation-delay: 0.4s">
+                    <div class="text-4xl font-bold gradient-text mb-2">&lt;50ms</div>
+                    <p class="text-gray-400">Average Latency</p>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 px-6 relative">
+        <div class="container mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6">
+                    Why Choose <span class="gradient-text">Rhytmelo CDN</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Powerful features designed for performance and reliability</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Ultra-Fast Delivery</h3>
+                    <p class="text-gray-400 leading-relaxed">Serve content from edge locations closest to your users, reducing latency and ensuring instant loading times.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Advanced Security</h3>
+                    <p class="text-gray-400 leading-relaxed">Protect your content with DDoS mitigation, SSL/TLS encryption, and comprehensive security protocols.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Real-Time Analytics</h3>
+                    <p class="text-gray-400 leading-relaxed">Monitor performance metrics, track user behavior, and optimize your content strategy with detailed insights.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Easy Integration</h3>
+                    <p class="text-gray-400 leading-relaxed">Simple API and intuitive dashboard make integration seamless. Get up and running in minutes, not days.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Transparent Pricing</h3>
+                    <p class="text-gray-400 leading-relaxed">Pay only for what you use with no hidden fees. Flexible pricing plans that scale with your business.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">24/7 Support</h3>
+                    <p class="text-gray-400 leading-relaxed">Dedicated support team available round the clock to assist you with any questions or concerns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-500/5 rounded-3xl"></div>
+        <div class="container mx-auto text-center relative z-10">
+            <h2 class="text-5xl md:text-6xl font-bold mb-8">Ready to Accelerate Your Content?</h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-12">Join thousands of businesses trusting Rhytmelo CDN for fast, reliable, and secure content delivery.</p>
+            <a href="https://rhytmelo.com/contact/" class="cta-button text-lg font-bold text-white py-4 px-12 rounded-xl shadow-xl transform transition duration-300 inline-block">
+                Start Free Trial
+            </a>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 py-8">
-        <div class="container mx-auto text-center">
-            <p class="text-sm">&copy; 2024 Rhytmelo Designs. All rights reserved.</p>
-            <p class="text-sm mt-2">Empowering businesses with innovative solutions for a better tomorrow.</p>
+    <footer class="bg-gray-900 border-t border-cyan-500/20 py-12 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-cyan-400 mb-4">Product</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://rhytmelo.com" class="hover:text-cyan-400 transition">Features</a></li>
+                        <li><a href="https://rhytmelo.com/services/" class="hover:text-cyan-400 transition">Services</a></li>
+                        <li><a href="https://rhytmelo.com/contact/" class="hover:text-cyan-400 transition">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-cyan-400 mb-4">Company</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://rhytmelo.com" class="hover:text-cyan-400 transition">About</a></li>
+                        <li><a href="https://rhytmelo.com/contact/" class="hover:text-cyan-400 transition">Contact</a></li>
+                        <li><a href="https://rhytmelo.com" class="hover:text-cyan-400 transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-cyan-400 mb-4">Legal</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://rhytmelo.com" class="hover:text-cyan-400 transition">Privacy</a></li>
+                        <li><a href="https://rhytmelo.com" class="hover:text-cyan-400 transition">Terms</a></li>
+                        <li><a href="https://rhytmelo.com" class="hover:text-cyan-400 transition">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-cyan-500/20 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; <span id="year">2024</span> Rhytmelo Designs. All rights reserved.</p>
+                <p class="text-gray-500 text-sm mt-2">Empowering businesses with innovative solutions for a better tomorrow.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            drawer.classList.toggle('-translate-x-full');
+        }
+
+        // Close drawer when a link is clicked
+        document.querySelectorAll('#drawer a').forEach(link => {
+            link.addEventListener('click', toggleDrawer);
+        });
+
+        // Update copyright year to current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
