@@ -782,65 +782,92 @@
             margin-bottom: 20px;
         }
 
-        @media print {
-            body {
-                background: white;
-            }
+        /*  ===============================
+            FINAL PRINT STYLES – RHYTMELO
+            ===============================  */
 
-            .acceptance-section {
-                display: none;
-            }
+        @page {
+            size: A4;
+            margin: 12mm;
         }
 
         @media print {
 
-            /* Force color & backgrounds */
+            /* Force accurate colors & fonts */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                box-shadow: none !important;
             }
 
+            html,
             body {
-                background: #fff !important;
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                    Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #FAFAFA !important;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                    "Segoe UI", Roboto, Ubuntu, Cantarell,
+                    "Helvetica Neue", Arial, sans-serif !important;
                 font-size: 12pt;
                 line-height: 1.6;
             }
 
+            /* Main wrapper */
             .container {
                 max-width: 100% !important;
-                padding: 0 !important;
                 margin: 0 !important;
+                padding: 0 !important;
             }
 
-            /* Prevent cut-off sections */
-            section,
-            div,
-            table {
-                page-break-inside: avoid;
+            /* Section spacing control */
+            .section {
+                margin-bottom: 16px !important;
             }
 
+            .acceptance-section {
+                margin-top: 12px !important;
+                padding: 12px !important;
+                border: 1px solid #ddd !important;
+            }
+
+            /* Typography tightening */
             h1,
-            h2,
-            h3 {
+            h2 {
+                margin: 12px 0 8px !important;
                 page-break-after: avoid;
             }
 
-            /* Hide buttons only */
-            .btn-print,
-            .btn-submit {
-                display: none !important;
+            h3 {
+                margin: 10px 0 6px !important;
+                page-break-after: avoid;
             }
 
-            /* Ensure inputs look like text */
+            p {
+                margin: 0 0 6px !important;
+            }
+
+            /* Allow normal flow */
+            div {
+                page-break-inside: auto;
+            }
+
+            /* Prevent breaking critical blocks */
+            .section,
+            .acceptance-section,
+            table,
+            footer {
+                page-break-inside: avoid;
+            }
+
+            /* Form fields appear as text */
             input,
             textarea {
                 border: none !important;
                 padding: 0 !important;
                 background: transparent !important;
                 font-size: inherit !important;
+                color: #000 !important;
             }
 
             input::placeholder,
@@ -848,23 +875,25 @@
                 color: transparent !important;
             }
 
-            /* Show checkbox state clearly */
+            /* Checkbox visibility */
             input[type="checkbox"] {
                 transform: scale(1.1);
+                margin-right: 6px;
             }
 
-            /* Footer always visible */
+            /* Hide interactive UI */
+            .btn-print,
+            .btn-submit {
+                display: none !important;
+            }
+
+            /* Footer – flow naturally (NO reserved space) */
             footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
+                position: static !important;
+                margin-top: 20px !important;
                 font-size: 10pt;
                 color: #444;
-            }
-
-            @page {
-                size: A4;
-                margin: 15mm;
+                text-align: center;
             }
         }
     </style>
