@@ -1,0 +1,945 @@
+<style>
+    /* Typography & Section Styles */
+    .gallery-section {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    .gallery-header {
+        text-align: center;
+        padding: 60px 20px 40px;
+    }
+
+    .gallery-title {
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--color-main, #1a1a1a);
+        margin: 0 0 24px 0;
+        line-height: 1.2;
+    }
+
+    .gallery-intro {
+        max-width: 80vw;
+        margin: 0 auto 16px;
+        font-size: 18px;
+        line-height: 1.7;
+        color: #333;
+    }
+
+    .gallery-subline {
+        font-size: 16px;
+        font-style: italic;
+        color: #666;
+        margin-top: 20px;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 40px 20px;
+        text-align: center;
+        margin-top: 60px;
+    }
+
+    .cta-container {
+        max-width: 75vw;
+        margin: 0 auto;
+
+    }
+
+    .cta-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0 0 20px 0;
+        line-height: 1.3;
+    }
+
+    .cta-description {
+        font-size: 18px;
+        line-height: 1.7;
+        color: #333;
+        margin-bottom: 32px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background: var(--bg-btn-product-hover);
+        color: white;
+        padding: 16px 40px;
+        font-size: 18px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 2px solid #1a1a1a;
+    }
+
+    .cta-button:hover {
+        background: var(--bg-btn-product-hover);
+        color: var(--color-btn-text_hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .cta-closing {
+        font-size: 16px;
+        font-style: italic;
+        color: #666;
+        margin-top: 32px;
+    }
+
+    @media (max-width: 768px) {
+        .gallery-header {
+            padding: 40px 16px 30px;
+        }
+
+        .gallery-title {
+            font-size: 32px;
+        }
+
+        .gallery-intro {
+            font-size: 16px;
+        }
+
+        .gallery-subline {
+            font-size: 14px;
+        }
+
+        .cta-section {
+            padding: 60px 16px;
+            margin-top: 40px;
+        }
+
+        .cta-title {
+            font-size: 28px;
+        }
+
+        .cta-description {
+            font-size: 16px;
+        }
+
+        .cta-button {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
+
+        .cta-closing {
+            font-size: 14px;
+        }
+    }
+
+    /* Masonry Grid */
+    .clients-wall {
+        column-count: 2;
+        column-gap: 12px;
+        padding: 12px;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 640px) {
+        .clients-wall {
+            column-count: 3;
+            column-gap: 16px;
+            padding: 16px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .clients-wall {
+            column-count: 4;
+            column-gap: 20px;
+            padding: 20px;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .clients-wall {
+            column-count: 5;
+        }
+    }
+
+    .wall-item {
+        break-inside: avoid;
+        margin-bottom: 12px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #efefef;
+        cursor: zoom-in;
+        position: relative;
+        transition: all 0.2s ease;
+    }
+
+    @media (min-width: 640px) {
+        .wall-item {
+            margin-bottom: 16px;
+            border-radius: 20px;
+        }
+    }
+
+    .wall-item:hover {
+        filter: brightness(0.95);
+    }
+
+    .wall-item:hover .item-overlay {
+        opacity: 1;
+    }
+
+    .wall-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .item-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, transparent 30%, transparent 70%, rgba(0, 0, 0, 0.3) 100%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+    }
+
+    /* Modal/Lightbox */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        animation: fadeIn 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .modal.active {
+        display: block;
+    }
+
+    .modal-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Close Button - Fixed */
+    .close-btn-fixed {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        color: #333;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        line-height: 1;
+        z-index: 10001;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-btn-fixed:hover {
+        background: white;
+        transform: scale(1.1);
+    }
+
+    /* Modal Header */
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        background: transparent;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .action-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease;
+        font-size: 20px;
+    }
+
+    .action-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Modal Content */
+    .modal-content {
+        flex: 1;
+        display: flex;
+        padding: 20px;
+        gap: 30px;
+    }
+
+    .modal-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .modal-image-wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        touch-action: pan-y;
+    }
+
+    .modal-image {
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-image.swipe-left {
+        animation: swipeLeft 0.3s ease-out;
+    }
+
+    .modal-image.swipe-right {
+        animation: swipeRight 0.3s ease-out;
+    }
+
+    @keyframes swipeLeft {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(-100px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes swipeRight {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(100px);
+            opacity: 0;
+        }
+    }
+
+    /* Pagination Pills */
+    .pagination-pills {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+    }
+
+    .pill {
+        width: 40px;
+        height: 6px;
+        border-radius: 5em;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .pill.hidden {
+        display: none;
+    }
+
+    .pill:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .pill.active {
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .pill-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: white;
+        width: 0%;
+        transition: width 0.1s linear;
+    }
+
+    .pill.active .pill-fill {
+        animation: fillPill 3s linear forwards;
+    }
+
+    @keyframes fillPill {
+        from {
+            width: 0%;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    .pill-ellipsis {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 20px;
+        line-height: 1;
+        padding: 0 4px;
+        user-select: none;
+    }
+
+    /* Similar Images Sidebar */
+    .modal-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-title {
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+
+    .similar-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .similar-item {
+        cursor: pointer;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease;
+    }
+
+    .similar-item:hover {
+        transform: scale(1.05);
+    }
+
+    .similar-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .close-btn-fixed {
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+        }
+
+        .modal-header {
+            padding: 12px 16px;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+        }
+
+        .modal-content {
+            flex-direction: column;
+            padding: 10px;
+            gap: 20px;
+        }
+
+        .modal-sidebar {
+            width: 100%;
+        }
+
+        .similar-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .pill {
+            width: 30px;
+            height: 5px;
+        }
+    }
+
+    /* Dropdown Menu */
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        min-width: 180px;
+        overflow: hidden;
+        z-index: 10000;
+    }
+
+    .dropdown-menu.active {
+        display: block;
+        animation: dropdownFade 0.2s ease;
+    }
+
+    @keyframes dropdownFade {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .dropdown-item:hover {
+        background: #f5f5f5;
+    }
+</style>
+
+<div class="gallery-section">
+    <!-- Header Section -->
+    <div class="gallery-header">
+        <h1 class="gallery-title">Our Clients' Walls</h1>
+        <div class="gallery-intro">
+            Every wall tells a story. Across homes, cafés, studios, and creative spaces, our handcrafted wall plates
+            have been styled in countless unique ways. This gallery is a glimpse into how our clients have brought
+            Culture Aisle pieces to life—layered, clustered, minimal, bold, and beautifully personal.<br><br>
+            Scroll through for inspiration, ideas, and real-world styling possibilities.
+        </div>
+        <p class="gallery-subline">No two walls are the same—just like the people who create them.</p>
+    </div>
+
+    <!-- Masonry Gallery -->
+    <!-- Masonry Gallery -->
+    <div class="clients-wall" id="clientsWall"></div>
+
+    <!-- CTA Section -->
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Want a Wall Designed Just for You?</h2>
+            <p class="cta-description">
+                If you're planning a new space or refreshing an existing one, we'd love to help. Our team works closely
+                with you to curate a wall arrangement that fits your space, style, and story—right down to plate sizes,
+                colours, and layout.<br><br>
+                Whether it's a single accent wall or a complete statement installation, we'll design it with intention
+                and craftsmanship.
+            </p>
+            <a href="/pages/custom-orders" class="cta-button">Design My Wall</a>
+            <p class="cta-closing">Because handcrafted art deserves a wall that's thoughtfully made—just for you.</p>
+        </div>
+    </div>
+</div>
+
+<div class="clients-wall" id="clientsWall"></div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+    <button class="close-btn-fixed" id="closeBtn">×</button>
+
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-actions">
+                <div class="dropdown">
+                    <button class="action-btn" id="moreBtn">⋯</button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <button class="dropdown-item" id="downloadBtn">
+                            <span>⬇</span>
+                            <span>Download image</span>
+                        </button>
+                        <button class="dropdown-item" id="pinBtn">
+                            <span>📌</span>
+                            <span>Pin this</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-content">
+            <div class="modal-main">
+                <div class="modal-image-wrapper" id="imageWrapper">
+                    <img class="modal-image" id="modalImage" src="" alt="Wall Decor">
+                </div>
+
+                <div class="pagination-pills" id="paginationPills"></div>
+            </div>
+
+            <div class="modal-sidebar">
+                <h3 class="sidebar-title">More like this</h3>
+                <div class="similar-grid" id="similarGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const base = "https://www.earthenwallplates.com/wp-content/uploads/";
+    const wallImages = [
+        "2022/01/BWA06.jpeg", "2020/02/BWANEW13.jpg", "2022/01/BWA21.jpeg",
+        "2022/01/BWA07.jpeg", "2020/02/BWANEW8.jpg",
+        "2020/04/WhatsApp-Image-2020-04-02-at-18.35.16.jpeg",
+        "2020/02/BWANEW15.jpg", "2020/02/BWANEW12.jpg", "2022/01/BWA28.jpeg",
+        "2020/02/BWANEW16.jpg", "2022/01/BWA05.jpeg", "2022/01/BWA20.jpeg",
+        "2022/01/BWA22.jpeg", "2022/01/BWA27.jpeg", "2020/02/BWANEW10.jpg",
+        "2022/01/BWA02.jpeg", "2022/01/BWA32.jpeg", "2022/01/BWA16.jpeg",
+        "2020/02/BWANEW11.jpg", "2020/02/BWANEW14.jpg", "2020/02/BWANEW18.jpg",
+        "2022/01/BWA08.jpeg", "2022/01/BWA18.jpeg", "2020/02/BWANEW4.jpg",
+        "2022/01/BWA31.jpeg", "2022/01/BWA23.jpeg", "2022/01/BWA14.jpeg",
+        "2022/01/BWA13.jpeg", "2022/01/BWA17.jpeg", "2020/02/BWANEW28.jpg",
+        "2020/04/WhatsApp-Image-2020-04-02-at-18.36.53.jpeg",
+        "2020/02/BWANEW26.jpg", "2022/01/BWA19.jpeg", "2022/01/BWA25.jpeg",
+        "2022/01/BWA30.jpeg", "2022/01/BWA26.jpeg", "2022/01/BWA33.jpeg",
+        "2022/01/BWA11.jpeg", "2020/02/BWANEW23.png", "2020/02/BWANEW21.jpg",
+        "2022/01/BWA29.jpeg", "2020/02/BWANEW22.png", "2020/02/BWANEW17.jpg",
+        "2020/02/BWANEW24.jpg", "2022/01/BWA03.jpeg", "2020/02/BWANEW27.jpg",
+        "2020/02/BWANEW25.jpg", "2022/01/BWA04.jpeg", "2022/01/BWA12.jpeg",
+        "2022/01/BWA01.jpg", "2022/01/BWA10.jpeg", "2020/02/BWANEW7.jpg",
+        "2020/02/BWANEW5.jpg", "2020/02/BWANEW6.jpg", "2022/01/BWA15.jpeg",
+        "2022/01/BWA24.jpeg", "2022/01/BWA09.jpeg", "2020/02/BWANEW9.jpg",
+        "2020/02/BWANEW3.jpg", "2020/02/BWANEW20.png", "2020/02/BWANEW19.png",
+        "2020/02/BWANEW2.jpg", "2020/02/BWANEW1.jpg"
+    ].map(p => base + p);
+
+
+    const wall = document.getElementById("clientsWall");
+    const modal = document.getElementById("modal");
+    const modalImage = document.getElementById("modalImage");
+    const imageWrapper = document.getElementById("imageWrapper");
+    const closeBtn = document.getElementById("closeBtn");
+    const moreBtn = document.getElementById("moreBtn");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const pinBtn = document.getElementById("pinBtn");
+    const similarGrid = document.getElementById("similarGrid");
+    const paginationPills = document.getElementById("paginationPills");
+
+    let currentImageIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let autoplayTimer = null;
+    let autoplayInterval = 3000;
+
+    // Create masonry grid
+    wallImages.forEach((src, index) => {
+        const item = document.createElement("div");
+        item.className = "wall-item";
+        item.innerHTML = `
+        <img src="${src}" loading="lazy" alt="Client Wall Decor">
+        <div class="item-overlay"></div>
+      `;
+        item.addEventListener("click", () => openModal(index));
+        wall.appendChild(item);
+    });
+
+    // Create pagination pills
+    function createPills() {
+        paginationPills.innerHTML = "";
+        const maxVisiblePills = 8;
+        const totalImages = wallImages.length;
+
+        if (totalImages <= maxVisiblePills) {
+            // Show all pills if total is 8 or less
+            wallImages.forEach((_, index) => {
+                createPill(index);
+            });
+        } else {
+            // Smart pill display logic
+            const halfVisible = Math.floor(maxVisiblePills / 2);
+
+            if (currentImageIndex < halfVisible) {
+                // Show first 7 pills + ellipsis
+                for (let i = 0; i < maxVisiblePills - 1; i++) {
+                    createPill(i);
+                }
+                paginationPills.innerHTML += '<span class="pill-ellipsis"></span>';
+            } else if (currentImageIndex >= totalImages - halfVisible) {
+                // Show ellipsis + last 7 pills
+                paginationPills.innerHTML += '<span class="pill-ellipsis"></span>';
+                for (let i = totalImages - (maxVisiblePills - 1); i < totalImages; i++) {
+                    createPill(i);
+                }
+            } else {
+                // Show ellipsis + middle pills + ellipsis
+                paginationPills.innerHTML += '<span class="pill-ellipsis"></span>';
+                const start = currentImageIndex - Math.floor((maxVisiblePills - 2) / 2);
+                const end = start + (maxVisiblePills - 2);
+                for (let i = start; i < end; i++) {
+                    createPill(i);
+                }
+                paginationPills.innerHTML += '<span class="pill-ellipsis"></span>';
+            }
+        }
+    }
+
+    function createPill(index) {
+        const pill = document.createElement("div");
+        pill.className = "pill";
+        pill.dataset.index = index;
+        if (index === currentImageIndex) {
+            pill.classList.add("active");
+        }
+        pill.innerHTML = '<div class="pill-fill"></div>';
+        pill.addEventListener("click", () => {
+            stopAutoplay();
+            openModal(index);
+            startAutoplay();
+        });
+        paginationPills.appendChild(pill);
+    }
+
+    // Update active pill
+    function updatePills() {
+        createPills(); // Recreate pills to update visible range
+        const pills = paginationPills.querySelectorAll(".pill");
+        pills.forEach((pill) => {
+            const index = parseInt(pill.dataset.index);
+            const fill = pill.querySelector(".pill-fill");
+            fill.style.animation = "none";
+            if (index === currentImageIndex) {
+                pill.classList.add("active");
+                setTimeout(() => {
+                    fill.style.animation = "fillPill 3s linear forwards";
+                }, 10);
+            }
+        });
+    }
+
+    // Autoplay functionality
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setTimeout(() => {
+            const nextIndex = (currentImageIndex + 1) % wallImages.length;
+            navigateToImage(nextIndex, "left");
+        }, autoplayInterval);
+    }
+
+    function stopAutoplay() {
+        if (autoplayTimer) {
+            clearTimeout(autoplayTimer);
+            autoplayTimer = null;
+        }
+    }
+
+    // Navigate to image with animation
+    function navigateToImage(index, direction) {
+        if (direction === "left") {
+            modalImage.classList.add("swipe-left");
+        } else {
+            modalImage.classList.add("swipe-right");
+        }
+
+        setTimeout(() => {
+            currentImageIndex = index;
+            modalImage.src = wallImages[index];
+            modalImage.classList.remove("swipe-left", "swipe-right");
+            updatePills();
+            loadSimilarImages(index);
+            startAutoplay();
+        }, 300);
+    }
+
+    // Open modal
+    function openModal(index) {
+        currentImageIndex = index;
+        modalImage.src = wallImages[index];
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+        createPills();
+        loadSimilarImages(index);
+        startAutoplay();
+        modal.scrollTop = 0;
+    }
+
+    // Close modal
+    function closeModal() {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+        dropdownMenu.classList.remove("active");
+        stopAutoplay();
+    }
+
+    // Load similar images
+    function loadSimilarImages(currentIndex) {
+        similarGrid.innerHTML = "";
+        const similarCount = 12;
+        const indices = [];
+
+        while (indices.length < similarCount) {
+            const randomIndex = Math.floor(Math.random() * wallImages.length);
+            if (randomIndex !== currentIndex && !indices.includes(randomIndex)) {
+                indices.push(randomIndex);
+            }
+        }
+
+        indices.forEach(idx => {
+            const item = document.createElement("div");
+            item.className = "similar-item";
+            item.innerHTML = `<img src="${wallImages[idx]}" alt="Similar Wall Decor">`;
+            item.addEventListener("click", () => {
+                stopAutoplay();
+                navigateToImage(idx, currentImageIndex < idx ? "left" : "right");
+            });
+            similarGrid.appendChild(item);
+        });
+    }
+
+    // Toggle dropdown
+    moreBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle("active");
+    });
+
+    // Download image
+    downloadBtn.addEventListener("click", async () => {
+        try {
+            const response = await fetch(wallImages[currentImageIndex]);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `wall-decor-${currentImageIndex + 1}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            dropdownMenu.classList.remove("active");
+        } catch (error) {
+            console.error("Download failed:", error);
+            alert("Download failed. Please try again.");
+        }
+    });
+
+    // Pin functionality
+    pinBtn.addEventListener("click", () => {
+        alert("Image pinned! 📌");
+        dropdownMenu.classList.remove("active");
+    });
+
+    // Close modal events
+    closeBtn.addEventListener("click", closeModal);
+
+    // Touch swipe events for mobile
+    imageWrapper.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoplay();
+    }, { passive: true });
+
+    imageWrapper.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next image
+                const nextIndex = (currentImageIndex + 1) % wallImages.length;
+                navigateToImage(nextIndex, "left");
+            } else {
+                // Swipe right - previous image
+                const prevIndex = (currentImageIndex - 1 + wallImages.length) % wallImages.length;
+                navigateToImage(prevIndex, "right");
+            }
+        } else {
+            startAutoplay();
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!moreBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove("active");
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+        if (modal.classList.contains("active")) {
+            if (e.key === "Escape") {
+                closeModal();
+            } else if (e.key === "ArrowRight") {
+                stopAutoplay();
+                const nextIndex = (currentImageIndex + 1) % wallImages.length;
+                navigateToImage(nextIndex, "left");
+            } else if (e.key === "ArrowLeft") {
+                stopAutoplay();
+                const prevIndex = (currentImageIndex - 1 + wallImages.length) % wallImages.length;
+                navigateToImage(prevIndex, "right");
+            }
+        }
+    });
+
+    // Pause autoplay on user interaction
+    modal.addEventListener("mousedown", stopAutoplay);
+    modal.addEventListener("touchstart", stopAutoplay);
+</script>
