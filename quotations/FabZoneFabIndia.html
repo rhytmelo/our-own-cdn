@@ -350,27 +350,424 @@
             font-weight: 500;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .container {
+                border-radius: 8px;
+            }
+
             .content {
-                padding: 25px;
+                padding: 30px;
+            }
+
+            header {
+                padding: 30px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 6px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            .content {
+                padding: 20px;
             }
 
             header {
                 flex-direction: column;
-                padding: 25px;
+                padding: 20px;
                 text-align: center;
+                gap: 15px;
             }
 
             .header-left h1 {
-                font-size: 22px;
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .header-left p {
+                font-size: 12px;
+            }
+
+            .header-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .date-issued {
+                padding: 12px 20px;
+                font-size: 13px;
             }
 
             h2 {
                 font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            h3 {
+                font-size: 14px;
+                margin-top: 12px;
+                margin-bottom: 8px;
+            }
+
+            .section {
+                margin-bottom: 25px;
+            }
+
+            .section-number {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+                margin-right: 8px;
+            }
+
+            .contact-card {
+                padding: 15px;
+                margin-bottom: 15px;
+                border-left-width: 3px;
+            }
+
+            .contact-card p {
+                font-size: 13px;
+                margin: 6px 0;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .contact-card strong {
+                display: block;
+                margin-bottom: 3px;
+                min-width: 0;
+            }
+
+            ul li {
+                padding: 8px 0 8px 25px;
+                margin-bottom: 6px;
+                font-size: 13px;
+            }
+
+            ul li:before {
+                font-size: 16px;
+            }
+
+            .pricing-box {
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 8px;
+            }
+
+            .pricing-box h3 {
+                font-size: 15px;
+                margin-top: 0;
+            }
+
+            .price {
+                font-size: 20px;
+                margin: 10px 0;
+            }
+
+            .pricing-box ul li {
+                font-size: 12px;
+            }
+
+            .timeline {
+                padding: 15px;
+                margin: 12px 0;
+            }
+
+            .timeline p {
+                font-size: 13px;
+                margin: 8px 0;
+                padding-left: 20px;
+            }
+
+            .acceptance-section {
+                padding: 20px;
+                margin-top: 25px;
+            }
+
+            .acceptance-section h3 {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            textarea {
+                padding: 10px;
+                font-size: 14px;
+                border-radius: 6px;
+            }
+
+            textarea {
+                min-height: 70px;
+            }
+
+            .checkbox-group {
+                margin: 15px 0;
+                padding: 12px;
+            }
+
+            .checkbox-group label {
+                font-size: 12px;
+                margin: 8px 0;
+                gap: 8px;
+            }
+
+            input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                min-width: 18px;
             }
 
             .button-group {
                 flex-direction: column;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 14px;
+                border-radius: 6px;
+            }
+
+            footer {
+                padding: 20px;
+                font-size: 12px;
+            }
+
+            .validity-badge {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .highlight {
+                padding: 2px 5px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                border-radius: 4px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            header {
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .header-left h1 {
+                font-size: 18px;
+                margin-bottom: 3px;
+            }
+
+            .header-left p {
+                font-size: 11px;
+            }
+
+            .header-logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .date-issued {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+
+            h2 {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+
+            h3 {
+                font-size: 13px;
+                margin-top: 10px;
+                margin-bottom: 7px;
+            }
+
+            .section {
+                margin-bottom: 20px;
+            }
+
+            .section-number {
+                width: 28px;
+                height: 28px;
+                line-height: 28px;
+                font-size: 12px;
+                margin-right: 6px;
+            }
+
+            .contact-card {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+
+            .contact-card p {
+                font-size: 12px;
+                margin: 5px 0;
+            }
+
+            ul li {
+                padding: 6px 0 6px 22px;
+                margin-bottom: 5px;
+                font-size: 12px;
+            }
+
+            ul li:before {
+                font-size: 14px;
+                left: -2px;
+            }
+
+            .pricing-box {
+                padding: 12px;
+                margin: 10px 0;
+                border-radius: 6px;
+            }
+
+            .pricing-box h3 {
+                font-size: 14px;
+            }
+
+            .price {
+                font-size: 18px;
+                margin: 8px 0;
+            }
+
+            .timeline {
+                padding: 12px;
+            }
+
+            .timeline p {
+                font-size: 12px;
+                margin: 6px 0;
+                padding-left: 18px;
+            }
+
+            .acceptance-section {
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+            .acceptance-section h3 {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            textarea {
+                padding: 9px;
+                font-size: 13px;
+                border-radius: 4px;
+            }
+
+            textarea {
+                min-height: 60px;
+            }
+
+            .checkbox-group {
+                margin: 12px 0;
+                padding: 10px;
+            }
+
+            .checkbox-group label {
+                font-size: 11px;
+                margin: 7px 0;
+            }
+
+            input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+            }
+
+            .button-group {
+                gap: 8px;
+                margin-top: 15px;
+            }
+
+            button {
+                padding: 10px 16px;
+                font-size: 13px;
+                border-radius: 4px;
+            }
+
+            footer {
+                padding: 15px;
+                font-size: 11px;
+            }
+
+            .validity-badge {
+                font-size: 10px;
+                padding: 5px 10px;
+            }
+
+            .success-message,
+            .error-message {
+                font-size: 12px;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .header-left h1 {
+                font-size: 16px;
+            }
+
+            h2 {
+                font-size: 15px;
+            }
+
+            .price {
+                font-size: 16px;
+            }
+
+            .button-group {
+                gap: 6px;
+            }
+
+            button {
+                padding: 10px 12px;
+                font-size: 12px;
             }
         }
 
@@ -563,7 +960,7 @@
                     <h3>✓ Confirm & Accept This Proposal</h3>
 
                     <div class="success-message" id="successMessage">
-                        ✓ Your acceptance has been sent successfully RHYTMELO DESIGNS
+                        ✓ Your acceptance has been sent successfully to Rhytmelo Designs.
                     </div>
 
                     <div class="error-message" id="errorMessage">
