@@ -954,3 +954,16 @@
                 transform: translateY(0);
             }
         }
+
+        .pricing-box ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0 12px 30px;
+    border-bottom: 1px dashed rgba(102,126,234,.25);
+}
+
+.pricing-box ul li:last-child {
+    border-bottom: none;
+}
