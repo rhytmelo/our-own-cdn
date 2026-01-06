@@ -1,312 +1,43 @@
-name: Deploy to GitHub Pages
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
 
 on:
+  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - '.github/workflows/deploy.yml'
-      - '!**.md'
-  pull_request:
-    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
-  pull-requests: write
 
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages-${{ github.ref }}"
+  group: "pages"
   cancel-in-progress: false
 
-env:
-  ARTIFACT_RETENTION_DAYS: 30
-  NODE_VERSION: '18'
-
 jobs:
-  build:
-    name: Build and Validate
-    runs-on: ubuntu-latest
-    outputs:
-      artifact-id: ${{ steps.upload.outputs.artifact-id }}
-      build-time: ${{ steps.timing.outputs.duration }}
-      newest-page: ${{ steps.newest.outputs.page }}
-      page-time: ${{ steps.newest.outputs.time }}
-    steps:
-      - name: Start timing
-        id: timing
-        run: echo "start=$(date +%s)" >> $GITHUB_OUTPUT
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Validate build files exist
-        run: |
-          if [ ! -d "src" ] && [ ! -d "public" ] && [ ! -f "index.html" ]; then
-            echo "ERROR: No build files found! Expected 'src/', 'public/', or 'index.html'"
-            exit 1
-          fi
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-        if: hashFiles('package.json') != ''
-
-      - name: Install and build
-        run: |
-          if [ -f "package.json" ]; then
-            npm ci --prefer-offline --no-audit
-            npm run build --if-present
-          fi
-
-      - name: Generate robots.txt
-        run: |
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || ([ -d "build" ] && echo "build" || echo "."))
-          cat > "$BUILD_DIR/robots.txt" << 'EOF'
-          User-agent: *
-          Allow: /
-          Disallow: /private/
-          Disallow: /.git/
-          Disallow: /.github/
-          Crawl-delay: 1
-          Sitemap: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/sitemap.xml
-          EOF
-          echo "SUCCESS: robots.txt generated"
-
-      - name: Generate sitemap.xml
-        run: |
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || ([ -d "build" ] && echo "build" || echo "."))
-          DOMAIN="${{ github.repository_owner }}.github.io"
-          REPO="${{ github.event.repository.name }}"
-          BASE_URL="https://$DOMAIN/$REPO/"
-          
-          cat > "$BUILD_DIR/sitemap.xml" << 'EOF'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url>
-              <loc>BASEURL_PLACEHOLDER</loc>
-              <lastmod>$(date +%Y-%m-%d)</lastmod>
-              <changefreq>weekly</changefreq>
-              <priority>1.0</priority>
-            </url>
-          </urlset>
-          EOF
-          sed -i "s|BASEURL_PLACEHOLDER|$BASE_URL|g" "$BUILD_DIR/sitemap.xml"
-          echo "SUCCESS: sitemap.xml generated"
-
-      - name: Generate .htaccess
-        run: |
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || ([ -d "build" ] && echo "build" || echo "."))
-          cat > "$BUILD_DIR/.htaccess" << 'EOF'
-          RewriteEngine On
-          RewriteCond %{HTTPS} off
-          RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteRule ^(.+)/$ /$1 [L,R=301]
-          RewriteCond %{REQUEST_FILENAME} !-f
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteRule ^ index.html [L]
-          <IfModule mod_expires.c>
-            ExpiresActive On
-            ExpiresByType text/html "access plus 1 week"
-            ExpiresByType text/css "access plus 1 month"
-            ExpiresByType application/javascript "access plus 1 month"
-            ExpiresByType image/* "access plus 1 month"
-            ExpiresByType font/* "access plus 1 year"
-          </IfModule>
-          EOF
-          echo "SUCCESS: .htaccess generated"
-
-      - name: Generate security.txt
-        run: |
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || ([ -d "build" ] && echo "build" || echo "."))
-          mkdir -p "$BUILD_DIR/.well-known"
-          cat > "$BUILD_DIR/.well-known/security.txt" << 'EOF'
-          Contact: https://github.com/${{ github.repository_owner }}
-          Preferred-Languages: en
-          Canonical: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-          Policy: https://github.com/${{ github.repository }}/security/policy
-          EOF
-          echo "SUCCESS: security.txt generated"
-
-      - name: Generate humans.txt
-        run: |
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || ([ -d "build" ] && echo "build" || echo "."))
-          cat > "$BUILD_DIR/humans.txt" << 'EOF'
-          /* humanstxt.org */
-          Developer: ${{ github.actor }}
-          Site: https://github.com/${{ github.repository_owner }}
-          Last update: $(date +%Y/%m/%d)
-          Language: English
-          Standards: HTML5, CSS3, JavaScript
-          Components: GitHub Pages, GitHub Actions
-          EOF
-          echo "SUCCESS: humans.txt generated"
-
-      - name: Find newest page
-        id: newest
-        run: |
-          BUILD_DIR=$([ -d "dist" ] && echo "dist" || ([ -d "build" ] && echo "build" || echo "."))
-          NEWEST_PAGE=$(find "$BUILD_DIR" -name "*.html" -type f | head -1 | sed "s|$BUILD_DIR/||")
-          NEWEST_TIME=$(date +"%Y-%m-%d %H:%M:%S UTC")
-          
-          echo "page=$NEWEST_PAGE" >> $GITHUB_OUTPUT
-          echo "time=$NEWEST_TIME" >> $GITHUB_OUTPUT
-          echo "Newest page: $NEWEST_PAGE"
-          echo "Updated: $NEWEST_TIME"
-
-      - name: Generate build report
-        id: report
-        run: |
-          echo "## Build Report" >> $GITHUB_STEP_SUMMARY
-          echo "Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
-          echo "Commit: ${GITHUB_SHA:0:7}" >> $GITHUB_STEP_SUMMARY
-          echo "Author: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-
-      - name: Determine artifact path
-        id: path
-        run: |
-          if [ -d "dist" ]; then
-            echo "build-path=dist" >> $GITHUB_OUTPUT
-          elif [ -d "build" ]; then
-            echo "build-path=build" >> $GITHUB_OUTPUT
-          else
-            echo "build-path=." >> $GITHUB_OUTPUT
-          fi
-
-      - name: Upload artifact
-        id: upload
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ steps.path.outputs.build-path }}
-          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
-
-      - name: Calculate build time
-        run: |
-          end=$(date +%s)
-          start=${{ steps.timing.outputs.start }}
-          duration=$((end - start))
-          echo "duration=${duration}s" >> $GITHUB_OUTPUT
-          echo "Build completed in ${duration}s"
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    if: hashFiles('package.json') != ''
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-
-      - name: Run tests
-        run: npm test --if-present -- --passWithNoTests
-        continue-on-error: true
-
-      - name: Lint code
-        run: npm run lint --if-present
-        continue-on-error: true
-
-  security:
-    name: Security Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run security scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-        continue-on-error: true
-
-      - name: Upload scan results
-        uses: github/codeql-action/upload-sarif@v2
-        if: hashFiles('trivy-results.sarif') != ''
-        with:
-          sarif_file: 'trivy-results.sarif'
-
+  # Single deploy job since we're just deploying
   deploy:
-    name: Deploy to GitHub Pages
-    needs: [build, test, security]
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Pages
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact-name: github-pages
-
-      - name: Deployment notification
-        env:
-          NEWEST_PAGE: ${{ needs.build.outputs.newest-page }}
-          PAGE_TIME: ${{ needs.build.outputs.page-time }}
-          LIVE_URL: ${{ steps.deployment.outputs.page_url }}
-        run: |
-          echo "## DEPLOYMENT SUCCESSFUL" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Live Site" >> $GITHUB_STEP_SUMMARY
-          echo "URL: $LIVE_URL" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Latest Page" >> $GITHUB_STEP_SUMMARY
-          echo "Page: $NEWEST_PAGE" >> $GITHUB_STEP_SUMMARY
-          echo "Updated: $PAGE_TIME" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### SEO and Standards" >> $GITHUB_STEP_SUMMARY
-          echo "- robots.txt deployed" >> $GITHUB_STEP_SUMMARY
-          echo "- sitemap.xml deployed" >> $GITHUB_STEP_SUMMARY
-          echo "- humans.txt deployed" >> $GITHUB_STEP_SUMMARY
-          echo "- security.txt deployed" >> $GITHUB_STEP_SUMMARY
-          echo "- .htaccess deployed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Deployment Info" >> $GITHUB_STEP_SUMMARY
-          echo "Commit: ${GITHUB_SHA:0:7}" >> $GITHUB_STEP_SUMMARY
-          echo "Author: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "Build Time: ${{ needs.build.outputs.build-time }}" >> $GITHUB_STEP_SUMMARY
-
-      - name: Comment on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Build Successful! Preview will be available after merge to main.'
-            })
-
-  notify:
-    name: Notify
-    needs: deploy
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Success notification
-        if: needs.deploy.result == 'success'
-        run: echo "Deployment Complete - Your site is live!"
-
-      - name: Failure notification
-        if: needs.deploy.result == 'failure'
-        run: |
-          echo "Deployment Failed - Check the logs above for details"
-          exit 1
