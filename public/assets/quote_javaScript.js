@@ -185,3 +185,4 @@
                 expiredBox.style.display = "block";
             }
         });
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
