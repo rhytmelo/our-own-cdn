@@ -1,43 +1,147 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Create these files in your project root to set standards
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+# 📄 public/robots.txt
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /.git/
+Disallow: /.github/
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+Crawl-delay: 1
+Request-rate: 30/60
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# Sitemap location
+Sitemap: https://[YOUR_USERNAME].github.io/[YOUR_REPO]/sitemap.xml
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+---
 
-jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+# 📋 public/humans.txt
+/* humanstxt.org */
+
+/* TEAM */
+Developer: Your Name
+Site: https://github.com/[YOUR_USERNAME]
+Twitter: @yourhandle
+Location: Your City
+
+/* SITE */
+Last update: 2025-01-06
+Standards: HTML5, CSS3, JavaScript ES6+
+Language: English
+Built with: GitHub Pages & GitHub Actions
+
+/* THANKS */
+Thanks to GitHub for the amazing infrastructure!
+Powered by automation and clean code.
+
+---
+
+# 🔒 public/.well-known/security.txt
+Contact: https://github.com/[YOUR_USERNAME]
+Preferred-Languages: en
+Canonical: https://[YOUR_USERNAME].github.io/[YOUR_REPO]/
+Policy: https://github.com/[YOUR_USERNAME]/[YOUR_REPO]/security/policy
+Expires: 2026-01-06T00:00:00.000Z
+
+---
+
+# 📄 .github/workflows/deploy.yml
+# Already configured in the main workflow!
+
+---
+
+# 🎯 public/.htaccess
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Redirect HTTP to HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Remove trailing slashes
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [L,R=301]
+  
+  # Pretty URLs - route to index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Cache Control Headers
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 week"
+  
+  # HTML files
+  ExpiresByType text/html "access plus 1 week"
+  
+  # CSS & JavaScript
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  
+  # Images
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  
+  # Fonts
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+</IfModule>
+
+# GZIP Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+---
+
+# 📊 public/deploy-info.json
+{
+  "deployment": {
+    "timestamp": "2025-01-06T00:00:00Z",
+    "version": "1.0.0",
+    "repository": "[YOUR_REPO]",
+    "branch": "main",
+    "commit": "[AUTO_GENERATED]",
+    "author": "[AUTO_GENERATED]",
+    "liveUrl": "[AUTO_GENERATED]"
+  },
+  "seo": {
+    "robots": true,
+    "sitemap": true,
+    "humans": true,
+    "security": true,
+    "https": true
+  },
+  "performance": {
+    "caching": true,
+    "compression": true,
+    "cdn": "GitHub Pages"
+  }
+}
