@@ -896,6 +896,72 @@
                 text-align: center;
             }
         }
+
+        .quote-expired {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9ff, #eef1ff);
+            border-radius: 12px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .quote-expired h2 {
+            font-size: 26px;
+            margin-bottom: 12px;
+            color: #1f2937;
+        }
+
+        .quote-expired p {
+            font-size: 16px;
+            color: #4b5563;
+            margin-bottom: 24px;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 22px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #25D366, #1ebe57);
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            animation: pulse 2s infinite;
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -1129,6 +1195,17 @@
                             <button type="submit" class="btn-submit">✓ Send Acceptance</button>
                         </div>
                     </form>
+                    <div class="quote-expired" style="display:none;">
+                        <h2>⏰ This Quote Has Expired</h2>
+                        <p>
+                            This proposal was valid for 3 days from the issue date.
+                            Please reach out to us on WhatsApp to get an updated quote.
+                        </p>
+
+                        <a href="https://api.whatsapp.com/message/ZPS3KEF6S2GQO1" target="_blank" class="whatsapp-btn">
+                            💬 Chat with Rhytmelo on WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1299,6 +1376,34 @@
 
             }, 300);
         }
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const issuedEl = document.querySelector(".date-issued");
+            const form = document.querySelector("form");
+            const expiredBox = document.querySelector(".quote-expired");
+
+            if (!issuedEl || !form || !expiredBox) return;
+
+            // Extract date text: "📅 Issued: 6th January 2026"
+            const issuedText = issuedEl.textContent.replace("📅 Issued:", "").trim();
+
+            // Convert "6th January 2026" → Date
+            const cleanedDate = issuedText.replace(/(\d+)(st|nd|rd|th)/, "$1");
+            const issuedDate = new Date(cleanedDate);
+
+            // Expiry = Issued + 3 days
+            const expiryDate = new Date(issuedDate);
+            expiryDate.setDate(expiryDate.getDate() + 3);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (today > expiryDate) {
+                form.style.display = "none";
+                expiredBox.style.display = "block";
+            }
+        });
 
     </script>
 </body>
