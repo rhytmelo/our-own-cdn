@@ -975,25 +975,26 @@
 
                         <div class="form-group">
                             <label for="clientName">Your Full Name *</label>
-                            <input type="text" id="clientName" name="clientName" placeholder="MADHUBEN MULJIBHAI PATEL"
-                                required>
+                            <input type="text" id="clientName" name="clientName"
+                                placeholder="Please enter your full name" required>
                         </div>
 
                         <div class="form-group">
                             <label for="clientEmail">Email Address *</label>
-                            <input type="email" id="clientEmail" name="email" placeholder="fabzonefabindia@gmail.com"
-                                required>
+                            <input type="email" id="clientEmail" name="email"
+                                placeholder="Please enter your email address" required>
                         </div>
 
                         <div class="form-group">
                             <label for="clientPhone">Phone Number *</label>
-                            <input type="text" id="clientPhone" name="clientPhone" placeholder="9081625551" required>
+                            <input type="text" id="clientPhone" name="clientPhone"
+                                placeholder="Please enter your phone number" required>
                         </div>
 
                         <div class="form-group">
                             <label for="companName">Company Name *</label>
-                            <input type="text" id="companName" name="companName" placeholder="Fab Zone Fab India"
-                                required>
+                            <input type="text" id="companName" name="companName"
+                                placeholder="Please enter your company name" required>
                         </div>
 
                         <div class="form-group">
@@ -1027,7 +1028,7 @@
         </div>
 
         <footer>
-            Rhytmelo Designs | SOW - Fab Zone Fab India
+            <span>&copy; <span id="currentYear"></span> Rhytmelo Designs | SOW - Fab Zone Fab India</span>
         </footer>
     </div>
 
@@ -1038,6 +1039,50 @@
             btn.disabled = true;
             btn.textContent = '⏳ Sending...';
         });
+
+        //Form Validation and Submission Handling
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.querySelector('form[action="https://api.web3forms.com/submit"]');
+            const errorBox = document.querySelector('.error-message');
+            const successBox = document.querySelector('.success-message');
+
+            form.addEventListener("submit", function (e) {
+
+                errorBox.style.display = "none";
+                successBox.style.display = "none";
+
+                const name = form.elements["clientName"]?.value.trim();
+                const email = form.elements["email"]?.value.trim();
+                const phone = form.elements["clientPhone"]?.value.trim();
+                const company = form.elements["companName"]?.value.trim();
+
+                const agreeScope = form.elements["agree_scope"]?.checked;
+                const agreeAccept = form.elements["agree_accept"]?.checked;
+
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const phonePattern = /^[0-9]{10,15}$/;
+
+                if (
+                    !name || name.length < 3 ||
+                    !emailPattern.test(email) ||
+                    !phonePattern.test(phone) ||
+                    !company || company.length < 2 ||
+                    !agreeScope ||
+                    !agreeAccept
+                ) {
+                    e.preventDefault();
+                    errorBox.style.display = "block";
+                    return false;
+                }
+
+                // Allow submit + show success
+                successBox.style.display = "block";
+            });
+        });
+
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
     </script>
 </body>
 
