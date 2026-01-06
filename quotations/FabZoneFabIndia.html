@@ -791,6 +791,82 @@
                 display: none;
             }
         }
+
+        @media print {
+
+            /* Force color & backgrounds */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            body {
+                background: #fff !important;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif !important;
+                font-size: 12pt;
+                line-height: 1.6;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Prevent cut-off sections */
+            section,
+            div,
+            table {
+                page-break-inside: avoid;
+            }
+
+            h1,
+            h2,
+            h3 {
+                page-break-after: avoid;
+            }
+
+            /* Hide buttons only */
+            .btn-print,
+            .btn-submit {
+                display: none !important;
+            }
+
+            /* Ensure inputs look like text */
+            input,
+            textarea {
+                border: none !important;
+                padding: 0 !important;
+                background: transparent !important;
+                font-size: inherit !important;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+
+            /* Show checkbox state clearly */
+            input[type="checkbox"] {
+                transform: scale(1.1);
+            }
+
+            /* Footer always visible */
+            footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                font-size: 10pt;
+                color: #444;
+            }
+
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+        }
     </style>
 </head>
 
@@ -968,7 +1044,7 @@
                     </div>
 
                     <form id="acceptanceForm" action="https://api.web3forms.com/submit" method="POST">
-                        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+                        <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY">
                         <input type="hidden" name="subject" value="SOW Acceptance - Fab Zone Fab India">
                         <input type="hidden" name="from_name" value="SOW Acceptance Portal">
                         <!-- <input type="hidden" name="redirect" value="https://web3forms.com/success"> -->
@@ -1019,8 +1095,8 @@
                         </div>
 
                         <div class="button-group">
-                            <button type="button" class="btn-print" onclick="window.print()">🖨️ Print Document</button>
-                            <button type="submit" class="btn-submit">✓ Send Acceptance</button>
+                            <button type="button" class="btn-print" onclick="printDocument()">🖨️ Print
+                                Document</button>
                         </div>
                     </form>
                 </div>
@@ -1164,6 +1240,35 @@
                 }
             });
         });
+
+        function printDocument() {
+
+            // Force visibility of everything
+            const hiddenElements = [];
+
+            document.querySelectorAll('[style*="display: none"]').forEach(el => {
+                hiddenElements.push({ el, display: el.style.display });
+                el.style.display = "block";
+            });
+
+            // Add print class to body
+            document.body.classList.add("print-mode");
+
+            // Wait for layout to stabilize
+            setTimeout(() => {
+                window.print();
+
+                // Restore UI after print
+                setTimeout(() => {
+                    document.body.classList.remove("print-mode");
+
+                    hiddenElements.forEach(item => {
+                        item.el.style.display = item.display;
+                    });
+                }, 500);
+
+            }, 300);
+        }
 
     </script>
 </body>
