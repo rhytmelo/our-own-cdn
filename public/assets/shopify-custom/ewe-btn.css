@@ -249,12 +249,6 @@ button[aria-expanded="true"]
     box-shadow 0.25s ease;
 }
 
-/* X Icon */
-.sticky-atc__close::before {
-  content: "✕";
-  display: block;
-}
-
 
 @media (hover: hover) {
   .sticky-atc__close:hover {
@@ -300,4 +294,452 @@ button[aria-expanded="true"]
     height: 34px;
     font-size: 17px;
   }
+}
+
+.small{
+    font-family: inherit;
+    font-size: .675rem;
+    padding: .25rem 2rem;
+}
+
+
+.cart-discounts {
+  position: relative;
+  list-style: none;
+  margin: 0 auto 14px;
+  padding: 12px 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(34, 139, 230, 0.14),
+    rgba(34, 139, 230, 0.06)
+  );
+
+  border: 1px dashed rgba(34, 139, 230, 0.45);
+  border-radius: 14px;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #0b3c6d;
+
+  text-align: center;
+  width: fit-content;
+  max-width: 100%;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  animation: discountFadeIn 0.4s ease;
+}
+
+/* ===============================
+   Discount Item
+   =============================== */
+
+.cart-discounts li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===============================
+   Icon
+   =============================== */
+
+.cart-discounts svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+  color: #1f6fe5;
+  flex-shrink: 0;
+}
+
+/* ===============================
+   SHINE EFFECT
+   =============================== */
+
+.cart-discounts::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -60%;
+  width: 40%;
+  height: 180%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+
+  transform: rotate(15deg);
+  animation: shineSweep 3.8s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* ===============================
+   CONFETTI SPARKLES
+   =============================== */
+
+.cart-discounts::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.8) 1px, transparent 2px),
+    radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.6) 1px, transparent 2px),
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.7) 1px, transparent 2px),
+    radial-gradient(circle at 85% 65%, rgba(255, 255, 255, 0.6) 1px, transparent 2px);
+
+  animation: confettiTwinkle 2.2s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===============================
+   Mobile Optimization
+   =============================== */
+
+@media (max-width: 767px) {
+  .cart-discounts {
+    padding: 10px 12px;
+    font-size: 12.5px;
+    border-radius: 12px;
+  }
+
+  .cart-discounts li {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* ===============================
+   Tablet
+   =============================== */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cart-discounts {
+    font-size: 13px;
+  }
+}
+
+/* ===============================
+   Animations
+   =============================== */
+
+@keyframes shineSweep {
+  0% {
+    left: -60%;
+  }
+  45% {
+    left: 120%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+
+@keyframes confettiTwinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes discountFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+    .cart-subtotal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  margin-bottom: 18px;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #111;
+
+  text-align: center;
+}
+
+/* ===============================
+   Label
+   =============================== */
+
+.cart-subtotal .opacity-70 {
+  opacity: 0.65;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ===============================
+   Price Wrapper
+   =============================== */
+
+.cart-subtotal span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===============================
+   Old Price
+   =============================== */
+
+.cart-subtotal s {
+  color: #8b8b8b;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(0, 0, 0, 0.35);
+}
+
+/* ===============================
+   New Price (Final)
+   =============================== */
+
+.cart-subtotal b {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b5ed7;
+  position: relative;
+}
+
+/* ===============================
+   Subtle Glow on Final Price
+   =============================== */
+
+.cart-subtotal b::after {
+  content: "";
+  position: absolute;
+  inset: -4px -6px;
+  background: radial-gradient(
+    circle,
+    rgba(11, 94, 215, 0.18),
+    transparent 65%
+  );
+  z-index: -1;
+}
+
+/* ===============================
+   Mobile
+   =============================== */
+
+@media (max-width: 767px) {
+  .cart-subtotal {
+    font-size: 16px;
+    gap: 4px;
+  }
+
+  .cart-subtotal b {
+    font-size: 19px;
+  }
+
+  .cart-subtotal s {
+    font-size: 13px;
+  }
+}
+
+/* ===============================
+   Tablet
+   =============================== */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cart-subtotal {
+    font-size: 17px;
+  }
+}
+    /* ===============================
+   Cart Note – Wrapper
+   =============================== */
+
+.collapse-wrapper {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+/* ===============================
+   Toggle Button
+   =============================== */
+
+.collapse-wrapper > button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Left Content */
+.collapse-wrapper > button .d-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===============================
+   Icons
+   =============================== */
+
+.collapse-wrapper svg {
+  color: #0b5ed7;
+  flex-shrink: 0;
+}
+
+/* Chevron */
+.svg-icon-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+/* Rotate when open */
+.collapse-wrapper > button:not(.collapsed) .svg-icon-chevron-down {
+  transform: rotate(180deg);
+}
+
+/* ===============================
+   Hover / Focus
+   =============================== */
+
+.collapse-wrapper > button:hover {
+  background: rgba(11, 94, 215, 0.04);
+}
+
+.collapse-wrapper > button:focus-visible {
+  outline: 2px solid rgba(11, 94, 215, 0.5);
+  outline-offset: -2px;
+}
+
+/* ===============================
+   Collapse Content
+   =============================== */
+
+.collapse-inner {
+  padding: 14px 16px 16px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  animation: collapseFadeIn 0.35s ease;
+}
+
+/* ===============================
+   Textarea
+   =============================== */
+
+.cart-note textarea {
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 10px 12px;
+  resize: none;
+
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cart-note textarea:focus {
+  border-color: #0b5ed7;
+  box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.15);
+  outline: none;
+}
+
+/* ===============================
+   Save Button
+   =============================== */
+
+.cart-note .btn {
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 12px;
+
+  transition: all 0.25s ease;
+}
+
+.cart-note .btn:hover {
+  background-color: #0b5ed7;
+  color: #fff;
+  border-color: #0b5ed7;
+}
+
+/* ===============================
+   Mobile Optimization
+   =============================== */
+
+@media (max-width: 767px) {
+  .collapse-wrapper > button {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .collapse-inner {
+    padding: 12px 14px 14px;
+  }
+}
+
+/* ===============================
+   Animations
+   =============================== */
+
+@keyframes collapseFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.collapse-wrapper [data-bs-toggle=collapse] {
+    padding: 0 !important;
+}
+
+.product-block-collapse .collapse-inner {
+    padding: 2vh 1rem 2vh;
+    font-size: 14px !important;
+    line-height: 1.65;
+    color: inherit;
+}
+
+form button.btn-primary[aria-label="Subscribe"] {
+  padding: 0.45rem;
+  margin-top: 1.6rem;
+  margin-right: 1.5rem;
 }
