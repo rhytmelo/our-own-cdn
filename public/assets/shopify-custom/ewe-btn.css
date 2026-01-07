@@ -78,3 +78,115 @@ button[aria-label="Remove"],
 .btn[aria-label="Remove"] {
     padding: 0.675rem !important;
 }
+
+/* Wrapper cleanup */
+.product-block-collapse {
+  font-family: inherit;
+}
+
+/* Collapse container */
+.product-block-collapse .collapse-wrapper {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Button styling */
+.product-block-collapse button {
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+}
+
+/* Left content (icon + title) */
+.product-block-collapse button .d-flex {
+  gap: 10px;
+}
+
+.product-block-collapse button img {
+  opacity: 0.85;
+}
+
+/* Chevron animation */
+.product-block-collapse .svg-icon-chevron-down {
+  transition: transform 0.25s ease;
+}
+
+.product-block-collapse
+button[aria-expanded="true"]
+.svg-icon-chevron-down {
+  transform: rotate(180deg);
+}
+
+/* Description content */
+.product-block-collapse .collapse-inner {
+  padding: 10px 0 20px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #444;
+}
+
+/* Remove Word junk spacing */
+.product-block-collapse .collapse-inner p {
+  margin-bottom: 8px;
+}
+
+/* Make description cleaner */
+.product-block-collapse .collapse-inner p strong {
+  font-weight: 600;
+}
+
+/* Small note text */
+.product-block-collapse .collapse-inner span {
+  font-size: 12.5px;
+  color: #777;
+}
+
+/* Mobile touch improvement */
+@media (max-width: 768px) {
+  .product-block-collapse button {
+    padding: 14px 0;
+  }
+}
+/* Left icon (product icon) */
+.product-block-collapse button img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  opacity: 0.75;
+  filter: grayscale(100%) contrast(1.1);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Subtle hover polish */
+.product-block-collapse button:hover img {
+  opacity: 0.9;
+  transform: translateY(-0.5px);
+}
+
+/* Chevron icon refinement */
+.product-block-collapse .svg-icon-chevron-down {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.8;
+  color: #555;
+  opacity: 0.8;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+/* Active state */
+.product-block-collapse
+button[aria-expanded="true"]
+.svg-icon-chevron-down {
+  opacity: 1;
+}
+
+/* Align icons perfectly with text */
+.product-block-collapse button .d-flex {
+  align-items: center;
+}
