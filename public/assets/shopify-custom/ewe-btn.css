@@ -24,7 +24,7 @@
     position: absolute;
     width: 100px;
     height: 120%;
-    background-color: var(--bs-primary);  /*#ff6700 */
+    background-color: #ff6700, var(--bs-primary);  /*#ff6700 */
     top: 50%;
     transform: skewX(30deg) translate(-150%, -50%);
     -webkit-transform: skewX(30deg) translate(-150%, -50%);
@@ -740,6 +740,186 @@ button[aria-expanded="true"]
 
 form button.btn-primary[aria-label="Subscribe"] {
   padding: 0.45rem;
-  margin-top: 1.6rem;
-  margin-right: 1.5rem;
 }
+
+/* .newsletter-form .form-floating button {
+    position: absolute;
+    top: 50%;
+    right: .5rem;
+    transform: translateY(-50%);
+    z-index: 3;
+    height: calc(100% - 1rem);
+    display: flex;
+    align-items: center;
+    border-radius: .8rem .4rem !important;
+    justify-content: center;
+    background-color: rgba(var(--bs-secondary-rgb));
+} */
+ .newsletter-form {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* =================================
+   Floating Input Wrapper
+   ================================= */
+
+.newsletter-form .form-floating {
+  position: relative;
+}
+
+/* =================================
+   Mail Icon
+   ================================= */
+
+.newsletter-form .form-floating-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  z-index: 3;
+  pointer-events: none;
+  color: #0b5ed7;
+}
+
+/* =================================
+   Input Field
+   ================================= */
+
+.newsletter-form .form-control {
+  height: 54px;
+  padding-left: 48px;
+  padding-right: 64px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+
+  transition: 
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.newsletter-form .form-control::placeholder {
+  color: transparent;
+}
+
+/* =================================
+   Floating Label
+   ================================= */
+
+.newsletter-form .form-floating label {
+  padding-left: 48px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* =================================
+   Focus State
+   ================================= */
+
+.newsletter-form .form-control:focus {
+  border-color: #0b5ed7;
+  box-shadow: 0 0 0 4px rgba(11, 94, 215, 0.15);
+  background-color: #fff;
+}
+
+/* =================================
+   Subscribe Button
+   ================================= */
+
+.newsletter-form button.btn-primary[aria-label="Subscribe"] {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  border: none;
+
+  background: #3b82f6;
+  color: #fff;
+
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* Hover */
+@media (hover: hover) {
+  .newsletter-form button.btn-primary[aria-label="Subscribe"]:hover {
+    box-shadow: 0 6px 18px rgba(11, 94, 215, 0.35);
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+/* Active */
+.newsletter-form button.btn-primary[aria-label="Subscribe"]:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+/* =================================
+   Icon Inside Button
+   ================================= */
+
+.newsletter-form button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =================================
+   Notice Text
+   ================================= */
+
+.newsletter-notice {
+  max-width: 460px;
+  margin: 16px auto 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.newsletter-notice a {
+  color: var(--bs-primary);
+  text-decoration: underline;
+}
+
+/* =================================
+   Mobile Optimization
+   ================================= */
+
+@media (max-width: 767px) {
+  .newsletter-form {
+    max-width: 100%;
+  }
+
+  .newsletter-form .form-control {
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .newsletter-form button.btn-primary[aria-label="Subscribe"] {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+:not(#footer-mobile) .collapse-wrapper {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    background: transparent;
+    overflow: hidden;
+    margin-bottom: 18px;
+    border-color: #fff;
+    padding: .756rem;
