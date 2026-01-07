@@ -217,8 +217,8 @@ button[aria-expanded="true"]
 
 .sticky-atc__close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0.5vh;
+  right: 2vw;
 
   width: 36px;
   height: 36px;
@@ -236,12 +236,12 @@ button[aria-expanded="true"]
   border: none;
   border-radius: 50%;
 
-  font-size: 18px;
+ 
   font-weight: 600;
   line-height: 1;
 
-  cursor: pointer;
-  z-index: 999;
+  cursor: pointer !important;
+  z-index: 1100 !important;
 
   transition: 
     background-color 0.25s ease,
@@ -923,3 +923,23 @@ form button.btn-primary[aria-label="Subscribe"] {
     margin-bottom: 18px;
     border-color: #fff;
     padding: .756rem;
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 15vh;
+    right: 1.5vw;
+    z-index: 999;
+}
+
+.sticky-atc__close{
+        position: absolute;
+    top: 0.5vh;
+    right: 2vw;
+    background: none;
+    border: none;
+    font-size: 1.7rem;
+    line-height: 1;
+    z-index: 1100;
+    cursor: pointer;
+}
