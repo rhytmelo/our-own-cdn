@@ -1,0 +1,495 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    /* Social Links */
+    .social-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .social-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        text-decoration: none;
+        background: transparent;
+        transition: all 0.3s ease;
+        position: relative;
+        color: white;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .social-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .social-btn:hover::before,
+    .social-btn:focus-visible::before {
+        opacity: 1;
+    }
+
+    .social-btn:hover,
+    .social-btn:focus-visible {
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-2px);
+    }
+
+    .social-btn i {
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .social-btn:hover i,
+    .social-btn:focus-visible i {
+        transform: scale(1.1);
+    }
+
+    /* WhatsApp CTA - starts as circle like other icons */
+    .whatsapp-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 999px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        overflow: hidden;
+        text-decoration: none;
+        transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .whatsapp-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        transition: transform 0.3s ease;
+        position: relative;
+        font-size: 1.1rem;
+    }
+
+    /* Pulsing animation ring for WhatsApp icon */
+    .whatsapp-pulse-ring {
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 2px solid rgba(37, 211, 102, 0.8);
+        opacity: 0;
+        animation: whatsappPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        pointer-events: none;
+    }
+
+    @keyframes whatsappPulse {
+        0% {
+            transform: scale(0.8);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.3);
+            opacity: 0.5;
+        }
+
+        100% {
+            transform: scale(1.6);
+            opacity: 0;
+        }
+    }
+
+    .whatsapp-icon i {
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .whatsapp-text {
+        white-space: nowrap;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #ffffff;
+        opacity: 0;
+        transform: translateX(-0.5rem);
+        transition: all 0.3s ease;
+        padding-right: 0.75rem;
+    }
+
+    .whatsapp-cta:hover,
+    .whatsapp-cta:focus-visible {
+        width: 10rem;
+        background-color: #25D366;
+        border-color: #25D366;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    }
+
+    .whatsapp-cta:hover .whatsapp-text,
+    .whatsapp-cta:focus-visible .whatsapp-text {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .whatsapp-cta:hover .whatsapp-icon i,
+    .whatsapp-cta:focus-visible .whatsapp-icon i {
+        transform: scale(1.1);
+    }
+
+    /* Payment Section */
+    .payment-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+    }
+
+    .payment-label {
+        font-size: 0.65rem;
+        opacity: 0.9;
+        text-align: center;
+        color: white;
+        letter-spacing: 0.3px;
+        line-height: 1.3;
+    }
+
+    .payment-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+        width: 100%;
+    }
+
+    .payment-card {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        border-radius: 0.4rem;
+        padding: 0.4rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        min-height: 32px;
+    }
+
+    .payment-card:hover {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .payment-card img {
+        height: 16px;
+        width: auto;
+        display: block;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    /* Tablet and below */
+    @media (max-width: 768px) {
+        .footer-container {
+            gap: 1rem;
+            padding: 0.75rem 0.5rem;
+        }
+
+        .social-wrapper {
+            gap: 0.5rem;
+        }
+
+        .social-btn {
+            width: 2.2rem;
+            height: 2.2rem;
+            font-size: 1rem;
+        }
+
+        .whatsapp-cta {
+            width: 2.2rem;
+            height: 2.2rem;
+        }
+
+        .whatsapp-icon {
+            min-width: 2.2rem;
+            height: 2.2rem;
+            font-size: 1rem;
+        }
+
+        /* On mobile, WhatsApp stays as button */
+        .whatsapp-cta:hover {
+            width: 2.2rem;
+            background-color: transparent;
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: none;
+        }
+
+        .whatsapp-cta:hover .whatsapp-text {
+            opacity: 0;
+        }
+
+        .whatsapp-text {
+            display: none;
+        }
+
+        .payment-section {
+            gap: 0.5rem;
+        }
+
+        .payment-label {
+            font-size: 0.6rem;
+        }
+
+        .payment-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.35rem;
+        }
+
+        .payment-card {
+            padding: 0.35rem 0.4rem;
+            min-height: 28px;
+        }
+
+        .payment-card img {
+            height: 14px;
+        }
+    }
+
+    /* Mobile - 50% max width constraint */
+    @media (max-width: 600px) {
+        .footer-container {
+            max-width: 100%;
+            gap: 0.85rem;
+            padding: 0.5rem 0.25rem;
+        }
+
+        .social-wrapper {
+            gap: 0.4rem;
+        }
+
+        .social-btn {
+            width: 2rem;
+            height: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-cta {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .whatsapp-icon {
+            min-width: 2rem;
+            height: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .payment-section {
+            gap: 0.4rem;
+        }
+
+        .payment-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.2px;
+        }
+
+        .payment-grid {
+            gap: 0.3rem;
+        }
+
+        .payment-card {
+            padding: 0.3rem 0.35rem;
+            min-height: 26px;
+            border-radius: 0.35rem;
+        }
+
+        .payment-card img {
+            height: 12px;
+        }
+    }
+
+    /* Very small mobile */
+    @media (max-width: 400px) {
+        .footer-container {
+            gap: 0.7rem;
+            padding: 0.4rem 0.2rem;
+        }
+
+        .social-wrapper {
+            gap: 0.35rem;
+        }
+
+        .social-btn {
+            width: 1.85rem;
+            height: 1.85rem;
+            font-size: 0.85rem;
+        }
+
+        .whatsapp-cta {
+            width: 1.85rem;
+            height: 1.85rem;
+        }
+
+        .whatsapp-icon {
+            min-width: 1.85rem;
+            height: 1.85rem;
+            font-size: 0.85rem;
+        }
+
+        .payment-section {
+            gap: 0.35rem;
+        }
+
+        .payment-label {
+            font-size: 0.5rem;
+        }
+
+        .payment-grid {
+            gap: 0.25rem;
+        }
+
+        .payment-card {
+            padding: 0.25rem 0.3rem;
+            min-height: 24px;
+        }
+
+        .payment-card img {
+            height: 11px;
+        }
+    }
+
+    /* Accessibility */
+    .social-btn:focus-visible,
+    .whatsapp-cta:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+        .whatsapp-pulse-ring {
+            animation: none;
+        }
+
+        * {
+            transition-duration: 0.01ms !important;
+        }
+    }
+</style>
+
+<div class="footer-container">
+    <!-- Social Links -->
+    <div class="social-wrapper">
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/cultureaisleindia/" target="_blank" rel="noopener noreferrer"
+            class="social-btn" aria-label="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+
+        <!-- Pinterest -->
+        <a href="https://www.pinterest.com/cultureaisleindia/" target="_blank" rel="noopener noreferrer"
+            class="social-btn" aria-label="Follow us on Pinterest">
+            <i class="fab fa-pinterest"></i>
+        </a>
+
+        <!-- WhatsApp CTA -->
+        <a href="https://wa.me/9711972790?text=Hello,%20I%20want%20to%20know" target="_blank" rel="noopener noreferrer"
+            class="whatsapp-cta" id="whatsappCta" aria-label="Chat with us on WhatsApp">
+            <span class="whatsapp-icon">
+                <i class="fab fa-whatsapp"></i>
+            </span>
+            <span class="whatsapp-text">Chat on WhatsApp</span>
+        </a>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="payment-section">
+        <span class="payment-label">Secure payments powered by Razorpay</span>
+
+        <div class="payment-grid">
+            <div class="payment-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa"
+                    loading="lazy">
+            </div>
+            <div class="payment-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard"
+                    loading="lazy">
+            </div>
+            <div class="payment-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/PayPal_Logo_Icon_2014.svg" alt="PayPal"
+                    loading="lazy">
+            </div>
+            <div class="payment-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
+                    alt="American Express" loading="lazy">
+            </div>
+            <div class="payment-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI"
+                    loading="lazy">
+            </div>
+            <div class="payment-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay"
+                    loading="lazy">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Ensure WhatsApp pulse animation keeps running
+    (function () {
+        const whatsappIcon = document.querySelector('.whatsapp-icon');
+        const whatsappCta = document.getElementById('whatsappCta');
+
+        if (whatsappIcon && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            // Create pulse rings
+            const createPulseRing = () => {
+                const ring = document.createElement('div');
+                ring.className = 'whatsapp-pulse-ring';
+                whatsappIcon.appendChild(ring);
+            };
+
+            // Start animation after a short delay
+            setTimeout(() => {
+                createPulseRing();
+                setTimeout(createPulseRing, 1000);
+
+                // Keep animation running continuously
+                setInterval(() => {
+                    const rings = whatsappIcon.querySelectorAll('.whatsapp-pulse-ring');
+                    if (rings.length < 2) {
+                        createPulseRing();
+                    }
+                }, 2000);
+            }, 500);
+        }
+    })();
+</script>
