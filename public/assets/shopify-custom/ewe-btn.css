@@ -1,5 +1,8 @@
+/* ================================
+   ATC BUTTON STYLES (SCOPED)
+   ================================ */
 
-.btn {
+.product-block-atc .btn {
     padding: 1.1em 2em;
     background: none;
     border: 2px solid #fff;
@@ -19,7 +22,8 @@
     will-change: transform, background-color;
 }
 
-.btn:before {
+/* Animated diagonal overlay */
+.product-block-atc .btn::before {
     content: "";
     position: absolute;
     width: 100px;
@@ -32,30 +36,33 @@
     -webkit-transition: all 0.5s;
 }
 
-.btn:hover,
-.btn:focus {
+/* Hover & focus */
+.product-block-atc .btn:hover,
+.product-block-atc .btn:focus {
     background-color: #4cc9f0;
     color: #fff;
     box-shadow: 0 2px 0 2px #0d3b66;
     -webkit-box-shadow: 0 2px 0 2px #0d3b66;
 }
 
-.btn:hover::before,
-.btn:focus::before {
+/* Animate overlay on hover/focus */
+.product-block-atc .btn:hover::before,
+.product-block-atc .btn:focus::before {
     transform: skewX(30deg) translate(150%, -50%);
     -webkit-transform: skewX(30deg) translate(150%, -50%);
     transition-delay: 0.1s;
     -webkit-transition-delay: 0.1s;
 }
 
-.btn:active {
+/* Active */
+.product-block-atc .btn:active {
     transform: scale(0.9);
     -webkit-transform: scale(0.9);
 }
 
-/* Touch-device fallback: on devices that don't support hover, apply hover styles while active/pressed */
+/* Touch-device fallback */
 @media (hover: none) {
-    .btn:active {
+    .product-block-atc .btn:active {
         background-color: #4cc9f0;
         color: #fff;
         box-shadow: 0 2px 0 2px #0d3b66;
@@ -64,16 +71,18 @@
         -webkit-transform: scale(0.99);
     }
 
-    .btn:active::before {
+    .product-block-atc .btn:active::before {
         transform: skewX(30deg) translate(150%, -50%);
         -webkit-transform: skewX(30deg) translate(150%, -50%);
     }
 }
 
-/* Accessibility: remove focus outline but keep visible focus by color change */
-.btn:focus {
+/* Accessibility */
+.product-block-atc .btn:focus {
     outline: none;
 }
+
+
 button[aria-label="Remove"],
 .btn[aria-label="Remove"] {
     padding: 0.675rem !important;
