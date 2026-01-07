@@ -24,7 +24,7 @@
     position: absolute;
     width: 100px;
     height: 120%;
-    background-color: #ff6700, var(--bs-primary);  /*#ff6700 */
+    background-color: #ff6700;  /* var(--bs-primary) #ff6700 */
     top: 50%;
     transform: skewX(30deg) translate(-150%, -50%);
     -webkit-transform: skewX(30deg) translate(-150%, -50%);
