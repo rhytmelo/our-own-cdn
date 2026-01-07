@@ -802,6 +802,120 @@ flexibility(document.documentElement);
 	<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="use-credentials">
 	<link rel="preconnect" href="https://fonts.gstatic.com/">
 	<link rel="stylesheet" href="./Saforia - Saforia India_files/css2">
+	<!-- Improved header and responsive tweaks -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--accent: #b04b82;
+			--muted: #6b6b6b;
+			--bg: #ffffff
+		}
+
+		body {
+			font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+			line-height: 1.45;
+			color: #222
+		}
+
+		/* Header improvements */
+		.site-header {
+			position: sticky;
+			top: 0;
+			z-index: 999;
+			background: var(--bg);
+			box-shadow: 0 6px 18px rgba(10, 10, 10, 0.06);
+			backdrop-filter: saturate(1.1) blur(4px)
+		}
+
+		.site-branding {
+			display: flex;
+			align-items: center
+		}
+
+		.site-branding img.custom-logo {
+			max-height: 56px;
+			width: auto;
+			display: block
+		}
+
+		.main-header-bar-alignment {
+			display: flex;
+			align-items: center;
+			gap: 18px
+		}
+
+		.main-header-menu {
+			display: flex;
+			gap: 6px;
+			align-items: center;
+			list-style: none;
+			padding: 0;
+			margin: 0
+		}
+
+		.main-header-menu .menu-link {
+			display: inline-block;
+			padding: 10px 12px;
+			border-radius: 8px;
+			color: var(--muted);
+			font-weight: 600;
+			transition: all .18s
+		}
+
+		.main-header-menu .menu-link:hover {
+			color: #111;
+			background: rgba(176, 75, 130, 0.06);
+			transform: translateY(-1px)
+		}
+
+		/* Compact right-side icons */
+		.site-header-above-section-right .ast-header-account-wrap,
+		.site-header-above-section-right .ast-site-header-cart {
+			display: inline-flex;
+			align-items: center;
+			margin-left: 8px
+		}
+
+		/* Responsive behavior */
+		@media (max-width:980px) {
+			.main-header-menu {
+				display: none
+			}
+
+			.menu-toggle {
+				display: inline-flex
+			}
+
+			.site-branding img.custom-logo {
+				max-height: 48px
+			}
+		}
+
+		/* Mobile open state */
+		body.menu-open .main-header-menu {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding: 14px
+		}
+
+		body.menu-open .main-header-bar-navigation {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 64px;
+			background: var(--bg);
+			box-shadow: 0 8px 30px rgba(10, 10, 10, 0.08);
+			padding: 12px
+		}
+
+		/* Content container max width */
+		.ast-container {
+			max-width: 1200px;
+			margin-inline: auto;
+			padding-inline: 16px
+		}
+	</style>
 </head>
 
 <body itemtype="https://schema.org/WebPage" itemscope="itemscope"
@@ -1175,7 +1289,8 @@ flexibility(document.documentElement);
 													&amp; Earn</a></li>
 											<li
 												class="page_item page-item-30 current-menu-item menu-item current-menu-item">
-												<a href="https://saforiaindia.com/" class="menu-link">Saforia</a></li>
+												<a href="https://saforiaindia.com/" class="menu-link">Saforia</a>
+											</li>
 											<li class="page_item page-item-48 menu-item"><a
 													href="https://saforiaindia.com/shipping-returns/"
 													class="menu-link">Shipping &amp; Returns</a></li>
@@ -2480,7 +2595,8 @@ flexibility(document.documentElement);
 													<path
 														d="m135.72 44.03c66.496 49.921 138.02 151.14 164.28 205.46 26.262-54.316 97.782-155.54 164.28-205.46 47.98-36.021 125.72-63.892 125.72 24.795 0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.3797-3.6904-10.832-3.7077-7.8964-0.0174-2.9357-1.1937 0.51669-3.7077 7.8964-13.714 40.255-67.233 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.4491-163.25-81.433-5.9562-21.282-16.111-152.36-16.111-170.07 0-88.687 77.742-60.816 125.72-24.795z">
 													</path>
-												</svg></span></a></div>
+												</svg></span></a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -3022,6 +3138,24 @@ flexibility(document.documentElement);
 		<div class="modal__content" id="eael_modal_content">
 		</div>
 	</div>
+	<script>
+		// Minimal mobile menu toggle: toggles `body.menu-open`
+		(function () {
+			var btn = document.querySelector('.main-header-menu-toggle');
+			if (!btn) return;
+			btn.addEventListener('click', function (e) {
+				e.preventDefault();
+				var open = document.body.classList.toggle('menu-open');
+				btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+			});
+			window.addEventListener('resize', function () {
+				if (window.innerWidth > 980) {
+					document.body.classList.remove('menu-open');
+					btn.setAttribute('aria-expanded', 'false');
+				}
+			});
+		})();
+	</script>
 	<div class="wcpc-overlay" id="wcpc-overlay"></div>
 	<div class="eael-wcpc-modal">
 		<i title="Close" class="close-modal far fa-times-circle"></i>
