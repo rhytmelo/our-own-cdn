@@ -724,6 +724,142 @@
             cursor: pointer;
         }
 
+        /* Image lightbox styles */
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 11000;
+        }
+
+        .image-lightbox.visible {
+            display: flex;
+        }
+
+        .image-lightbox .lightbox-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+        }
+
+        .image-lightbox .lightbox-content {
+            position: relative;
+            z-index: 11001;
+            max-width: 92%;
+            max-height: 92%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .image-lightbox .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .image-lightbox .lightbox-caption {
+            color: var(--gray);
+            font-size: 0.95rem;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .image-lightbox .lightbox-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #fff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* Image placeholder: ensure image sits above descriptive text */
+        .image-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+            padding: 0.4rem 0.6rem;
+        }
+
+        .image-placeholder img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Animated vertical scroll for images that should move fully from top → bottom
+           Use `object-position` animation so the image pans within its box from 0%→100%.
+           This avoids needing exact pixel math and preserves aspect ratio. */
+        .animated-scroll-picture {
+            display: block;
+            width: 100%;
+            min-height: 250px;
+            /* sensible default; overridden by layout if needed */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .animated-scroll-picture img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* start at top (0%), animate to bottom (100%) */
+            object-position: 50% 0%;
+            animation: verticalScroll 10s linear infinite alternate;
+            will-change: object-position;
+            margin: 0 auto;
+        }
+
+        @keyframes verticalScroll {
+            from {
+                object-position: 50% 0%;
+            }
+
+            to {
+                object-position: 50% 100%;
+            }
+        }
+
+        /* Respect user preference for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .animated-scroll-picture img {
+                animation: none;
+                object-position: 50% 50%;
+            }
+        }
+
+        .image-placeholder .caption,
+        .image-placeholder p {
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .image-label {
+            margin-top: 0.6rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
         /* Quote expiry modal */
         body.modal-open {
             overflow: hidden;
@@ -979,7 +1115,8 @@
                     <div class="header">❌ CURRENT: Generic & Unfinished</div>
                     <div class="content">
                         <div class="image-placeholder">
-                            [Current Website Screenshot]<br>
+                            <span><img src="../public/assets/saforia/previous/homePage.png"
+                                    alt="Current Saforia Website" style="max-width: 100%; max-height: 100%;"></span><br>
                             Generic template, no trust signals,<br>
                             missing fit guides, unclear brand
                         </div>
@@ -1109,7 +1246,10 @@
                     <div class="header">❌ BEFORE: No Fit Guidance</div>
                     <div class="content">
                         <div class="image-placeholder">
-                            [Sparse Product Page]<br>
+                            <span><img src="../public/assets/saforia/previous/productPage.png"
+                                    alt="Current Saforia Website" style="max-width: 100%; max-height: 100%;"></span><br>
+
+
                             Just image + price,<br>
                             no fit info, no trust
                         </div>
@@ -1123,7 +1263,8 @@
                     <div class="header">✅ AFTER: Full Trust Architecture</div>
                     <div class="content">
                         <div class="image-placeholder">
-                            [Enhanced Product Page]<br>
+                            <span><img src="../public/assets/saforia/previous/enhanced-prodcutPage.png"
+                                    alt="Current Saforia Website" style="max-width: 100%; max-height: 100%;"></span><br>
                             Fit guide, reviews, security badges,<br>
                             easy returns, customer testimonials
                         </div>
@@ -1172,9 +1313,9 @@
                     <div class="header">❌ BEFORE: Desktop-Focused, Slow</div>
                     <div class="content">
                         <div class="image-placeholder">
-                            [Desktop Website on Mobile]<br>
-                            Small text, clunky navigation,<br>
-                            checkout takes 5 minutes
+                            <span class="animated-scroll-picture"><img
+                                    src="../public/assets/saforia/previous/static-bara-scroll.png"
+                                    alt="Current Saforia Website" style="max-width: 100%; max-height: 100%;"></span>
                         </div>
                         <div class="image-label">
                             → High cart abandonment (70%+)
@@ -1186,808 +1327,855 @@
                     <div class="header">✅ AFTER: Mobile-First, Fast</div>
                     <div class="content">
                         <div class="image-placeholder">
-                            [Mobile Optimized Website]<br>
-                            Clear layout, 1-click checkout,<br>
-                            fast loading (< 2 seconds) </div>
-                                <div class="image-label">
-                                    → Low abandonment, high conversion
-                                </div>
+                            <span class="animated-scroll-picture"><img
+                                    src="../public/assets/saforia/previous/culture-aisle-scroll.png"
+                                    alt="Current Saforia Website" style="max-width: 100%; max-height: 100%;"></span>
+                        </div>
+                        <div class="image-label">
+                            → Low abandonment, high conversion
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">🟢 Solution #4: Ongoing
-                    Growth & Optimization (Month 2+)</h3>
-                <div class="solution-box">
-                    <h4>What We're Fixing (Growth Plan Only)</h4>
-                    <ul class="solution-list">
-                        <li>Continuous CRO: Homepage, product, checkout improvements</li>
-                        <li>Monthly performance analysis & recommendations</li>
-                        <li>Trust enhancements based on customer feedback</li>
-                        <li>Preparation for paid ads & influencer campaigns</li>
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">🟢 Solution #4: Ongoing
+                Growth & Optimization (Month 2+)</h3>
+            <div class="solution-box">
+                <h4>What We're Fixing (Growth Plan Only)</h4>
+                <ul class="solution-list">
+                    <li>Continuous CRO: Homepage, product, checkout improvements</li>
+                    <li>Monthly performance analysis & recommendations</li>
+                    <li>Trust enhancements based on customer feedback</li>
+                    <li>Preparation for paid ads & influencer campaigns</li>
+                </ul>
+            </div>
+
+            <p
+                style="background: #ecfdf5; border-left: 4px solid var(--success); padding: 1.5rem; margin: 1.5rem 0; border-radius: 6px; color: var(--gray);">
+                <strong style="color: var(--success);">💡 Note:</strong> Starter Plan is a one-time build. Growth
+                Plan includes 6-month retainer for continuous optimization—this is where real conversion
+                improvements happen.
+            </p>
+        </div>
+
+        <!-- SECTION 4: Plan Comparison -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div class="section-title">Detailed Plan Comparison</div>
+            </div>
+
+            <p style="color: var(--gray); margin-bottom: 2rem; line-height: 1.8;">Here's exactly what you get with
+                each plan. Both are professional-grade. The difference is strategy depth and ongoing support.</p>
+
+            <div class="plan-comparison">
+                <!-- Starter Plan -->
+                <div class="plan-card starter">
+                    <div class="plan-badge starter">🚀 STARTER PLAN</div>
+                    <div class="plan-name">Starter Plan</div>
+                    <div class="plan-description">Launch-Ready Brand Foundation</div>
+                    <div class="plan-price">
+                        <div class="price-label">One-Time Investment</div>
+                        <div class="price-amount">₹70,800</div>
+                        <div class="price-subtext">Includes 18% GST</div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #0066cc; margin-bottom: 1.5rem; font-weight: 600;">
+                        ✓ 10 working days | 1 revision round
+                    </div>
+                    <ul class="plan-features">
+                        <li>Homepage UX & messaging optimization</li>
+                        <li>Basic brand positioning</li>
+                        <li>Shopify theme setup & mobile optimization</li>
+                        <li>Product page optimization (bras & panties)</li>
+                        <li>Payment gateway & checkout setup</li>
+                        <li>Basic trust elements & policies</li>
+                        <li>Complete QA & launch support</li>
                     </ul>
                 </div>
 
-                <p
-                    style="background: #ecfdf5; border-left: 4px solid var(--success); padding: 1.5rem; margin: 1.5rem 0; border-radius: 6px; color: var(--gray);">
-                    <strong style="color: var(--success);">💡 Note:</strong> Starter Plan is a one-time build. Growth
-                    Plan includes 6-month retainer for continuous optimization—this is where real conversion
-                    improvements happen.
-                </p>
-            </div>
-
-            <!-- SECTION 4: Plan Comparison -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">4</div>
-                    <div class="section-title">Detailed Plan Comparison</div>
-                </div>
-
-                <p style="color: var(--gray); margin-bottom: 2rem; line-height: 1.8;">Here's exactly what you get with
-                    each plan. Both are professional-grade. The difference is strategy depth and ongoing support.</p>
-
-                <div class="plan-comparison">
-                    <!-- Starter Plan -->
-                    <div class="plan-card starter">
-                        <div class="plan-badge starter">🚀 STARTER PLAN</div>
-                        <div class="plan-name">Starter Plan</div>
-                        <div class="plan-description">Launch-Ready Brand Foundation</div>
-                        <div class="plan-price">
-                            <div class="price-label">One-Time Investment</div>
-                            <div class="price-amount">₹70,800</div>
-                            <div class="price-subtext">Includes 18% GST</div>
-                        </div>
-                        <div style="font-size: 0.85rem; color: #0066cc; margin-bottom: 1.5rem; font-weight: 600;">
-                            ✓ 10 working days | 1 revision round
-                        </div>
-                        <ul class="plan-features">
-                            <li>Homepage UX & messaging optimization</li>
-                            <li>Basic brand positioning</li>
-                            <li>Shopify theme setup & mobile optimization</li>
-                            <li>Product page optimization (bras & panties)</li>
-                            <li>Payment gateway & checkout setup</li>
-                            <li>Basic trust elements & policies</li>
-                            <li>Complete QA & launch support</li>
-                        </ul>
+                <!-- Growth Plan -->
+                <div class="plan-card growth">
+                    <div class="plan-badge growth">📈 GROWTH PLAN ⭐ RECOMMENDED</div>
+                    <div class="plan-name">Growth Plan</div>
+                    <div class="plan-description">Conversion-Focused Brand Experience</div>
+                    <div class="plan-price">
+                        <div class="price-label">One-Time Investment</div>
+                        <div class="price-amount">₹1,00,300</div>
+                        <div class="price-subtext">Includes 18% GST</div>
                     </div>
-
-                    <!-- Growth Plan -->
-                    <div class="plan-card growth">
-                        <div class="plan-badge growth">📈 GROWTH PLAN ⭐ RECOMMENDED</div>
-                        <div class="plan-name">Growth Plan</div>
-                        <div class="plan-description">Conversion-Focused Brand Experience</div>
-                        <div class="plan-price">
-                            <div class="price-label">One-Time Investment</div>
-                            <div class="price-amount">₹1,00,300</div>
-                            <div class="price-subtext">Includes 18% GST</div>
-                        </div>
-                        <div style="font-size: 0.85rem; color: #831843; margin-bottom: 1.5rem; font-weight: 600;">
-                            ✓ 7 working days | 2 revision rounds | Priority support
-                        </div>
-                        <ul class="plan-features">
-                            <li>Deep brand strategy & tone development</li>
-                            <li>Advanced UX & conversion architecture</li>
-                            <li>Competitor benchmark-based improvements</li>
-                            <li>Advanced product page CRO</li>
-                            <li>Mobile-first UX engineering</li>
-                            <li>Advanced checkout optimization</li>
-                            <li>Visual trust & credibility framework</li>
-                            <li><strong>+ 6-Month Monthly Retainer</strong></li>
-                        </ul>
+                    <div style="font-size: 0.85rem; color: #831843; margin-bottom: 1.5rem; font-weight: 600;">
+                        ✓ 7 working days | 2 revision rounds | Priority support
                     </div>
-                </div>
-
-                <div class="recommendation-box">
-                    <h3>🎯 Our Recommendation</h3>
-                    <p>If Saforia wants to <strong>build brand trust in the intimate-wear category and scale
-                            sustainably</strong>, the <strong>Growth Plan is strongly recommended</strong>. It provides:
-                    </p>
-                    <ul style="margin-top: 1rem; margin-left: 1.5rem; color: var(--gray);">
-                        <li>✓ Deeper brand positioning (why Saforia, not competitors)</li>
-                        <li>✓ Advanced CRO that drives real conversion improvements</li>
-                        <li>✓ Monthly optimization (this is where results come from)</li>
-                        <li>✓ Faster delivery (7 days vs 10 days)</li>
-                        <li>✓ Foundation for paid ads & influencer campaigns</li>
-                    </ul>
-                    <p style="margin-top: 1rem;"><strong>Starter Plan is ideal if:</strong> You want to launch fast,
-                        test the market with minimal investment, and upgrade later when revenue scales.</p>
-                </div>
-
-                <!-- Full Comparison Table -->
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">Complete Feature Comparison
-                </h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th class="feature-name">Feature</th>
-                            <th style="text-align: center;">🚀 Starter</th>
-                            <th style="text-align: center;">📈 Growth</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="feature-name"><strong>Delivery Timeline</strong></td>
-                            <td style="text-align: center;">10 days</td>
-                            <td style="text-align: center;"><span class="check">7 days</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Revision Rounds</strong></td>
-                            <td style="text-align: center;">1 round</td>
-                            <td style="text-align: center;"><span class="check">2 rounds</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Brand Positioning</strong></td>
-                            <td style="text-align: center;">Basic</td>
-                            <td style="text-align: center;"><span class="check">Deep</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Competitor Analysis</strong></td>
-                            <td style="text-align: center;"><span class="cross">—</span></td>
-                            <td style="text-align: center;"><span class="check">✓</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Mobile Optimization</strong></td>
-                            <td style="text-align: center;"><span class="check">✓</span></td>
-                            <td style="text-align: center;"><span class="check">Advanced</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>CRO Framework</strong></td>
-                            <td style="text-align: center;">Basic</td>
-                            <td style="text-align: center;"><span class="check">Advanced</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Fit Guide Development</strong></td>
-                            <td style="text-align: center;">Standard</td>
-                            <td style="text-align: center;"><span class="check">Advanced</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Checkout Optimization</strong></td>
-                            <td style="text-align: center;">Standard</td>
-                            <td style="text-align: center;"><span class="check">Advanced</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Trust Elements</strong></td>
-                            <td style="text-align: center;">Basic</td>
-                            <td style="text-align: center;"><span class="check">Strategic</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Priority Support</strong></td>
-                            <td style="text-align: center;"><span class="cross">—</span></td>
-                            <td style="text-align: center;"><span class="check">✓</span></td>
-                        </tr>
-                        <tr>
-                            <td class="feature-name"><strong>Monthly Retainer</strong></td>
-                            <td style="text-align: center;"><span class="cross">Optional</span></td>
-                            <td style="text-align: center;"><span class="check">Included</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SECTION 5: Detailed Pricing -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">5</div>
-                    <div class="section-title">Detailed Pricing Structure</div>
-                </div>
-
-                <p style="color: var(--gray); margin-bottom: 2rem; line-height: 1.8;">Complete breakdown of all costs,
-                    including GST at 18%. Both plans include all necessary setup and no hidden fees.</p>
-
-                <!-- Starter Pricing -->
-                <h3 style="margin-bottom: 1.5rem; color: var(--dark);">🚀 Starter Plan - Complete Pricing Breakdown</h3>
-                <table class="pricing-table">
-                    <thead>
-                        <tr>
-                            <th>Module / Service</th>
-                            <th>Description</th>
-                            <th style="text-align: right; width: 150px;">Cost (₹)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="module-name">Brand Positioning (Basic)</td>
-                            <td>Brand tone, homepage messaging, audience clarity</td>
-                            <td class="amount">10,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Homepage UX & CRO</td>
-                            <td>Clear value proposition, CTAs, trust structure</td>
-                            <td class="amount">12,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Shopify Design & Setup</td>
-                            <td>Theme customization, mobile-first layout, fast loading</td>
-                            <td class="amount">18,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Product Page Optimisation</td>
-                            <td>Fit guide layout, CTA improvement, trust blocks</td>
-                            <td class="amount">9,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Payment & Checkout Setup</td>
-                            <td>Razorpay + Shiprocket + faster checkout configuration</td>
-                            <td class="amount">6,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">QA & Launch Support</td>
-                            <td>Testing, bug fixes, go-live support, monitoring</td>
-                            <td class="amount">5,000</td>
-                        </tr>
-                        <tr class="subtotal-row">
-                            <td colspan="2">Subtotal (Before GST)</td>
-                            <td class="amount">60,000</td>
-                        </tr>
-                        <tr class="gst-row">
-                            <td colspan="2">GST @ 18%</td>
-                            <td class="amount">10,800</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td colspan="2"><strong>TOTAL (One-Time Investment)</strong></td>
-                            <td class="amount"><strong>₹70,800</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <p style="margin: 1.5rem 0; color: var(--gray); font-size: 0.95rem;">
-                    <strong>Timeline:</strong> 10 working days | <strong>Revisions:</strong> 1 round included |
-                    <strong>What's Included:</strong> Complete Shopify store, mobile optimization, payment setup, launch
-                    support
-                </p>
-
-                <!-- Growth Pricing -->
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">📈 Growth Plan - Complete
-                    Pricing Breakdown</h3>
-                <table class="pricing-table">
-                    <thead>
-                        <tr>
-                            <th>Module / Service</th>
-                            <th>Description</th>
-                            <th style="text-align: right; width: 150px;">Cost (₹)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="module-name">Brand Strategy & Positioning</td>
-                            <td>Deep brand tone, audience mapping, homepage messaging, category strategy</td>
-                            <td class="amount">22,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">UX & Conversion Architecture</td>
-                            <td>Homepage wireframe, collection flow, product page CRO structure</td>
-                            <td class="amount">18,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Shopify Design & Development</td>
-                            <td>Mobile-first UI, theme customization, advanced page builds</td>
-                            <td class="amount">28,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Advanced Product Page CRO</td>
-                            <td>Fit guide layout, strategic trust sections, CTA optimization</td>
-                            <td class="amount">14,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Payment & Logistics Setup</td>
-                            <td>Razorpay + Shiprocket + advanced checkout configuration</td>
-                            <td class="amount">9,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">QA & Priority Launch Support</td>
-                            <td>Rigorous testing, bug fixes, live deployment, priority support</td>
-                            <td class="amount">7,000</td>
-                        </tr>
-                        <tr class="subtotal-row">
-                            <td colspan="2">Subtotal (Before GST)</td>
-                            <td class="amount">98,000</td>
-                        </tr>
-                        <tr class="gst-row">
-                            <td colspan="2">GST @ 18%</td>
-                            <td class="amount">17,640</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td colspan="2"><strong>TOTAL (One-Time Investment)</strong></td>
-                            <td class="amount"><strong>₹1,15,640</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <p style="margin: 1.5rem 0; color: var(--gray); font-size: 0.95rem;">
-                    <strong>Timeline:</strong> 7 working days (Priority) | <strong>Revisions:</strong> 2 rounds included
-                    | <strong>What's Included:</strong> Everything in Starter + deep strategy, advanced CRO, priority
-                    support
-                </p>
-
-                <!-- Monthly Retainer -->
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">Monthly Retainer Options
-                    (Optional for Starter, Included in Growth)</h3>
-                <table class="pricing-table">
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Starter Retainer</th>
-                            <th>Growth Retainer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="module-name">Monthly Fee (Before GST)</td>
-                            <td class="amount">12,000</td>
-                            <td class="amount">15,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">GST @ 18%</td>
-                            <td class="amount">2,160</td>
-                            <td class="amount">2,820</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td class="module-name"><strong>Total Monthly</strong></td>
-                            <td class="amount"><strong>₹14,160</strong></td>
-                            <td class="amount"><strong>₹17,820</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Minimum Duration</td>
-                            <td>3 months (optional)</td>
-                            <td>6 months (recommended)</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Total Cost (6 months)</td>
-                            <td class="amount">84,960</td>
-                            <td class="amount">106,920</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <!-- Optional Add-ons -->
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">Optional Add-Ons (Only if
-                    Needed)</h3>
-                <table class="pricing-table">
-                    <thead>
-                        <tr>
-                            <th>Add-On Service</th>
-                            <th>What's Included</th>
-                            <th style="text-align: right;">Cost (₹)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="module-name">Size Calculator Integration</td>
-                            <td>Advanced size recommendation tool</td>
-                            <td class="amount">4,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Advanced Fit Guide Content</td>
-                            <td>Detailed content + video tutorials</td>
-                            <td class="amount">8,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Instagram Shop Setup</td>
-                            <td>Instagram checkout integration</td>
-                            <td class="amount">3,000 - 5,000</td>
-                        </tr>
-                        <tr>
-                            <td class="module-name">Email Automation (Basic)</td>
-                            <td>Abandoned cart + welcome flows</td>
-                            <td class="amount">5,000 - 7,000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SECTION 6: Payment & Implementation -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">6</div>
-                    <div class="section-title">Payment Terms & Implementation Timeline</div>
-                </div>
-
-                <h3 style="margin-bottom: 1.5rem; color: var(--dark);">💳 Payment Milestones</h3>
-                <table class="pricing-table">
-                    <thead>
-                        <tr>
-                            <th>Milestone</th>
-                            <th>Trigger</th>
-                            <th style="text-align: right;">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="module-name"><strong>Payment #1</strong></td>
-                            <td>Project Kickoff (upon approval)</td>
-                            <td class="amount"><strong>60%</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="module-name"><strong>Payment #2</strong></td>
-                            <td>Pre-Launch Approval (before go-live)</td>
-                            <td class="amount"><strong>40%</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="module-name"><strong>Monthly Retainer</strong></td>
-                            <td>Billed in advance each month (Growth Plan)</td>
-                            <td class="amount"><strong>Monthly</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">⏱️ Implementation Timeline
-                </h3>
-                <div class="process-flow">
-                    <div class="flow-step active">
-                        <div class="step-number">1</div>
-                        <div class="step-title">Week 1: Discovery & Strategy</div>
-                        <div class="step-description">Brand workshop, audience mapping, competitor analysis</div>
-                    </div>
-                    <div class="flow-step active">
-                        <div class="step-number">2</div>
-                        <div class="step-title">Week 1-2: Design & Build</div>
-                        <div class="step-description">Homepage design, product pages, checkout flow</div>
-                    </div>
-                    <div class="flow-step active">
-                        <div class="step-number">3</div>
-                        <div class="step-title">Week 2-3: Integration</div>
-                        <div class="step-description">Razorpay, Shiprocket, analytics, trust elements</div>
-                    </div>
-                    <div class="flow-step">
-                        <div class="step-number">4</div>
-                        <div class="step-title">Week 3: QA & Launch</div>
-                        <div class="step-description">Testing, fixes, deployment (Starter: 10 days, Growth: 7 days)
-                        </div>
-                    </div>
-                </div>
-
-                <div style="background: #f0f0f0; padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
-                    <strong style="color: var(--dark);">📅 Timeline Summary:</strong>
-                    <div
-                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; color: var(--gray);">
-                        <div>
-                            <strong>Starter Plan:</strong> 10 working days
-                        </div>
-                        <div>
-                            <strong>Growth Plan:</strong> 7 working days (priority)
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 7: Investment Summary -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">7</div>
-                    <div class="section-title">Investment Summary & Next Steps</div>
-                </div>
-
-                <h3 style="margin-bottom: 1.5rem; color: var(--dark);">💰 Total Investment Comparison</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
-                    <div style="border: 2px solid #3b82f6; border-radius: 8px; padding: 2rem; background: #eff6ff;">
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem;">🚀
-                            Starter Plan</div>
-                        <div style="color: var(--gray); margin-bottom: 1.5rem; line-height: 1.8;">
-                            <div><strong>One-Time:</strong> ₹70,800</div>
-                            <div style="margin-top: 1rem; font-size: 0.9rem;"><em>Optional Retainer:</em></div>
-                            <div>₹14,160/month (3 months = ₹42,480)</div>
-                        </div>
-                        <div style="border-top: 1px solid #3b82f6; padding-top: 1rem;">
-                            <div style="font-size: 1.1rem; color: #1e40af; font-weight: 700;">Total (3 months):
-                                ₹1,13,280</div>
-                        </div>
-                    </div>
-
-                    <div
-                        style="border: 2px solid var(--primary); border-radius: 8px; padding: 2rem; background: #fff9fb;">
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem;">📈
-                            Growth Plan ⭐ RECOMMENDED</div>
-                        <div style="color: var(--gray); margin-bottom: 1.5rem; line-height: 1.8;">
-                            <div><strong>One-Time:</strong> ₹1,15,640</div>
-                            <div style="margin-top: 1rem; font-size: 0.9rem;"><em>Included Retainer (6 months):</em>
-                            </div>
-                            <div>₹17,820/month × 6 = ₹1,06,920</div>
-                        </div>
-                        <div style="border-top: 1px solid var(--primary); padding-top: 1rem;">
-                            <div style="font-size: 1.1rem; color: var(--primary); font-weight: 700;">Total (First 6
-                                months): ₹2,22,560</div>
-                            <div style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem;">Includes deep
-                                strategy + ongoing optimization</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="recommendation-box">
-                    <h3>🎯 Why Growth Plan is Worth the Investment</h3>
-                    <ul style="margin-top: 1rem; margin-left: 1.5rem; color: var(--gray); line-height: 1.8;">
-                        <li>✓ <strong>₹45,280 more initially</strong>, but includes 6 months of optimization (regular
-                            retainer would be ₹84,960)</li>
-                        <li>✓ <strong>Faster launch</strong> (7 days vs 10 days)</li>
-                        <li>✓ <strong>Real conversion improvements</strong> from Month 2 onwards</li>
-                        <li>✓ <strong>Ready for paid ads</strong> in Month 2 (Starter would need extra work)</li>
-                        <li>✓ <strong>Higher ROI</strong> due to continuous optimization</li>
+                    <ul class="plan-features">
+                        <li>Deep brand strategy & tone development</li>
+                        <li>Advanced UX & conversion architecture</li>
+                        <li>Competitor benchmark-based improvements</li>
+                        <li>Advanced product page CRO</li>
+                        <li>Mobile-first UX engineering</li>
+                        <li>Advanced checkout optimization</li>
+                        <li>Visual trust & credibility framework</li>
+                        <li><strong>+ 6-Month Monthly Retainer</strong></li>
                     </ul>
                 </div>
+            </div>
 
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">📋 Terms & Conditions</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <h4 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Quote Validity</h4>
-                        <ul style="list-style: none; color: var(--gray); font-size: 0.95rem;">
-                            <li style="padding: 0.5rem 0;">✓ Valid for <strong>7 days</strong> from issuance</li>
-                            <li style="padding: 0.5rem 0;">✓ Scope strictly as defined above</li>
-                            <li style="padding: 0.5rem 0;">✓ New features quoted separately</li>
-                            <li style="padding: 0.5rem 0;">✓ IP ownership transfers after full payment</li>
-                        </ul>
-                    </div>
+            <div class="recommendation-box">
+                <h3>🎯 Our Recommendation</h3>
+                <p>If Saforia wants to <strong>build brand trust in the intimate-wear category and scale
+                        sustainably</strong>, the <strong>Growth Plan is strongly recommended</strong>. It provides:
+                </p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; color: var(--gray);">
+                    <li>✓ Deeper brand positioning (why Saforia, not competitors)</li>
+                    <li>✓ Advanced CRO that drives real conversion improvements</li>
+                    <li>✓ Monthly optimization (this is where results come from)</li>
+                    <li>✓ Faster delivery (7 days vs 10 days)</li>
+                    <li>✓ Foundation for paid ads & influencer campaigns</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Starter Plan is ideal if:</strong> You want to launch fast,
+                    test the market with minimal investment, and upgrade later when revenue scales.</p>
+            </div>
 
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <h4 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Service Level
-                            Agreement</h4>
-                        <ul style="list-style: none; color: var(--gray); font-size: 0.95rem;">
-                            <li style="padding: 0.5rem 0;">✓ Launch support within timeline</li>
-                            <li style="padding: 0.5rem 0;">✓ Full QA & testing before go-live</li>
-                            <li style="padding: 0.5rem 0;">✓ 30 days post-launch support included</li>
-                            <li style="padding: 0.5rem 0;">✓ Growth Plan: Priority support included</li>
-                        </ul>
+            <!-- Full Comparison Table -->
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">Complete Feature Comparison
+            </h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th class="feature-name">Feature</th>
+                        <th style="text-align: center;">🚀 Starter</th>
+                        <th style="text-align: center;">📈 Growth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature-name"><strong>Delivery Timeline</strong></td>
+                        <td style="text-align: center;">10 days</td>
+                        <td style="text-align: center;"><span class="check">7 days</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Revision Rounds</strong></td>
+                        <td style="text-align: center;">1 round</td>
+                        <td style="text-align: center;"><span class="check">2 rounds</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Brand Positioning</strong></td>
+                        <td style="text-align: center;">Basic</td>
+                        <td style="text-align: center;"><span class="check">Deep</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Competitor Analysis</strong></td>
+                        <td style="text-align: center;"><span class="cross">—</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Mobile Optimization</strong></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">Advanced</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>CRO Framework</strong></td>
+                        <td style="text-align: center;">Basic</td>
+                        <td style="text-align: center;"><span class="check">Advanced</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Fit Guide Development</strong></td>
+                        <td style="text-align: center;">Standard</td>
+                        <td style="text-align: center;"><span class="check">Advanced</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Checkout Optimization</strong></td>
+                        <td style="text-align: center;">Standard</td>
+                        <td style="text-align: center;"><span class="check">Advanced</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Trust Elements</strong></td>
+                        <td style="text-align: center;">Basic</td>
+                        <td style="text-align: center;"><span class="check">Strategic</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Priority Support</strong></td>
+                        <td style="text-align: center;"><span class="cross">—</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name"><strong>Monthly Retainer</strong></td>
+                        <td style="text-align: center;"><span class="cross">Optional</span></td>
+                        <td style="text-align: center;"><span class="check">Included</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 5: Detailed Pricing -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <div class="section-title">Detailed Pricing Structure</div>
+            </div>
+
+            <p style="color: var(--gray); margin-bottom: 2rem; line-height: 1.8;">Complete breakdown of all costs,
+                including GST at 18%. Both plans include all necessary setup and no hidden fees.</p>
+
+            <!-- Starter Pricing -->
+            <h3 style="margin-bottom: 1.5rem; color: var(--dark);">🚀 Starter Plan - Complete Pricing Breakdown</h3>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Module / Service</th>
+                        <th>Description</th>
+                        <th style="text-align: right; width: 150px;">Cost (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="module-name">Brand Positioning (Basic)</td>
+                        <td>Brand tone, homepage messaging, audience clarity</td>
+                        <td class="amount">10,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Homepage UX & CRO</td>
+                        <td>Clear value proposition, CTAs, trust structure</td>
+                        <td class="amount">12,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Shopify Design & Setup</td>
+                        <td>Theme customization, mobile-first layout, fast loading</td>
+                        <td class="amount">18,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Product Page Optimisation</td>
+                        <td>Fit guide layout, CTA improvement, trust blocks</td>
+                        <td class="amount">9,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Payment & Checkout Setup</td>
+                        <td>Razorpay + Shiprocket + faster checkout configuration</td>
+                        <td class="amount">6,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">QA & Launch Support</td>
+                        <td>Testing, bug fixes, go-live support, monitoring</td>
+                        <td class="amount">5,000</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="2">Subtotal (Before GST)</td>
+                        <td class="amount">60,000</td>
+                    </tr>
+                    <tr class="gst-row">
+                        <td colspan="2">GST @ 18%</td>
+                        <td class="amount">10,800</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>TOTAL (One-Time Investment)</strong></td>
+                        <td class="amount"><strong>₹70,800</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin: 1.5rem 0; color: var(--gray); font-size: 0.95rem;">
+                <strong>Timeline:</strong> 10 working days | <strong>Revisions:</strong> 1 round included |
+                <strong>What's Included:</strong> Complete Shopify store, mobile optimization, payment setup, launch
+                support
+            </p>
+
+            <!-- Growth Pricing -->
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">📈 Growth Plan - Complete
+                Pricing Breakdown</h3>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Module / Service</th>
+                        <th>Description</th>
+                        <th style="text-align: right; width: 150px;">Cost (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="module-name">Brand Strategy & Positioning</td>
+                        <td>Deep brand tone, audience mapping, homepage messaging, category strategy</td>
+                        <td class="amount">22,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">UX & Conversion Architecture</td>
+                        <td>Homepage wireframe, collection flow, product page CRO structure</td>
+                        <td class="amount">18,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Shopify Design & Development</td>
+                        <td>Mobile-first UI, theme customization, advanced page builds</td>
+                        <td class="amount">28,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Advanced Product Page CRO</td>
+                        <td>Fit guide layout, strategic trust sections, CTA optimization</td>
+                        <td class="amount">14,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Payment & Logistics Setup</td>
+                        <td>Razorpay + Shiprocket + advanced checkout configuration</td>
+                        <td class="amount">9,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">QA & Priority Launch Support</td>
+                        <td>Rigorous testing, bug fixes, live deployment, priority support</td>
+                        <td class="amount">7,000</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="2">Subtotal (Before GST)</td>
+                        <td class="amount">98,000</td>
+                    </tr>
+                    <tr class="gst-row">
+                        <td colspan="2">GST @ 18%</td>
+                        <td class="amount">17,640</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>TOTAL (One-Time Investment)</strong></td>
+                        <td class="amount"><strong>₹1,15,640</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin: 1.5rem 0; color: var(--gray); font-size: 0.95rem;">
+                <strong>Timeline:</strong> 7 working days (Priority) | <strong>Revisions:</strong> 2 rounds included
+                | <strong>What's Included:</strong> Everything in Starter + deep strategy, advanced CRO, priority
+                support
+            </p>
+
+            <!-- Monthly Retainer -->
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">Monthly Retainer Options
+                (Optional for Starter, Included in Growth)</h3>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Starter Retainer</th>
+                        <th>Growth Retainer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="module-name">Monthly Fee (Before GST)</td>
+                        <td class="amount">12,000</td>
+                        <td class="amount">15,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">GST @ 18%</td>
+                        <td class="amount">2,160</td>
+                        <td class="amount">2,820</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td class="module-name"><strong>Total Monthly</strong></td>
+                        <td class="amount"><strong>₹14,160</strong></td>
+                        <td class="amount"><strong>₹17,820</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Minimum Duration</td>
+                        <td>3 months (optional)</td>
+                        <td>6 months (recommended)</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Total Cost (6 months)</td>
+                        <td class="amount">84,960</td>
+                        <td class="amount">106,920</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Optional Add-ons -->
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">Optional Add-Ons (Only if
+                Needed)</h3>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Add-On Service</th>
+                        <th>What's Included</th>
+                        <th style="text-align: right;">Cost (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="module-name">Size Calculator Integration</td>
+                        <td>Advanced size recommendation tool</td>
+                        <td class="amount">4,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Advanced Fit Guide Content</td>
+                        <td>Detailed content + video tutorials</td>
+                        <td class="amount">8,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Instagram Shop Setup</td>
+                        <td>Instagram checkout integration</td>
+                        <td class="amount">3,000 - 5,000</td>
+                    </tr>
+                    <tr>
+                        <td class="module-name">Email Automation (Basic)</td>
+                        <td>Abandoned cart + welcome flows</td>
+                        <td class="amount">5,000 - 7,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 6: Payment & Implementation -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <div class="section-title">Payment Terms & Implementation Timeline</div>
+            </div>
+
+            <h3 style="margin-bottom: 1.5rem; color: var(--dark);">💳 Payment Milestones</h3>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Milestone</th>
+                        <th>Trigger</th>
+                        <th style="text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="module-name"><strong>Payment #1</strong></td>
+                        <td>Project Kickoff (upon approval)</td>
+                        <td class="amount"><strong>60%</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="module-name"><strong>Payment #2</strong></td>
+                        <td>Pre-Launch Approval (before go-live)</td>
+                        <td class="amount"><strong>40%</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="module-name"><strong>Monthly Retainer</strong></td>
+                        <td>Billed in advance each month (Growth Plan)</td>
+                        <td class="amount"><strong>Monthly</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">⏱️ Implementation Timeline
+            </h3>
+            <div class="process-flow">
+                <div class="flow-step active">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Week 1: Discovery & Strategy</div>
+                    <div class="step-description">Brand workshop, audience mapping, competitor analysis</div>
+                </div>
+                <div class="flow-step active">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Week 1-2: Design & Build</div>
+                    <div class="step-description">Homepage design, product pages, checkout flow</div>
+                </div>
+                <div class="flow-step active">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Week 2-3: Integration</div>
+                    <div class="step-description">Razorpay, Shiprocket, analytics, trust elements</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Week 3: QA & Launch</div>
+                    <div class="step-description">Testing, fixes, deployment (Starter: 10 days, Growth: 7 days)
                     </div>
                 </div>
+            </div>
 
-                <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">🚀 Next Steps</h3>
+            <div style="background: #f0f0f0; padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
+                <strong style="color: var(--dark);">📅 Timeline Summary:</strong>
                 <div
-                    style="background: #f9f9f9; padding: 2rem; border-radius: 8px; border-left: 4px solid var(--primary);">
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
-                        <div>
-                            <div
-                                style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
-                                1️⃣ Review</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Review both plans & choose your
-                                investment level</div>
-                        </div>
-                        <div>
-                            <div
-                                style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
-                                2️⃣ Decide</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Confirm Starter or Growth plan
-                                preference</div>
-                        </div>
-                        <div>
-                            <div
-                                style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
-                                3️⃣ Contract</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Sign service agreement & make 60%
-                                payment</div>
-                        </div>
-                        <div>
-                            <div
-                                style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
-                                4️⃣ Launch</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Kickoff brand workshop & website build
-                                begins</div>
-                        </div>
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; color: var(--gray);">
+                    <div>
+                        <strong>Starter Plan:</strong> 10 working days
                     </div>
-                </div>
-            </div>
-
-            <!-- SECTION 8: Why Rhytmelo -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-number">8</div>
-                    <div class="section-title">Why Rhytmelo (Not Another Agency)</div>
-                </div>
-
-                <div
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">🎯</div>
-                        <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Brand-First, Not
-                            Template-First</h4>
-                        <p style="color: var(--gray); font-size: 0.95rem;">We build real brands, not cookie-cutter
-                            sites. Your positioning is unique.</p>
+                    <div>
+                        <strong>Growth Plan:</strong> 7 working days (priority)
                     </div>
-
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">📈</div>
-                        <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Conversion-Focused</h4>
-                        <p style="color: var(--gray); font-size: 0.95rem;">We measure success by sales, not vanity
-                            metrics. Every element has a purpose.</p>
-                    </div>
-
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">👗</div>
-                        <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Fashion & D2C
-                            Experience</h4>
-                        <p style="color: var(--gray); font-size: 0.95rem;">We've built 15+ fashion D2C brands. We know
-                            what works in this space.</p>
-                    </div>
-
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">⏱️</div>
-                        <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Clear Timelines</h4>
-                        <p style="color: var(--gray); font-size: 0.95rem;">No "it's in progress." Growth Plan launches
-                            in 7 days. Starter in 10 days.</p>
-                    </div>
-
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">🔄</div>
-                        <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Long-Term Partnership
-                        </h4>
-                        <p style="color: var(--gray); font-size: 0.95rem;">We don't hand off and disappear. Growth Plan
-                            includes 6 months of optimization.</p>
-                    </div>
-
-                    <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">🎁</div>
-                        <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">No Hidden Costs</h4>
-                        <p style="color: var(--gray); font-size: 0.95rem;">What you see is what you get. All costs
-                            included (Razorpay, Shiprocket, GST).</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Footer -->
-            <div class="document-footer">
-                <div class="contact-info">
-                    <h4>📍 RHYTMELO Designs</h4>
-                    <p><strong>Address:</strong> Assotech Business Cresteria, Noida, Uttar Pradesh 201304, India</p>
-                    <p><strong>Email:</strong> hello@rhytmelo.com</p>
-                    <p><strong>Website:</strong> <a id="RhytmeloWebsiteLink"
-                            href="https://rhytmelo.com">https://rhytmelo.com</a></p>
-                </div>
-
-                <div style="border-top: 1px solid var(--border); padding-top: 2rem; color: var(--gray);">
-                    <p style="margin-bottom: 1rem; font-size: 0.9rem;">
-                        This document contains our statement of work, pricing, and investment recommendations for
-                        Saforia India's website and conversion optimization. All figures are in Indian Rupees (₹) and
-                        All Rights Reserved.
-                    </p>
-                    <p style="font-size: 0.85rem; color: #999;">
-                        Quote valid for 7 days from issuance. © <span id="currentYear"></span> Rhytmelo Designs. All
-                        rights reserved.
-                    </p>
                 </div>
             </div>
         </div>
-        <!-- Back to Top Button -->
-        <button id="backToTopBtn" title="Back to Top" aria-label="Back to top">↑</button>
 
-        <!-- Quote expiry modal (hidden by default) -->
-        <div id="quoteExpiredModal" class="quote-modal" role="dialog" aria-modal="true" aria-hidden="true">
-            <div class="modal-card">
-                <h3>Quote Expired</h3>
-                <p>The quote on this page has expired. Please reach out to Rhytmelo Designs to get a new quote.</p>
-                <a class="whatsapp-cta" href="https://wa.me/message/ZPS3KEF6S2GQO1" target="_blank"
-                    rel="noopener noreferrer" id="whatsappChatBtn">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path
-                            d="M20.52 3.48A11.88 11.88 0 0012 .5 11.87 11.87 0 003.48 3.48 11.68 11.68 0 000 12c0 2.1.55 3.96 1.62 5.68L0 24l6.9-1.8A11.67 11.67 0 0012 24c6.33 0 11.5-5.17 11.5-11.5 0-3.08-1.2-5.96-3-8.02zM12 21.3c-1.36 0-2.69-.35-3.86-1.01l-.28-.16-4.1 1.07 1.1-3.98-.18-.29A8.03 8.03 0 014 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z" />
-                    </svg>
-                    <span>Chat on WhatsApp</span>
-                </a>
+        <!-- SECTION 7: Investment Summary -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <div class="section-title">Investment Summary & Next Steps</div>
+            </div>
+
+            <h3 style="margin-bottom: 1.5rem; color: var(--dark);">💰 Total Investment Comparison</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                <div style="border: 2px solid #3b82f6; border-radius: 8px; padding: 2rem; background: #eff6ff;">
+                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem;">🚀
+                        Starter Plan</div>
+                    <div style="color: var(--gray); margin-bottom: 1.5rem; line-height: 1.8;">
+                        <div><strong>One-Time:</strong> ₹70,800</div>
+                        <div style="margin-top: 1rem; font-size: 0.9rem;"><em>Optional Retainer:</em></div>
+                        <div>₹14,160/month (3 months = ₹42,480)</div>
+                    </div>
+                    <div style="border-top: 1px solid #3b82f6; padding-top: 1rem;">
+                        <div style="font-size: 1.1rem; color: #1e40af; font-weight: 700;">Total (3 months):
+                            ₹1,13,280</div>
+                    </div>
+                </div>
+
+                <div style="border: 2px solid var(--primary); border-radius: 8px; padding: 2rem; background: #fff9fb;">
+                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem;">📈
+                        Growth Plan ⭐ RECOMMENDED</div>
+                    <div style="color: var(--gray); margin-bottom: 1.5rem; line-height: 1.8;">
+                        <div><strong>One-Time:</strong> ₹1,15,640</div>
+                        <div style="margin-top: 1rem; font-size: 0.9rem;"><em>Included Retainer (6 months):</em>
+                        </div>
+                        <div>₹17,820/month × 6 = ₹1,06,920</div>
+                    </div>
+                    <div style="border-top: 1px solid var(--primary); padding-top: 1rem;">
+                        <div style="font-size: 1.1rem; color: var(--primary); font-weight: 700;">Total (First 6
+                            months): ₹2,22,560</div>
+                        <div style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem;">Includes deep
+                            strategy + ongoing optimization</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendation-box">
+                <h3>🎯 Why Growth Plan is Worth the Investment</h3>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; color: var(--gray); line-height: 1.8;">
+                    <li>✓ <strong>₹45,280 more initially</strong>, but includes 6 months of optimization (regular
+                        retainer would be ₹84,960)</li>
+                    <li>✓ <strong>Faster launch</strong> (7 days vs 10 days)</li>
+                    <li>✓ <strong>Real conversion improvements</strong> from Month 2 onwards</li>
+                    <li>✓ <strong>Ready for paid ads</strong> in Month 2 (Starter would need extra work)</li>
+                    <li>✓ <strong>Higher ROI</strong> due to continuous optimization</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">📋 Terms & Conditions</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Quote Validity</h4>
+                    <ul style="list-style: none; color: var(--gray); font-size: 0.95rem;">
+                        <li style="padding: 0.5rem 0;">✓ Valid for <strong>7 days</strong> from issuance</li>
+                        <li style="padding: 0.5rem 0;">✓ Scope strictly as defined above</li>
+                        <li style="padding: 0.5rem 0;">✓ New features quoted separately</li>
+                        <li style="padding: 0.5rem 0;">✓ IP ownership transfers after full payment</li>
+                    </ul>
+                </div>
+
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Service Level
+                        Agreement</h4>
+                    <ul style="list-style: none; color: var(--gray); font-size: 0.95rem;">
+                        <li style="padding: 0.5rem 0;">✓ Launch support within timeline</li>
+                        <li style="padding: 0.5rem 0;">✓ Full QA & testing before go-live</li>
+                        <li style="padding: 0.5rem 0;">✓ 30 days post-launch support included</li>
+                        <li style="padding: 0.5rem 0;">✓ Growth Plan: Priority support included</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--dark);">🚀 Next Steps</h3>
+            <div style="background: #f9f9f9; padding: 2rem; border-radius: 8px; border-left: 4px solid var(--primary);">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
+                    <div>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
+                            1️⃣ Review</div>
+                        <div style="color: var(--gray); font-size: 0.9rem;">Review both plans & choose your
+                            investment level</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
+                            2️⃣ Decide</div>
+                        <div style="color: var(--gray); font-size: 0.9rem;">Confirm Starter or Growth plan
+                            preference</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
+                            3️⃣ Contract</div>
+                        <div style="color: var(--gray); font-size: 0.9rem;">Sign service agreement & make 60%
+                            payment</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
+                            4️⃣ Launch</div>
+                        <div style="color: var(--gray); font-size: 0.9rem;">Kickoff brand workshop & website build
+                            begins</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <script>
-            // Robust footer & back-to-top interactions
-            document.addEventListener('DOMContentLoaded', () => {
-                // Safe element getters
-                const setTextIfPresent = (id, text) => {
-                    const el = document.getElementById(id);
-                    if (el) el.textContent = text;
-                };
 
-                setTextIfPresent('currentYear', new Date().getFullYear());
+        <!-- SECTION 8: Why Rhytmelo -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <div class="section-title">Why Rhytmelo (Not Another Agency)</div>
+            </div>
 
-                const rhytmeloLogo = document.getElementById('rhytmeloLogo');
-                if (rhytmeloLogo) {
-                    const goHome = () => { window.location.href = 'https://rhytmelo.com'; };
-                    rhytmeloLogo.addEventListener('click', goHome);
-                    rhytmeloLogo.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goHome(); }
-                    });
-                }
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">🎯</div>
+                    <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Brand-First, Not
+                        Template-First</h4>
+                    <p style="color: var(--gray); font-size: 0.95rem;">We build real brands, not cookie-cutter
+                        sites. Your positioning is unique.</p>
+                </div>
 
-                const rhytmeloLink = document.getElementById('RhytmeloWebsiteLink');
-                if (rhytmeloLink) {
-                    rhytmeloLink.setAttribute('rel', 'noopener noreferrer');
-                    rhytmeloLink.addEventListener('click', (e) => {
-                        // allow normal navigation but ensure it opens intentionally
-                        // if you want to force same-window navigation, remove the following line
-                    });
-                }
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">📈</div>
+                    <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Conversion-Focused</h4>
+                    <p style="color: var(--gray); font-size: 0.95rem;">We measure success by sales, not vanity
+                        metrics. Every element has a purpose.</p>
+                </div>
 
-                const backToTopBtn = document.getElementById('backToTopBtn');
-                if (!backToTopBtn) return;
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">👗</div>
+                    <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Fashion & D2C
+                        Experience</h4>
+                    <p style="color: var(--gray); font-size: 0.95rem;">We've built 15+ fashion D2C brands. We know
+                        what works in this space.</p>
+                </div>
 
-                // Click & keyboard controls
-                const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-                backToTopBtn.addEventListener('click', scrollToTop);
-                backToTopBtn.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollToTop(); }
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">⏱️</div>
+                    <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Clear Timelines</h4>
+                    <p style="color: var(--gray); font-size: 0.95rem;">No "it's in progress." Growth Plan launches
+                        in 7 days. Starter in 10 days.</p>
+                </div>
+
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">🔄</div>
+                    <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">Long-Term Partnership
+                    </h4>
+                    <p style="color: var(--gray); font-size: 0.95rem;">We don't hand off and disappear. Growth Plan
+                        includes 6 months of optimization.</p>
+                </div>
+
+                <div style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">🎁</div>
+                    <h4 style="color: var(--dark); margin-bottom: 0.8rem; font-weight: 700;">No Hidden Costs</h4>
+                    <p style="color: var(--gray); font-size: 0.95rem;">What you see is what you get. All costs
+                        included (Razorpay, Shiprocket, GST).</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <div class="document-footer">
+            <div class="contact-info">
+                <h4>📍 RHYTMELO Designs</h4>
+                <p><strong>Address:</strong> Assotech Business Cresteria, Noida, Uttar Pradesh 201304, India</p>
+                <p><strong>Email:</strong> hello@rhytmelo.com</p>
+                <p><strong>Website:</strong> <a id="RhytmeloWebsiteLink"
+                        href="https://rhytmelo.com">https://rhytmelo.com</a></p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border); padding-top: 2rem; color: var(--gray);">
+                <p style="margin-bottom: 1rem; font-size: 0.9rem;">
+                    This document contains our statement of work, pricing, and investment recommendations for
+                    Saforia India's website and conversion optimization. All figures are in Indian Rupees (₹) and
+                    All Rights Reserved.
+                </p>
+                <p style="font-size: 0.85rem; color: #999;">
+                    Quote valid for 7 days from issuance. © <span id="currentYear"></span> Rhytmelo Designs. All
+                    rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Back to Top" aria-label="Back to top">↑</button>
+
+    <!-- Quote expiry modal (hidden by default) -->
+    <div id="quoteExpiredModal" class="quote-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-card">
+            <h3>Quote Expired</h3>
+            <p>The quote on this page has expired. Please reach out to Rhytmelo Designs to get a new quote.</p>
+            <a class="whatsapp-cta" href="https://wa.me/message/ZPS3KEF6S2GQO1" target="_blank"
+                rel="noopener noreferrer" id="whatsappChatBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                        d="M20.52 3.48A11.88 11.88 0 0012 .5 11.87 11.87 0 003.48 3.48 11.68 11.68 0 000 12c0 2.1.55 3.96 1.62 5.68L0 24l6.9-1.8A11.67 11.67 0 0012 24c6.33 0 11.5-5.17 11.5-11.5 0-3.08-1.2-5.96-3-8.02zM12 21.3c-1.36 0-2.69-.35-3.86-1.01l-.28-.16-4.1 1.07 1.1-3.98-.18-.29A8.03 8.03 0 014 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z" />
+                </svg>
+                <span>Chat on WhatsApp</span>
+            </a>
+        </div>
+    </div>
+    <!-- Image lightbox (created once and used for all .image-placeholder images) -->
+    <div id="imageLightbox" class="image-lightbox" aria-hidden="true">
+        <div class="lightbox-overlay" tabindex="-1"></div>
+        <div class="lightbox-content" role="dialog" aria-modal="true" aria-hidden="true">
+            <button class="lightbox-close" aria-label="Close image">×</button>
+            <img class="lightbox-img" src="" alt="" />
+            <div class="lightbox-caption"></div>
+        </div>
+    </div>
+    <script>
+        // Robust footer & back-to-top interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Safe element getters
+            const setTextIfPresent = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            };
+
+            setTextIfPresent('currentYear', new Date().getFullYear());
+
+            const rhytmeloLogo = document.getElementById('rhytmeloLogo');
+            if (rhytmeloLogo) {
+                const goHome = () => { window.location.href = 'https://rhytmelo.com'; };
+                rhytmeloLogo.addEventListener('click', goHome);
+                rhytmeloLogo.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goHome(); }
                 });
+            }
 
-                // Show/hide with a small debounce to avoid jank
-                let scrollTimer = null;
-                const checkScroll = () => {
-                    const sc = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-                    if (sc > 200) {
-                        backToTopBtn.classList.add('visible');
-                    } else {
-                        backToTopBtn.classList.remove('visible');
-                    }
-                };
+            const rhytmeloLink = document.getElementById('RhytmeloWebsiteLink');
+            if (rhytmeloLink) {
+                rhytmeloLink.setAttribute('rel', 'noopener noreferrer');
+                rhytmeloLink.addEventListener('click', (e) => {
+                    // allow normal navigation but ensure it opens intentionally
+                    // if you want to force same-window navigation, remove the following line
+                });
+            }
 
-                window.addEventListener('scroll', () => {
-                    if (scrollTimer !== null) clearTimeout(scrollTimer);
-                    scrollTimer = setTimeout(checkScroll, 60);
-                }, { passive: true });
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (!backToTopBtn) return;
 
-                // Initial check in case page is loaded scrolled
-                checkScroll();
-
-                // Quote expiry check
-                const parseDateString = (str) => {
-                    if (!str) return null;
-                    // Try Date.parse first
-                    const parsed = Date.parse(str);
-                    if (!isNaN(parsed)) return new Date(parsed);
-
-                    // Fallback: match "7 January 2025" style
-                    const m = str.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
-                    if (!m) return null;
-                    const day = parseInt(m[1], 10);
-                    const monthName = m[2].toLowerCase();
-                    const year = parseInt(m[3], 10);
-                    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
-                    // map full or short month
-                    let monthIndex = months[monthName.slice(0, 3)];
-                    if (monthIndex === undefined) return null;
-                    return new Date(year, monthIndex, day);
-                };
-
-                const checkQuoteExpiry = () => {
-                    const el = document.getElementById('quoteDate');
-                    let dateStr = el ? el.textContent.trim() : null;
-                    if (!dateStr) {
-                        // try to extract from header text
-                        const meta = document.querySelector('.header-meta');
-                        if (meta) {
-                            const txt = meta.textContent || '';
-                            const found = txt.match(/Date:\s*(\d{1,2}\s+[A-Za-z]+\s+\d{4})/);
-                            dateStr = found ? found[1] : null;
-                        }
-                    }
-                    const quoteDate = parseDateString(dateStr);
-                    if (!quoteDate) return;
-                    const now = new Date();
-                    const msInDay = 24 * 60 * 60 * 1000;
-                    if ((now - quoteDate) >= (7 * msInDay)) {
-                        const modal = document.getElementById('quoteExpiredModal');
-                        if (!modal) return;
-                        modal.classList.add('visible');
-                        modal.setAttribute('aria-hidden', 'false');
-                        document.body.classList.add('modal-open');
-                        // focus whatsapp button
-                        const wa = document.getElementById('whatsappChatBtn');
-                        if (wa) wa.focus();
-
-                        // simple focus trap
-                        const focusable = 'a, button, input, textarea, [tabindex]:not([tabindex="-1"])';
-                        const nodes = modal.querySelectorAll(focusable);
-                        const firstNode = nodes[0];
-                        const lastNode = nodes[nodes.length - 1];
-                        const keyHandler = (e) => {
-                            if (e.key === 'Tab') {
-                                if (e.shiftKey && document.activeElement === firstNode) {
-                                    e.preventDefault(); lastNode.focus();
-                                } else if (!e.shiftKey && document.activeElement === lastNode) {
-                                    e.preventDefault(); firstNode.focus();
-                                }
-                            }
-                        };
-                        modal.addEventListener('keydown', keyHandler);
-                    }
-                };
-
-                // run expiry check (safe to run after DOMContentLoaded)
-                checkQuoteExpiry();
+            // Click & keyboard controls
+            const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            backToTopBtn.addEventListener('click', scrollToTop);
+            backToTopBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollToTop(); }
             });
-        </script>
+
+            // Show/hide with a small debounce to avoid jank
+            let scrollTimer = null;
+            const checkScroll = () => {
+                const sc = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                if (sc > 200) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            };
+
+            window.addEventListener('scroll', () => {
+                if (scrollTimer !== null) clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(checkScroll, 60);
+            }, { passive: true });
+
+            // Initial check in case page is loaded scrolled
+            checkScroll();
+
+            // Quote expiry check
+            const parseDateString = (str) => {
+                if (!str) return null;
+                // Try Date.parse first
+                const parsed = Date.parse(str);
+                if (!isNaN(parsed)) return new Date(parsed);
+
+                // Fallback: match "7 January 2025" style
+                const m = str.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+                if (!m) return null;
+                const day = parseInt(m[1], 10);
+                const monthName = m[2].toLowerCase();
+                const year = parseInt(m[3], 10);
+                const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+                // map full or short month
+                let monthIndex = months[monthName.slice(0, 3)];
+                if (monthIndex === undefined) return null;
+                return new Date(year, monthIndex, day);
+            };
+
+            const checkQuoteExpiry = () => {
+                const el = document.getElementById('quoteDate');
+                let dateStr = el ? el.textContent.trim() : null;
+                if (!dateStr) {
+                    // try to extract from header text
+                    const meta = document.querySelector('.header-meta');
+                    if (meta) {
+                        const txt = meta.textContent || '';
+                        const found = txt.match(/Date:\s*(\d{1,2}\s+[A-Za-z]+\s+\d{4})/);
+                        dateStr = found ? found[1] : null;
+                    }
+                }
+                const quoteDate = parseDateString(dateStr);
+                if (!quoteDate) return;
+                const now = new Date();
+                const msInDay = 24 * 60 * 60 * 1000;
+                if ((now - quoteDate) >= (7 * msInDay)) {
+                    const modal = document.getElementById('quoteExpiredModal');
+                    if (!modal) return;
+                    modal.classList.add('visible');
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('modal-open');
+                    // focus whatsapp button
+                    const wa = document.getElementById('whatsappChatBtn');
+                    if (wa) wa.focus();
+
+                    // simple focus trap
+                    const focusable = 'a, button, input, textarea, [tabindex]:not([tabindex="-1"])';
+                    const nodes = modal.querySelectorAll(focusable);
+                    const firstNode = nodes[0];
+                    const lastNode = nodes[nodes.length - 1];
+                    const keyHandler = (e) => {
+                        if (e.key === 'Tab') {
+                            if (e.shiftKey && document.activeElement === firstNode) {
+                                e.preventDefault(); lastNode.focus();
+                            } else if (!e.shiftKey && document.activeElement === lastNode) {
+                                e.preventDefault(); firstNode.focus();
+                            }
+                        }
+                    };
+                    modal.addEventListener('keydown', keyHandler);
+                }
+            };
+
+            // run expiry check (safe to run after DOMContentLoaded)
+            checkQuoteExpiry();
+
+            // Image lightbox setup: clicking any image inside .image-placeholder opens the lightbox
+            (function setupImageLightbox() {
+                const lb = document.getElementById('imageLightbox');
+                if (!lb) return;
+                const overlay = lb.querySelector('.lightbox-overlay');
+                const content = lb.querySelector('.lightbox-content');
+                const imgEl = lb.querySelector('.lightbox-img');
+                const captionEl = lb.querySelector('.lightbox-caption');
+                const closeBtn = lb.querySelector('.lightbox-close');
+
+                const open = (src, alt, caption) => {
+                    imgEl.src = src;
+                    imgEl.alt = alt || '';
+                    captionEl.textContent = caption || '';
+                    lb.classList.add('visible');
+                    lb.setAttribute('aria-hidden', 'false');
+                    content.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('modal-open');
+                    closeBtn.focus();
+                };
+
+                const close = () => {
+                    lb.classList.remove('visible');
+                    lb.setAttribute('aria-hidden', 'true');
+                    content.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('modal-open');
+                    imgEl.src = '';
+                };
+
+                closeBtn.addEventListener('click', close);
+                overlay.addEventListener('click', close);
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('visible')) close(); });
+
+                // attach handlers to all images inside .image-placeholder
+                document.querySelectorAll('.image-placeholder img').forEach(img => {
+                    img.style.cursor = 'zoom-in';
+                    img.setAttribute('tabindex', '0');
+                    const caption = img.getAttribute('alt') || img.dataset.caption || '';
+                    img.addEventListener('click', () => open(img.src, img.alt, caption));
+                    img.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img.src, img.alt, caption); } });
+                });
+            })();
+        });
+    </script>
 </body>
 
 </html>
