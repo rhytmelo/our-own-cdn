@@ -210,3 +210,18 @@ button[aria-expanded="true"]
   border: 1.5px solid #e5e5e5;
   box-shadow: none;
 }
+
+.swiper-main{
+    border-radius: 1.2rem !important;
+    margin: 0 2vw !important;
+}
+
+.product-price {
+    font-size: 1rem !important;
+}
+@media (max-width: 746px) and (max-width: 1024px) {
+    .product-price {
+    font-size: .875rem !important;
+}
+    
+}
