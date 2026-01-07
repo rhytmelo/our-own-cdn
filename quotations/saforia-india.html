@@ -724,6 +724,65 @@
             cursor: pointer;
         }
 
+        /* Quote expiry modal */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .quote-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 10000;
+            padding: 24px;
+        }
+
+        .quote-modal.visible {
+            display: flex;
+        }
+
+        .quote-modal .modal-card {
+            background: #fff;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+            text-align: center;
+        }
+
+        .quote-modal h3 {
+            margin-top: 0;
+            color: var(--dark);
+        }
+
+        .quote-modal p {
+            color: var(--gray);
+            margin: 0.8rem 0 1.2rem;
+        }
+
+        .whatsapp-cta {
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #25d366, #1ebc4a);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.18);
+        }
+
+        .whatsapp-cta svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
         /* Print Styles */
         @media print {
             .section {
@@ -774,7 +833,7 @@
                 <strong>Client:</strong> Saforia India<br>
                 <strong>Category:</strong> Women's Innerwear<br>
                 <strong>Document:</strong> SOW Investment Comparison<br>
-                <strong>Date:</strong> January 2025
+                <strong>Date:</strong> <span id="quoteDate">7 January 2026</span>
             </div>
         </div>
         <div>
@@ -1788,6 +1847,21 @@
         <!-- Back to Top Button -->
         <button id="backToTopBtn" title="Back to Top" aria-label="Back to top">↑</button>
 
+        <!-- Quote expiry modal (hidden by default) -->
+        <div id="quoteExpiredModal" class="quote-modal" role="dialog" aria-modal="true" aria-hidden="true">
+            <div class="modal-card">
+                <h3>Quote Expired</h3>
+                <p>The quote on this page has expired. Please reach out to Rhytmelo Designs to get a new quote.</p>
+                <a class="whatsapp-cta" href="https://wa.me/message/ZPS3KEF6S2GQO1" target="_blank"
+                    rel="noopener noreferrer" id="whatsappChatBtn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path
+                            d="M20.52 3.48A11.88 11.88 0 0012 .5 11.87 11.87 0 003.48 3.48 11.68 11.68 0 000 12c0 2.1.55 3.96 1.62 5.68L0 24l6.9-1.8A11.67 11.67 0 0012 24c6.33 0 11.5-5.17 11.5-11.5 0-3.08-1.2-5.96-3-8.02zM12 21.3c-1.36 0-2.69-.35-3.86-1.01l-.28-.16-4.1 1.07 1.1-3.98-.18-.29A8.03 8.03 0 014 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z" />
+                    </svg>
+                    <span>Chat on WhatsApp</span>
+                </a>
+            </div>
+        </div>
         <script>
             // Robust footer & back-to-top interactions
             document.addEventListener('DOMContentLoaded', () => {
@@ -1845,6 +1919,73 @@
 
                 // Initial check in case page is loaded scrolled
                 checkScroll();
+
+                // Quote expiry check
+                const parseDateString = (str) => {
+                    if (!str) return null;
+                    // Try Date.parse first
+                    const parsed = Date.parse(str);
+                    if (!isNaN(parsed)) return new Date(parsed);
+
+                    // Fallback: match "7 January 2025" style
+                    const m = str.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+                    if (!m) return null;
+                    const day = parseInt(m[1], 10);
+                    const monthName = m[2].toLowerCase();
+                    const year = parseInt(m[3], 10);
+                    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+                    // map full or short month
+                    let monthIndex = months[monthName.slice(0, 3)];
+                    if (monthIndex === undefined) return null;
+                    return new Date(year, monthIndex, day);
+                };
+
+                const checkQuoteExpiry = () => {
+                    const el = document.getElementById('quoteDate');
+                    let dateStr = el ? el.textContent.trim() : null;
+                    if (!dateStr) {
+                        // try to extract from header text
+                        const meta = document.querySelector('.header-meta');
+                        if (meta) {
+                            const txt = meta.textContent || '';
+                            const found = txt.match(/Date:\s*(\d{1,2}\s+[A-Za-z]+\s+\d{4})/);
+                            dateStr = found ? found[1] : null;
+                        }
+                    }
+                    const quoteDate = parseDateString(dateStr);
+                    if (!quoteDate) return;
+                    const now = new Date();
+                    const msInDay = 24 * 60 * 60 * 1000;
+                    if ((now - quoteDate) >= (7 * msInDay)) {
+                        const modal = document.getElementById('quoteExpiredModal');
+                        if (!modal) return;
+                        modal.classList.add('visible');
+                        modal.setAttribute('aria-hidden', 'false');
+                        document.body.classList.add('modal-open');
+                        // focus whatsapp button
+                        const wa = document.getElementById('whatsappChatBtn');
+                        if (wa) wa.focus();
+
+                        // simple focus trap
+                        const focusable = 'a, button, input, textarea, [tabindex]:not([tabindex="-1"])';
+                        const nodes = modal.querySelectorAll(focusable);
+                        const firstNode = nodes[0];
+                        const lastNode = nodes[nodes.length - 1];
+                        const keyHandler = (e) => {
+                            if (e.key === 'Tab') {
+                                if (e.shiftKey && document.activeElement === firstNode) {
+                                    e.preventDefault(); lastNode.focus();
+                                } else if (!e.shiftKey && document.activeElement === lastNode) {
+                                    e.preventDefault(); firstNode.focus();
+                                }
+                            }
+                        };
+                        modal.addEventListener('keydown', keyHandler);
+                    }
+                };
+
+                // run expiry check (safe to run after DOMContentLoaded)
+                checkQuoteExpiry();
             });
         </script>
 </body>
