@@ -927,7 +927,7 @@ form button.btn-primary[aria-label="Subscribe"] {
 
 .whatsapp-float {
     position: fixed;
-    bottom: 15vh;
+    bottom: 10vh;
     right: 1.5vw;
     z-index: 999;
 }
