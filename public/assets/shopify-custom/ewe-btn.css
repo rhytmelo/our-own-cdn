@@ -1159,3 +1159,7 @@ ul.cart-items-list .btn-line-item-remove:hover {
     transform: translateY(0);
   }
 }
+
+.cart-container .text-center.p-3.text-muted.small {
+  display: none !important;
+}
