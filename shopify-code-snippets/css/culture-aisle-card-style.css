@@ -1,0 +1,787 @@
+/* ===================================
+   MODERN 2025 PRODUCT CARD STYLES
+   Mobile-First, Slider-Optimized
+   SCOPED to .product-collection only
+   Grid-based layout with refined typography
+   =================================== */
+
+/* Base Product Collection Container - SCOPED */
+.product-collection[data-js-product] {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.08);
+  height: auto !important;
+  margin: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.product-collection[data-js-product]:hover {
+  box-shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.12);
+  transform: translateY(-0.25rem);
+}
+
+/* Form wrapper */
+.product-collection[data-js-product] .frm_product_collection {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Image Container - SCOPED */
+.product-collection[data-js-product] .product-collection__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f8f9fa;
+  border-radius: 1rem 1rem 0 0;
+  grid-row: 1;
+  max-width: 100%;
+}
+
+.product-collection[data-js-product] .product-collection__image .image_product {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* Image Scaling Effect - SCOPED */
+.product-collection[data-js-product] .product-collection__image .pr_lazy_img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-collection[data-js-product]:hover .pr_lazy_img {
+  transform: scale(1.08);
+}
+
+/* Labels - Top Left - SCOPED */
+.product-collection[data-js-product] .product-image__overlay-top-left {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: calc(100% - 4.5rem);
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-left .label {
+  padding: 0.375rem 0.875rem;
+  border-radius: 1.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(0.75rem);
+  text-transform: uppercase;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-left .label--sale,
+.product-collection[data-js-product] .product-image__overlay-top-left .label.label--sale {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: #ffffff;
+  box-shadow: 0 0.25rem 0.75rem rgba(255, 107, 107, 0.3);
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-left .label--new,
+.product-collection[data-js-product] .product-image__overlay-top-left .label.label--new {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: #ffffff;
+  box-shadow: 0 0.25rem 0.75rem rgba(79, 172, 254, 0.3);
+}
+
+/* Wishlist Button - Top Right - SCOPED */
+.product-collection[data-js-product] .product-image__overlay-top-right {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(0.75rem);
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+  padding: 0 !important;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button .text,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button .added,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist .text,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist .added,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist .text,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist .added {
+  display: none !important;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button i,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist i,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist i {
+  font-size: 1.125rem !important;
+  color: #1a1a1a;
+  transition: all 0.3s ease;
+  stroke: #1a1a1a;
+  stroke-width: 1.5;
+  fill: transparent;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button:hover,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist:hover,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist:hover {
+  background: #ff6b6b !important;
+  transform: scale(1.1);
+  box-shadow: 0 0.25rem 0.75rem rgba(255, 107, 107, 0.4);
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button:hover i,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist:hover i,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist:hover i {
+  color: #ffffff;
+  stroke: #ffffff;
+  fill: #ffffff;
+}
+
+/* When item is in wishlist (added state) */
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button.added,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist.added,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist.added {
+  background: #ff6b6b !important;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button.added i,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist.added i,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist.added i {
+  color: #ffffff;
+  stroke: #ffffff;
+  fill: #ffffff;
+}
+
+/* Icon-heart specific styling */
+.product-collection[data-js-product] .product-image__overlay-top-right .icon-heart {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* SVG heart styling if using SVG icons */
+.product-collection[data-js-product] .product-image__overlay-top-right svg {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  transition: all 0.3s ease;
+}
+
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist:hover svg,
+.product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button:hover svg,
+.product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist:hover svg {
+  fill: #ffffff;
+  stroke: #ffffff;
+}
+
+/* Content Section - SCOPED - Grid layout */
+.product-collection[data-js-product] .product-collection__content {
+  padding: 1rem 1rem 0.75rem !important;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem !important;
+  grid-row: 2;
+  align-content: start;
+}
+
+/* Title - SCOPED */
+.product-collection[data-js-product] .product-collection__title {
+  margin: 0 !important;
+  order: 1;
+}
+
+.product-collection[data-js-product] .product-collection__title h2 {
+  margin: 0 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.3 !important;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.product-collection[data-js-product] .product-collection__title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-collection[data-js-product] .product-collection__title a:hover {
+  color: #4facfe;
+}
+
+/* Reviews - SCOPED */
+.product-collection[data-js-product] .product-collection__reviews {
+  min-height: 0 !important;
+  margin: 0 !important;
+  order: 2;
+}
+
+/* Price Section - Grid layout for price and discount */
+.product-collection[data-js-product] .frm-price-color {
+  margin: 0 !important;
+  order: 3;
+}
+
+.product-collection[data-js-product] .product-collection__price {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: 0.5rem !important;
+}
+
+.product-collection[data-js-product] .product-collection__price .price--sale {
+  display: contents;
+}
+
+.product-collection[data-js-product] .product-collection__price .price--sale .compare {
+  font-size: 0.75rem !important;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 500;
+  order: 1;
+}
+
+.product-collection[data-js-product] .product-collection__price .price--sale .current {
+  font-size: 0.9375rem !important;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  order: 3;
+}
+
+/* Add discount badge after compare price */
+.product-collection[data-js-product] .product-collection__price .price--sale .compare::after {
+  content: '-10%';
+  display: none;
+  margin-left: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-decoration: none;
+  order: 2;
+  grid-column: 2;
+}
+
+/* Product Options - SCOPED */
+.product-collection[data-js-product] .product-collection__options {
+  margin: 0 !important;
+  order: 4;
+}
+
+.product-collection[data-js-product] .product-options__section {
+  gap: 0.5rem;
+}
+
+.product-collection[data-js-product] .product-options__value--text {
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.5rem;
+  font-size: 0.75rem !important;
+  font-weight: 500;
+  background: #f8f9fa;
+  border: 0.09375rem solid #e9ecef;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-collection[data-js-product] .product-options__value--text.active,
+.product-collection[data-js-product] .product-options__value--text:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  border-color: #1a1a1a;
+}
+
+/* Bottom Overlay - Make visible - SCOPED */
+.product-collection[data-js-product] .product-image__overlay-bottom {
+  position: relative !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+  transform: translateY(0) !important;
+  padding: 0 !important;
+  background: transparent !important;
+  grid-row: 3;
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+}
+
+/* Force show all button container elements */
+.product-collection[data-js-product] .product-image__overlay-bottom * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.product-collection[data-js-product] .product-image__overlay-bottom button,
+.product-collection[data-js-product] .product-image__overlay-bottom a {
+  display: flex !important;
+}
+
+/* Remove the ::after pseudo element */
+.product-collection[data-js-product] .product-collection__content::after {
+  display: none !important;
+}
+
+/* Button Group - Grid layout - SCOPED */
+.product-collection[data-js-product] .group-button {
+  position: static !important;
+  width: 100% !important;
+  padding: 0 1rem 1rem !important;
+  margin: 0 !important;
+  background: transparent !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.product-collection[data-js-product] .group-button .inner {
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  gap: 0.625rem;
+  width: 100%;
+  visibility: visible !important;
+}
+
+/* Add to Cart Button - SCOPED */
+.product-collection[data-js-product] .group-button .add-to-cart,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button,
+.product-collection[data-js-product] .group-button button[type="submit"],
+.product-collection[data-js-product] .group-button button.js_add_to_cart_button {
+  min-height: 2.875rem !important;
+  height: 2.875rem !important;
+  padding: 0 1.25rem !important;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 0.625rem !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  position: relative;
+  overflow: hidden;
+  grid-column: 1;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart::before,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button::before,
+.product-collection[data-js-product] .group-button button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart:hover::before,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button:hover::before,
+.product-collection[data-js-product] .group-button button[type="submit"]:hover::before {
+  width: 18.75rem;
+  height: 18.75rem;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart:hover,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button:hover,
+.product-collection[data-js-product] .group-button button[type="submit"]:hover {
+  transform: translateY(-0.125rem) !important;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2) !important;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart:active,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button:active,
+.product-collection[data-js-product] .group-button button[type="submit"]:active {
+  transform: translateY(0) !important;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart .laber-icon,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button .laber-icon,
+.product-collection[data-js-product] .group-button button[type="submit"] .laber-icon {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  fill: currentColor;
+  position: relative;
+  z-index: 1;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart .text,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button .text,
+.product-collection[data-js-product] .group-button button[type="submit"] .text {
+  position: relative;
+  z-index: 1;
+}
+
+.product-collection[data-js-product] .group-button .add-to-cart .laber-loading,
+.product-collection[data-js-product] .group-button .js_add_to_cart_button .laber-loading,
+.product-collection[data-js-product] .group-button button[type="submit"] .laber-loading {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Quick View Button - SCOPED */
+.product-collection[data-js-product] .group-button .button-quick-view,
+.product-collection[data-js-product] .group-button .js_quick_view,
+.product-collection[data-js-product] .group-button a.js_quick_view {
+  min-width: 2.875rem !important;
+  min-height: 2.875rem !important;
+  height: 2.875rem !important;
+  width: 2.875rem !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  border: 0.125rem solid #e9ecef !important;
+  border-radius: 0.625rem !important;
+  color: #1a1a1a !important;
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  flex-shrink: 0;
+  grid-column: 2;
+}
+
+.product-collection[data-js-product] .group-button .button-quick-view:hover,
+.product-collection[data-js-product] .group-button .js_quick_view:hover,
+.product-collection[data-js-product] .group-button a.js_quick_view:hover {
+  background: #f8f9fa !important;
+  border-color: #1a1a1a !important;
+  transform: translateY(-0.125rem) !important;
+}
+
+.product-collection[data-js-product] .group-button .button-quick-view .laber-icon,
+.product-collection[data-js-product] .group-button .js_quick_view .laber-icon,
+.product-collection[data-js-product] .group-button a.js_quick_view .laber-icon {
+  font-size: 1.125rem !important;
+}
+
+.product-collection[data-js-product] .group-button .button-quick-view .text,
+.product-collection[data-js-product] .group-button .js_quick_view .text,
+.product-collection[data-js-product] .group-button a.js_quick_view .text {
+  display: none !important;
+}
+
+.product-collection[data-js-product] .group-button .button-quick-view .laber-loading,
+.product-collection[data-js-product] .group-button .js_quick_view .laber-loading,
+.product-collection[data-js-product] .group-button a.js_quick_view .laber-loading {
+  display: none !important;
+}
+
+/* Hide variants dropdown - SCOPED */
+.product-collection[data-js-product] .product-collection__variants {
+  display: none !important;
+}
+
+/* Hide product ID input if present */
+.product-collection[data-js-product] input[name="product-id"] {
+  display: none !important;
+}
+
+/* ===================================
+   RESPONSIVE BREAKPOINTS - SCOPED
+   =================================== */
+
+/* Mobile Small (320px - 374px) */
+@media (max-width: 374px) {
+  .product-collection[data-js-product] {
+    margin: 0.375rem;
+  }
+  
+  .product-collection[data-js-product] .product-collection__content {
+    padding: 0.875rem 0.75rem 0.625rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-collection__title h2 {
+    font-size: 0.8125rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-collection__price .price--sale .current {
+    font-size: 1rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button {
+    padding: 0 0.75rem 0.75rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .add-to-cart,
+  .product-collection[data-js-product] .group-button .js_add_to_cart_button,
+  .product-collection[data-js-product] .group-button button[type="submit"],
+  .product-collection[data-js-product] .group-button .button-quick-view,
+  .product-collection[data-js-product] .group-button .js_quick_view,
+  .product-collection[data-js-product] .group-button a.js_quick_view {
+    min-height: 2.75rem !important;
+    height: 2.75rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .button-quick-view,
+  .product-collection[data-js-product] .group-button .js_quick_view,
+  .product-collection[data-js-product] .group-button a.js_quick_view {
+    width: 2.75rem !important;
+  }
+}
+
+/* Mobile (375px - 767px) */
+@media (min-width: 375px) and (max-width: 767px) {
+  .product-collection[data-js-product] {
+    border-radius: 0.875rem;
+  }
+  
+  .product-collection[data-js-product] .product-collection__title h2 {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) {
+  .product-collection[data-js-product] {
+    border-radius: 1.125rem;
+    margin: 0.625rem;
+  }
+  
+  .product-collection[data-js-product] .product-collection__content {
+    padding: 1.125rem 1.125rem 0.875rem !important;
+    gap: 0.625rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-collection__title h2 {
+    font-size: 0.9375rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-collection__price .price--sale .current {
+    font-size: 1.0625rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button {
+    padding: 0 1.125rem 1.125rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .add-to-cart,
+  .product-collection[data-js-product] .group-button .js_add_to_cart_button,
+  .product-collection[data-js-product] .group-button button[type="submit"] {
+    min-height: 3rem !important;
+    height: 3rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .button-quick-view,
+  .product-collection[data-js-product] .group-button .js_quick_view,
+  .product-collection[data-js-product] .group-button a.js_quick_view {
+    min-height: 3rem !important;
+    height: 3rem !important;
+    width: 3rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .inner {
+    gap: 0.75rem;
+  }
+}
+
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .product-collection[data-js-product] {
+    border-radius: 1.25rem;
+    margin: 0.75rem;
+  }
+  
+  .product-collection[data-js-product] .product-collection__content {
+    padding: 1.25rem 1.25rem 1rem !important;
+    gap: 0.75rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-collection__title h2 {
+    font-size: 1rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-collection__price .price--sale .current {
+    font-size: 1.125rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button {
+    padding: 0 1.25rem 1.25rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .add-to-cart,
+  .product-collection[data-js-product] .group-button .js_add_to_cart_button,
+  .product-collection[data-js-product] .group-button button[type="submit"] {
+    font-size: 0.875rem !important;
+    min-height: 3.125rem !important;
+    height: 3.125rem !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .button-quick-view,
+  .product-collection[data-js-product] .group-button .js_quick_view,
+  .product-collection[data-js-product] .group-button a.js_quick_view {
+    min-height: 3.125rem !important;
+    height: 3.125rem !important;
+    width: 3.125rem !important;
+  }
+}
+
+/* ===================================
+   SLIDER OPTIMIZATIONS - SCOPED
+   =================================== */
+
+/* Prevent text selection in slider */
+.product-collection[data-js-product] * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Smooth dragging */
+.product-collection[data-js-product] img {
+  pointer-events: none;
+}
+
+/* Ensure consistent width in sliders */
+.product-collection[data-js-product] {
+  width: 100%;
+  max-width: 26.25rem;
+  box-sizing: border-box;
+}
+
+.product-collection[data-js-product] * {
+  box-sizing: border-box;
+}
+
+/* Touch-friendly spacing */
+@media (hover: none) and (pointer: coarse) {
+  .product-collection[data-js-product] .group-button .add-to-cart,
+  .product-collection[data-js-product] .group-button .js_add_to_cart_button,
+  .product-collection[data-js-product] .group-button button[type="submit"],
+  .product-collection[data-js-product] .group-button .button-quick-view,
+  .product-collection[data-js-product] .group-button .js_quick_view,
+  .product-collection[data-js-product] .group-button a.js_quick_view,
+  .product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button {
+    min-height: 3rem !important;
+  }
+  
+  .product-collection[data-js-product] .product-options__value--text {
+    padding: 0.625rem 1.125rem !important;
+    min-height: 2.75rem !important;
+  }
+}
+
+/* Dark mode support - SCOPED */
+@media (prefers-color-scheme: dark) {
+  .product-collection[data-js-product] {
+    background: #1a1a1a;
+    box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.3);
+  }
+  
+  .product-collection[data-js-product]:hover {
+    box-shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Image background */
+  .product-collection[data-js-product] .product-collection__image {
+    background: #2d2d2d;
+  }
+  
+  /* Title */
+  .product-collection[data-js-product] .product-collection__title h2,
+  .product-collection[data-js-product] .product-collection__title a {
+    color: #ffffff !important;
+  }
+  
+  /* Price - Current */
+  .product-collection[data-js-product] .product-collection__price .price--sale .current {
+    color: #ffffff !important;
+  }
+  
+  /* Price - Compare (strikethrough) */
+  .product-collection[data-js-product] .product-collection__price .price--sale .compare {
+    color: #999999 !important;
+  }
+  
+  /* Discount badge */
+  .product-collection[data-js-product] .product-collection__price .price--sale .compare::after {
+    background: #1e4620 !important;
+    color: #81c784 !important;
+  }
+  
+  /* Size options */
+  .product-collection[data-js-product] .product-options__value--text {
+    background: #2d2d2d !important;
+    border-color: #3d3d3d !important;
+    color: #e0e0e0 !important;
+  }
+  
+  .product-collection[data-js-product] .product-options__value--text.active,
+  .product-collection[data-js-product] .product-options__value--text:hover {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border-color: #ffffff !important;
+  }
+  
+  /* Wishlist button */
+  .product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button,
+  .product-collection[data-js-product] .product-image__overlay-top-right .wishlist,
+  .product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist {
+    background: rgba(45, 45, 45, 0.95) !important;
+  }
+  
+  .product-collection[data-js-product] .product-image__overlay-top-right .wishlist-button i,
+  .product-collection[data-js-product] .product-image__overlay-top-right .wishlist i,
+  .product-collection[data-js-product] .product-image__overlay-top-right .js-wishlist i {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+  
+  /* Quick view button */
+  .product-collection[data-js-product] .group-button .button-quick-view,
+  .product-collection[data-js-product] .group-button .js_quick_view,
+  .product-collection[data-js-product] .group-button a.js_quick_view {
+    background: #2d2d2d !important;
+    border-color: #3d3d3d !important;
+    color: #ffffff !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .button-quick-view:hover,
+  .product-collection[data-js-product] .group-button .js_quick_view:hover,
+  .product-collection[data-js-product] .group-button a.js_quick_view:hover {
+    background: #3d3d3d !important;
+    border-color: #ffffff !important;
+  }
+  
+  .product-collection[data-js-product] .group-button .button-quick-view .laber-icon,
+  .product-collection[data-js-product] .group-button .js_quick_view .laber-icon,
+  .product-collection[data-js-product] .group-button a.js_quick_view .laber-icon {
+    color: #ffffff !important;
+  }
+}

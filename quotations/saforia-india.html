@@ -787,12 +787,11 @@
 
         /* Image placeholder: ensure image sits above descriptive text */
         .image-placeholder {
-            display: flex;
+
             flex-direction: column;
-            align-items: center;
             gap: 0.5rem;
             text-align: center;
-            padding: 0.4rem 0.6rem;
+            /* padding: 0.4rem 0.6rem; */
         }
 
         .image-placeholder img {
@@ -953,6 +952,12 @@
         .recommendation-box p {
             color: var(--gray);
             line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .image-lightbox .lightbox-content {
+                margin-right: 15vw;
+            }
         }
     </style>
 </head>
