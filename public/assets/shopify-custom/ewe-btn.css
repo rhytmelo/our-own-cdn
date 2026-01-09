@@ -749,3 +749,15 @@ ul.cart-items-list .btn-line-item-remove:hover {
 .cart-container .text-center.p-3.text-muted.small {
 	display: none !important;
 }
+.carousel-caption.carousel-caption-center {
+    top: 80%;
+    bottom: auto;
+    transform: translateY(-40%);
+}
+@media (max-width: 456px) {
+    .carousel-caption.carousel-caption-center {
+        top: 20%;
+        bottom: auto;
+        transform: translateY(0);
+    }
+}
