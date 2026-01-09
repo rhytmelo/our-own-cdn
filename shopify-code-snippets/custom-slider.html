@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600&family=Poppins:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.22, 0.9, 0.25, 1);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            touch-action: pan-y;
+        }
+
+        .slider-wrapper.dragging {
+            transition: none;
+            cursor: grabbing;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
+            z-index: 1;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 90%;
+            opacity: 0;
+            transform: translateY(3rem);
+            transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+        }
+
+        .slide.active .slide-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.875rem, 2vw, 1.125rem);
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            transform: translateY(1rem);
+            transition: transform 0.6s ease-out 0.3s, opacity 0.6s ease-out 0.3s;
+        }
+
+        .slide.active .slide-subtitle {
+            transform: translateY(0);
+            opacity: 0.9;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.3);
+            transform: translateY(1rem);
+            transition: transform 0.6s ease-out 0.4s, opacity 0.6s ease-out 0.4s;
+        }
+
+        .slide.active .slide-title {
+            transform: translateY(0);
+        }
+
+        .slide-description {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 50rem;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+            transform: translateY(1rem);
+            transition: transform 0.6s ease-out 0.5s, opacity 0.6s ease-out 0.5s;
+        }
+
+        .slide.active .slide-description {
+            transform: translateY(0);
+            opacity: 0.95;
+        }
+
+        .slide-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            transform: translateY(1rem);
+            opacity: 0;
+            transition: transform 0.6s ease-out 0.6s, opacity 0.6s ease-out 0.6s;
+        }
+
+        .slide.active .slide-buttons {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #333;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-0.25rem);
+            box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 0.125rem solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #333;
+            transform: translateY(-0.25rem);
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(0.625rem);
+            border: none;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .slider-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-nav.prev {
+            left: 2rem;
+        }
+
+        .slider-nav.next {
+            right: 2rem;
+        }
+
+        .pagination {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .pagination-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .pagination-dot.active {
+            background: white;
+            width: 2.5rem;
+            border-radius: 0.375rem;
+        }
+
+        .pagination-dot:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .slider-nav {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.25rem;
+            }
+
+            .slider-nav.prev {
+                left: 1rem;
+            }
+
+            .slider-nav.next {
+                right: 1rem;
+            }
+
+            .slide-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 18.75rem;
+            }
+
+            .pagination {
+                bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-nav {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+
+            .slider-nav.prev {
+                left: 0.5rem;
+            }
+
+            .slider-nav.next {
+                right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slider-container">
+        <div class="slider-wrapper" id="sliderWrapper"></div>
+
+        <!-- Navigation -->
+        <button class="slider-nav prev" id="prevBtn">‹</button>
+        <button class="slider-nav next" id="nextBtn">›</button>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script>
+        // SLIDE DATA CONFIGURATION
+        const slidesData = [
+            {
+                image: 'https://cdn.shopify.com/s/files/1/0951/2511/1089/files/desktop-wallplates-set.jpg?v=1756649644',
+                subtitle: 'Artisan Crafted',
+                title: 'Beautiful Walls',
+                description: 'Transform your space with handpainted decorative plates and artistic wall pieces. Each creation tells a unique story.',
+                primaryButton: 'Shop Collection',
+                secondaryButton: 'Learn More'
+            },
+            {
+                image: 'https://cdn.shopify.com/s/files/1/0951/2511/1089/files/CAI_054_B_a5cc7049-92e3-43c4-b7f6-0ae46bfb9718.jpg?v=1756508785',
+                subtitle: 'Hand Painted',
+                title: 'Cow Head Masks',
+                description: 'Authentic traditional art meets contemporary design. Handcrafted wooden masks with intricate detailing and vibrant colors.',
+                primaryButton: 'View Masks',
+                secondaryButton: 'Custom Orders'
+            },
+            {
+                image: 'https://cdn.shopify.com/s/files/1/0951/2511/1089/files/desktop-set-19-upscaled.jpg?v=1767985512',
+                subtitle: 'Curated Sets',
+                title: 'Wall Plate Sets',
+                description: 'Perfectly coordinated collections that add personality to any room. Mix and match or display as stunning gallery walls.',
+                primaryButton: 'Browse Sets',
+                primaryLink: '/collections/wall-plate-sets-new-collection',
+                secondaryButton: 'Design Guide'
+            },
+            {
+                image: 'https://cdn.shopify.com/s/files/1/0951/2511/1089/files/CAI_032A_639e2758-c505-40ef-a92f-5be389d087cd.jpg?v=1756508795',
+                subtitle: 'Wooden Artistry',
+                title: 'Modern Crafts',
+                description: 'Sustainable wooden pieces painted with precision and care. Lightweight, durable, and absolutely stunning wall accents.',
+                primaryButton: 'Explore Now',
+                primaryLink: '/search?type=product&options%5Bunavailable_products%5D=last&options%5Bprefix%5D=none&q=wood*',
+                secondaryButton: 'See Process',
+            },
+            {
+                image: 'https://cdn.shopify.com/s/files/1/0951/2511/1089/files/desktop-preview.png?v=1767832077',
+                subtitle: 'Bespoke Creations',
+                title: 'Custom Made',
+                description: 'Your vision, our craftsmanship. Commission unique pieces tailored to your style, space, and story.',
+                primaryButton: 'Start Your Project',
+                primaryLink: '/pages/custom-orders',
+                secondaryButton: 'Get Inspired'
+            }
+        ];
+
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const pagination = document.getElementById('pagination');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const sliderContainer = document.querySelector('.slider-container');
+        const totalSlides = slidesData.length;
+        let currentSlide = 0;
+        let autoSlideInterval;
+        let startX = 0;
+        let currentX = 0;
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        let isScrolling;
+        let prevMoveX = 0;
+        let prevMoveTime = 0;
+        let rafId = null;
+
+        // Create slides dynamically
+        slidesData.forEach((slideData, index) => {
+            const slide = document.createElement('div');
+            slide.classList.add('slide');
+            if (index === 0) slide.classList.add('active');
+            slide.style.backgroundImage = `url('${slideData.image}')`;
+
+            // Determine button/link rendering behavior
+            const hasPrimaryLink = !!slideData.primaryLink;
+            const hasSecondaryLink = !!slideData.secondaryLink;
+
+            // If neither button has a link, hide secondary and link primary to collection
+            let primaryHref = hasPrimaryLink ? slideData.primaryLink : null;
+            let showSecondary = hasSecondaryLink;
+
+            if (!hasPrimaryLink && !hasSecondaryLink) {
+                primaryHref = '/collections/wall-plate-sets-new-collection';
+                showSecondary = false;
+            }
+
+            const primaryButtonHtml = primaryHref
+                ? `<a class="btn btn-primary" href="${primaryHref}">${slideData.primaryButton}</a>`
+                : `<button class="btn btn-primary">${slideData.primaryButton}</button>`;
+
+            const secondaryButtonHtml = showSecondary
+                ? (hasSecondaryLink
+                    ? `<a class="btn btn-secondary" href="${slideData.secondaryLink}">${slideData.secondaryButton}</a>`
+                    : `<button class="btn btn-secondary">${slideData.secondaryButton}</button>`)
+                : '';
+
+            slide.innerHTML = `
+        <div class="slide-content">
+            <div class="slide-subtitle">${slideData.subtitle}</div>
+            <h1 class="slide-title">${slideData.title}</h1>
+            <p class="slide-description">${slideData.description}</p>
+            <div class="slide-buttons">
+                ${primaryButtonHtml}
+                ${secondaryButtonHtml}
+            </div>
+        </div>
+    `;
+
+            sliderWrapper.appendChild(slide);
+        });
+
+        const slides = document.querySelectorAll('.slide');
+
+        // Create pagination dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.classList.add('pagination-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            pagination.appendChild(dot);
+        }
+
+        const dots = document.querySelectorAll('.pagination-dot');
+
+        function getSlideWidth() {
+            return sliderContainer.offsetWidth || window.innerWidth;
+        }
+
+        function updateSlider() {
+            const w = getSlideWidth();
+            sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.9, 0.25, 1)';
+            sliderWrapper.style.transform = `translate3d(${-currentSlide * w}px, 0, 0)`;
+
+            // Update pagination
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            // Update active slide for animations
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        // Navigation buttons
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoSlide();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoSlide();
+        });
+
+        // Touch/Mouse swipe support (improved)
+        sliderWrapper.addEventListener('mousedown', startDrag);
+        sliderWrapper.addEventListener('touchstart', startDrag, { passive: false });
+
+        sliderWrapper.addEventListener('mousemove', drag);
+        sliderWrapper.addEventListener('touchmove', drag, { passive: false });
+
+        sliderWrapper.addEventListener('mouseup', endDrag);
+        sliderWrapper.addEventListener('touchend', endDrag);
+        sliderWrapper.addEventListener('touchcancel', endDrag);
+        sliderWrapper.addEventListener('mouseleave', endDrag);
+
+        function startDrag(e) {
+            isDragging = true;
+            isScrolling = undefined; // unknown until we see movement
+            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            currentX = startX;
+            currentY = startY;
+            prevMoveX = startX;
+            prevMoveTime = Date.now();
+            sliderWrapper.classList.add('dragging');
+            sliderWrapper.style.transition = 'none';
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            const now = Date.now();
+
+            // Decide if user is intending to scroll vertically or swipe horizontally
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+
+            if (typeof isScrolling === 'undefined') {
+                isScrolling = Math.abs(dy) > Math.abs(dx);
+                if (isScrolling) {
+                    // let the page handle vertical scrolling — cancel slide drag state
+                    isDragging = false;
+                    sliderWrapper.classList.remove('dragging');
+                    sliderWrapper.style.transition = '';
+                    return;
+                }
+            }
+
+            // prevent page scrolling while performing horizontal swipe
+            e.preventDefault();
+
+            const diff = clientX - startX;
+            const w = getSlideWidth();
+
+            // update transform in pixels for smooth motion
+            const translatePx = -currentSlide * w + diff;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                sliderWrapper.style.transform = `translate3d(${translatePx}px, 0, 0)`;
+                rafId = null;
+            });
+
+            // track last movement for velocity calculation
+            prevMoveX = clientX;
+            prevMoveTime = now;
+            currentX = clientX;
+            currentY = clientY;
+        }
+
+        function endDrag() {
+            // if we cancelled dragging because of vertical scroll, just reset
+            if (!isDragging) {
+                isScrolling = false;
+                return;
+            }
+
+            isDragging = false;
+            sliderWrapper.classList.remove('dragging');
+
+            const diff = currentX - startX;
+            const w = getSlideWidth();
+            const threshold = w * 0.15;
+
+            // compute simple velocity (px per ms)
+            const timeDelta = Math.max(1, Date.now() - prevMoveTime);
+            const velocity = (currentX - prevMoveX) / timeDelta; // px/ms
+
+            // if swipe velocity is strong, use it to decide next/prev
+            const velocityThreshold = 0.5; // px/ms
+
+            if (Math.abs(diff) > threshold || Math.abs(velocity) > velocityThreshold) {
+                if (diff > 0 || velocity > velocityThreshold) {
+                    prevSlide();
+                } else {
+                    nextSlide();
+                }
+            } else {
+                updateSlider();
+            }
+
+            isScrolling = false;
+            resetAutoSlide();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                resetAutoSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+                resetAutoSlide();
+            }
+        });
+
+        // Start auto-sliding
+        startAutoSlide();
+
+        // Pause on hover
+        sliderContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+        sliderContainer.addEventListener('mouseleave', startAutoSlide);
+
+        // Recalculate transforms on resize
+        window.addEventListener('resize', () => {
+            updateSlider();
+        });
+
+        // Initialize first slide
+        updateSlider();
+    </script>
+
+</body>
+
+</html>
