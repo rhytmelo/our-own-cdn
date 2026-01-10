@@ -384,8 +384,8 @@
     </style>
 </head>
 
-<body class="p-8">
-    <div class="container-main">
+<body class="bg-accent-light text-color-primary bg-gradient-to-r from-purple-100 via-white to-blue-100 min-h-screen">
+    <div class="container-main mb-12">
         <!-- Header -->
         <div class="logo-header">
             <h1 class="text-5xl font-bold gradient-text mb-4">SAFORIA INDIA</h1>
@@ -1792,36 +1792,48 @@
                     <h3 class="text-2xl font-bold mb-3">Ready to Transform Saforia's Digital Presence?</h3>
                     <p class="text-lg mb-4">Let's schedule a detailed discussion to finalize the strategy and begin your
                         journey to ₹25 lakh/month revenue!</p>
-                    <div class="flex justify-center space-x-4">
-                        <div class="bg-white text-green-700 px-6 py-3 rounded font-bold">
-                            <i class="fas fa-phone mr-2"></i>Contact: +91-XXXXX-XXXXX
+                    <div class="flex flex-wrap justify-center gap-4 text-center">
+
+                        <div class="bg-white text-green-700 px-4 py-3 rounded font-bold max-w-full break-words">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span class="whitespace-nowrap sm:whitespace-normal">
+                                Contact: +91-98998-85363
+                            </span>
                         </div>
-                        <div class="bg-white text-green-700 px-6 py-3 rounded font-bold">
-                            <i class="fas fa-envelope mr-2"></i>Email: <a href="/cdn-cgi/l/email-protection"
-                                class="__cf_email__"
-                                data-cfemail="9df5f8f1f1f2ddeff5e4e9f0f8f1f2b3fef2f0">[email&#160;protected]</a>
+
+                        <div
+                            class="bg-white text-green-700 px-4 py-3 rounded font-bold max-w-full break-all sm:break-words">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Email:
+                            <a href="mailto:support@rhytmelo.com" class="underline break-all">
+                                support@rhytmelo.com
+                            </a>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="footer">
-            <h3 class="text-2xl font-bold mb-2">RHYTMELO DESIGNS</h3>
+        <div class="footer mb-12">
+            <h3 class="text-2xl font-bold mb-2 mr-2 ml-2"><img
+                    src="../public/brand/logos/logo-final/svgs/rhytmelo-logo-black-minified.svg" alt="RHYTMELO DESIGNS">
+            </h3>
             <p class="text-lg mb-4">Your Partner in Digital Excellence</p>
             <div class="flex justify-center space-x-6 text-3xl mb-4">
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-linkedin"></i>
-                <i class="fab fa-twitter"></i>
+                <a href="https://www.facebook.com/rhytmelo"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/rhytmelo"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/rhytmelo"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/rhytmelo"><i class="fab fa-twitter"></i></a>
             </div>
-            <p class="text-sm">© 2026 Rhytmelo Designs. All Rights Reserved.</p>
+            <p class="text-sm">© <span class="curentYear"></span> Rhytmelo Designs. All Rights Reserved.</p>
             <p class="text-xs mt-2">www.rhytmelo.com</p>
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
     <script>
         // Ad Budget Chart
         const adBudgetCtx = document.getElementById('adBudgetChart').getContext('2d');
@@ -1934,6 +1946,11 @@
                 }
             }
         });
+
+        // Set current year in footer
+        document.querySelector('.curentYear').textContent = new Date().getFullYear();
+
+
     </script>
     <script defer
         src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
