@@ -76,7 +76,7 @@
         h5,
         h6 {
             font-family: 'Clash Display', 'Space Grotesk', system-ui, sans-serif;
-            color: var(--color-primary);
+            color: var(--accent-light);
             margin-top: 0;
             line-height: 1.15;
             animation: text-reveal 0.9s ease both;
@@ -168,7 +168,23 @@
             width: 56px;
             height: 56px;
             background: linear-gradient(180deg, var(--accent-purple), var(--accent-blue));
-            color: #fff;
+
+            /* Section utility: force white text for specific sections */
+            .white-text-section,
+            .white-text-section * {
+                color: #ffffff !important;
+            }
+
+            .white-text-section a {
+                color: rgba(255, 255, 255, 0.95) !important
+            }
+
+            .white-text-section .price-table td,
+            .white-text-section .price-table th {
+                color: #fff !important
+            }
+
+            /* Responsive tweaks */
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -389,7 +405,7 @@
 
         <!-- Executive Summary -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-chart-line mr-3"></i>Executive Summary</h2>
             </div>
 
@@ -427,7 +443,7 @@
 
         <!-- Market Overview -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-globe-asia mr-3"></i>India Market Overview</h2>
             </div>
 
@@ -488,7 +504,7 @@
 
         <!-- Target Audience -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-users mr-3"></i>Target Audience Demographics</h2>
             </div>
 
@@ -539,7 +555,7 @@
 
         <!-- 10-Day Launch Plan -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-rocket mr-3"></i>10-Day Quick Launch Strategy</h2>
             </div>
 
@@ -657,7 +673,7 @@
 
         <!-- Technical Setup Details -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-cog mr-3"></i>Technical Setup Details</h2>
             </div>
 
@@ -726,7 +742,7 @@
 
         <!-- 6-Month Development Timeline -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-calendar-check mr-3"></i>6-Month Development Timeline
                 </h2>
             </div>
@@ -899,7 +915,7 @@
 
         <!-- Marketing Strategy -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-bullhorn mr-3"></i>Comprehensive Marketing Strategy</h2>
             </div>
 
@@ -942,13 +958,13 @@
                 </div>
             </div>
 
-            <div class="card mb-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Social Media Marketing Strategy</h3>
+            <div class="card mb-6 white-text-section rounded">
+                <h3 class="text-2xl font-bold text-white mb-4">Social Media Marketing Strategy</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-gradient-to-br from-purple-500 to-pink-500 p-4 rounded text-white">
                         <i class="fab fa-instagram text-4xl mb-2"></i>
-                        <h4 class="font-bold text-lg mb-2">Instagram</h4>
-                        <ul class="space-y-1 text-sm">
+                        <h4 class="font-bold text-lg text-white mb-2">Instagram</h4>
+                        <ul class="space-y-1 text-sm text-white">
                             <li>• 3 posts/week (carousel, reels)</li>
                             <li>• Daily stories with polls</li>
                             <li>• Influencer collaborations</li>
@@ -959,8 +975,8 @@
                     </div>
                     <div class="bg-gradient-to-br from-blue-500 to-blue-700 p-4 rounded text-white">
                         <i class="fab fa-facebook text-4xl mb-2"></i>
-                        <h4 class="font-bold text-lg mb-2">Facebook</h4>
-                        <ul class="space-y-1 text-sm">
+                        <h4 class="font-bold text-lg text-white mb-2">Facebook</h4>
+                        <ul class="space-y-1 text-sm text-white">
                             <li>• Targeted ads (25-40 age)</li>
                             <li>• Community building</li>
                             <li>• Testimonial sharing</li>
@@ -971,8 +987,8 @@
                     </div>
                     <div class="bg-gradient-to-br from-red-500 to-pink-600 p-4 rounded text-white">
                         <i class="fab fa-pinterest text-4xl mb-2"></i>
-                        <h4 class="font-bold text-lg mb-2">Pinterest</h4>
-                        <ul class="space-y-1 text-sm">
+                        <h4 class="font-bold text-lg text-white mb-2">Pinterest</h4>
+                        <ul class="space-y-1 text-sm text-white">
                             <li>• Style inspiration boards</li>
                             <li>• Product pins</li>
                             <li>• Size guide infographics</li>
@@ -1077,8 +1093,8 @@
 
         <!-- Monthly Ad Budget Breakdown -->
         <div class="p-8">
-            <div class="section-header">
-                <h2 class="text-3xl font-bold"><i class="fas fa-rupee-sign mr-3"></i>Monthly Marketing Budget Breakdown
+            <div class="section-header rounded-t-lg">
+                <h2 class="text-3xl font-bold">₹ Monthly Marketing Budget Breakdown
                 </h2>
             </div>
 
@@ -1193,7 +1209,7 @@
 
         <!-- Revenue Projections -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-chart-bar mr-3"></i>Revenue Projections & Growth Path
                 </h2>
             </div>
@@ -1300,7 +1316,7 @@
 
         <!-- Cost Breakdown -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-calculator mr-3"></i>Complete Cost Breakdown</h2>
             </div>
 
@@ -1444,7 +1460,7 @@
 
         <!-- Rhytmelo's Proposal -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-handshake mr-3"></i>Rhytmelo's Proposal for Saforia
                     India</h2>
             </div>
@@ -1567,7 +1583,7 @@
 
         <!-- Key Success Metrics -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-trophy mr-3"></i>Key Success Metrics & KPIs</h2>
             </div>
 
@@ -1654,7 +1670,7 @@
 
         <!-- Risk Mitigation -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-shield-alt mr-3"></i>Risk Mitigation Strategy</h2>
             </div>
 
@@ -1729,7 +1745,7 @@
 
         <!-- Next Steps -->
         <div class="p-8">
-            <div class="section-header">
+            <div class="section-header rounded-t-lg">
                 <h2 class="text-3xl font-bold"><i class="fas fa-forward mr-3"></i>Next Steps & Timeline</h2>
             </div>
 
