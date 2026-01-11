@@ -1,0 +1,396 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handmade Creations</title>
+<style>
+    .hero {
+        width: 100%;
+        padding: .5rem;
+        max-height: 80vh;
+        overflow: hidden;
+    }
+
+    @keyframes scrollDown {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(calc(-100% / 3));
+        }
+    }
+
+    @keyframes scrollUp {
+        0% {
+            transform: translateY(calc(-100% / 3));
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    /* Desktop Layout (1024px and above) */
+    @media (min-width: 1024px) {
+        .hero {
+            padding: 0rem 4rem;
+            max-height: 700px;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            height: 100%;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Image Grid Container */
+        .image-grid-wrapper {
+            height: 80vh;
+            display: flex;
+            gap: 1.5rem;
+            overflow: hidden;
+        }
+
+        .image-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .image-column:nth-child(1) {
+            animation: scrollDown 25s linear infinite;
+        }
+
+        .image-column:nth-child(2) {
+            animation: scrollUp 25s linear infinite;
+        }
+
+        .img-item {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            flex-shrink: 0;
+            height: 250px;
+        }
+
+        .img-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    /* Tablet Layout (768px - 1023px) */
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .hero {
+            padding: 0rem 1rem;
+            max-height: 700px;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            align-items: center;
+            height: 100%;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .hero-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .image-grid-wrapper {
+            height: 500px;
+            display: flex;
+            gap: 1rem;
+            overflow: hidden;
+        }
+
+        .image-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .image-column:nth-child(1) {
+            animation: scrollDown 22s linear infinite;
+        }
+
+        .image-column:nth-child(2) {
+            animation: scrollUp 22s linear infinite;
+        }
+
+        .img-item {
+            border-radius: 6px;
+            overflow: hidden;
+            height: 180px;
+            background-color: #f5f5f5;
+            flex-shrink: 0;
+        }
+
+        .img-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    /* Mobile Layout (under 768px) */
+    @media (max-width: 767px) {
+        .hero {
+            padding: 0rem 1rem;
+            max-height: none;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            height: 100%;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .hero-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .image-grid-wrapper {
+            height: 350px;
+            display: flex;
+            gap: 0.75rem;
+            overflow: hidden;
+        }
+
+        .image-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .image-column:nth-child(1) {
+            animation: scrollDown 20s linear infinite;
+        }
+
+        .image-column:nth-child(2) {
+            animation: scrollUp 20s linear infinite;
+        }
+
+        .img-item {
+            border-radius: 6px;
+            overflow: hidden;
+            height: 150px;
+            background-color: #f5f5f5;
+            flex-shrink: 0;
+        }
+
+        .img-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    /* Button Styles */
+    button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-shop {
+        background-color: #d4edda;
+        color: #333;
+        border: 1px solid #d4edda;
+    }
+
+    .btn-shop:hover {
+        background-color: #c3e6cb;
+        border-color: #c3e6cb;
+    }
+
+    .btn-learn {
+        background-color: transparent;
+        color: #333;
+        border: 1px solid #333;
+    }
+
+    .btn-learn:hover {
+        background-color: #f5f5f5;
+    }
+
+    @media (max-width: 767px) {
+        button {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+    }
+</style>
+
+
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover the Art of Handmade Creations</h1>
+            <p class="hero-description">Explore our exquisite collection of handmade wall plates and drawing art
+                products, perfect for any occasion. Each piece is crafted with love, making it a unique gift that tells
+                a story.</p>
+            <div class="hero-buttons">
+                <button class="btn-shop">Shop Now</button>
+                <button class="btn-learn">Learn More</button>
+            </div>
+        </div>
+
+        <div class="image-grid-wrapper" id="imageGridWrapper"></div>
+    </div>
+</section>
+
+<script>
+    const base = "https://www.earthenwallplates.com/wp-content/uploads/";
+    const heroImages = [
+        "2022/01/BWA22.jpeg", "2022/01/BWA26.jpeg","2022/01/BWA27.jpeg", "2020/02/BWANEW15.jpg", "2022/01/BWA32.jpeg", "2020/04/WhatsApp-Image-2020-04-02-at-18.35.16.jpeg", "2020/02/BWANEW14.jpg", "2020/02/BWANEW18.jpg",
+        "2022/01/BWA08.jpeg", "2022/01/BWA18.jpeg", "2020/02/BWANEW4.jpg",
+        "2022/01/BWA31.jpeg", "2022/01/BWA23.jpeg", "2022/01/BWA14.jpeg",
+        "2022/01/BWA13.jpeg", "2022/01/BWA17.jpeg", "2020/02/BWANEW28.jpg",
+        "2020/04/WhatsApp-Image-2020-04-02-at-18.36.53.jpeg",
+        "2020/02/BWANEW26.jpg", "2022/01/BWA19.jpeg", "2022/01/BWA25.jpeg",
+        "2022/01/BWA30.jpeg", "2022/01/BWA33.jpeg",
+        "2022/01/BWA11.jpeg", "2020/02/BWANEW23.png", "2020/02/BWANEW21.jpg",
+        "2022/01/BWA29.jpeg", "2020/02/BWANEW22.png", "2020/02/BWANEW17.jpg",
+        "2020/02/BWANEW24.jpg", "2022/01/BWA03.jpeg", "2020/02/BWANEW27.jpg",
+        "2020/02/BWANEW25.jpg", "2022/01/BWA04.jpeg", "2022/01/BWA12.jpeg",
+        "2022/01/BWA01.jpg", "2022/01/BWA10.jpeg", "2020/02/BWANEW7.jpg",
+        "2020/02/BWANEW5.jpg", "2020/02/BWANEW6.jpg", "2022/01/BWA15.jpeg",
+        "2022/01/BWA24.jpeg", "2022/01/BWA09.jpeg", "2020/02/BWANEW9.jpg",
+        "2020/02/BWANEW3.jpg", "2020/02/BWANEW20.png", "2020/02/BWANEW19.png",
+        "2020/02/BWANEW2.jpg", "2020/02/BWANEW1.jpg"
+    ].map(p => base + p);
+
+    function createImageColumns() {
+        var wrapper = document.getElementById('imageGridWrapper');
+        wrapper.innerHTML = '';
+
+        // Create 2 columns
+        var column1 = document.createElement('div');
+        column1.className = 'image-column';
+
+        var column2 = document.createElement('div');
+        column2.className = 'image-column';
+
+        // Create 3 sets of images for seamless infinite scroll
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < heroImages.length; j++) {
+                var imgDiv = document.createElement('div');
+                imgDiv.className = 'img-item';
+                var img = document.createElement('img');
+                img.src = heroImages[j];
+                img.alt = 'Product ' + (j + 1);
+                imgDiv.appendChild(img);
+
+                if (j % 2 === 0) {
+                    column1.appendChild(imgDiv);
+                } else {
+                    column2.appendChild(imgDiv);
+                }
+            }
+        }
+
+        wrapper.appendChild(column1);
+        wrapper.appendChild(column2);
+    }
+
+    createImageColumns();
+
+    document.querySelector('.btn-shop').addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = "/collections/wall-plate-sets-new-collection";
+    });
+
+    document.querySelector('.btn-learn').addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = "/pages/big-wall-arrangements";
+    });
+
+
+    // console.log('Hero images loaded:', heroImages);
+</script>
