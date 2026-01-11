@@ -1,0 +1,271 @@
+{%- capture htmlContent -%}
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="{{ settings.color_button }}">
+    <meta name="format-detection" content="telephone=no">
+    {{ 'custom-creation.min.css' | asset_url | stylesheet_tag }}
+    {{ 'mansory-cultureaisle.min.css' | asset_url | stylesheet_tag }}
+
+    {%- if canonical_url != blank -%}
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- endif -%}
+    <link rel="prefetch" as="document" href="https://{{shop.domain}}">
+    <link rel="preconnect" href="//{{shop.permanent_domain}}" crossorigin>
+    <link rel="preconnect" href="//shopify.com" crossorigin>
+    {% capture seo_title %}
+    {{ page_title }}
+    {% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags:
+    meta_tags -}}{% endif %}
+    {% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+    {% unless page_title contains shop.name %}&ndash; {{ shop.name }}{% endunless %}
+    {% endcapture %}
+    <title>{{ seo_title | strip_newlines | remove:" " }}</title>
+    {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    {%- if settings.favicon != blank %}
+    <link rel="shortcut icon" type="image/png" href="{{ settings.favicon | img_url: '32x' }}">{% endif -%}
+    {%- if settings.favicon_apple != blank %}
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152"
+        href="{{ settings.favicon_apple | img_url: '152x' }}">{% endif -%}
+    {% comment %}{% include 'social-meta-tags' %} {% endcomment %}
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    {% include 'language-rtl' %}
+    {% include 'header-stylesheets' %}
+    {% include 'header-scripts' %}
+
+    <script
+        src="https://cdn.jsdelivr.net/gh/rhytmelo/our-own-cdn@fce323ac4a2ce67c89d187f3b71357f2bb02a1f1/shopify-code-snippets/js/culture-aisle-custom.min.js"
+        defer>
+        </script>
+
+
+
+    <script>
+        var theme = { moneyFormat: {{ shop.money_format | json }}, moneyFormatWithCurrency: { { shop.money_with_currency_format | json } }, {% if customer %} customer: { id: { { customer.id } }, name: '{{customer.name}}' } {% endif %}};
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+        const type_name = "{{request.page_type}}", t_cartCount = 1, t_shop_currency = "USD", t_moneyFormat = "\u003cspan class='money'\u003e${{amount}}\u003c\/span\u003e", t_cart_url = "\/cart", pr_re_url = "\/recommendations\/products";
+        $(window).on('load', function () {
+            $("html:not('.no-js') .page-load").fadeOut("slow")
+        });    
+    </script>
+    {{ content_for_header }}
+</head>
+{%- assign admin_sp = request.design_mode -%}
+{%- assign type_name = request.page_type -%}
+
+<body id="{{ page_title | handle }}"
+    class="{% if template contains 'index' %} home {%else%} subpage {% endif %} {% if customer %}customer-logged-in {% endif %}template-{{ request.page_type | handle }}  {{ rtlClasses }}"
+    data-header="{{settings.select_header}}">
+    {%if settings.show_load_page%}
+    <div class="page-load circle-loadding"><span></span></div>
+    {%endif%}
+    <div class="main {{class_sidebar}}" style="transform: none;">
+        <header id="header">
+            {% include 'currencies' %}
+
+            {% assign import_header = settings.select_header | plus: 0%}
+            {% case import_header %}
+            {% when 1 %}
+            {% section 'top-bar' %}
+            {% section 'top-header' %}
+            {% section 'header1' %}
+            {% when 2 %}
+            {% section 'header2' %}
+            {% when 3 %}
+            {% section 'top-bar' %}
+            {% section 'top-header' %}
+            {% section 'header3' %}
+            {% when 4 %}
+            {% section 'top-header' %}
+            {% section 'header4' %}
+            {% when 5 %}
+            {% section 'top-header' %}
+            {% section 'header5' %}
+            {% endcase %}
+        </header>
+        {% if template contains 'product' %}
+        {% section 'breadcrumb' %}
+        <div class="page-container clearfix {%if settings.show_product_sidebar%}sidebar-product{%endif%}"
+            id="PageContainer">
+            <div
+                class="container {%if settings.product_page_layout == 'full-width' %}{{settings.product_page_layout}}{%endif%}">
+                <div class="row row-15">
+                    {%if settings.show_product_sidebar%}
+                    <div
+                        class="hide-mobile col-lg-auto col-xs-12  col-sm-4 col-md-3 col-lg-3 sidebar sidebar-{{settings.product_info_layout}}">
+                        {% section 'product_sidebar' %}
+                    </div>
+                    {%endif%}
+                    <main id="MainContent " class="col">
+                        {{ content_for_layout }}
+                    </main>
+                </div>
+            </div>
+        </div>
+
+        {% section 'related-product-carousel' %}
+        {% section 'products-recently-viewed' %}
+
+        {%else%}
+        <div class="page-container clearfix" id="PageContainer">
+            <main id="MainContent">
+                {{ content_for_layout }}
+            </main>
+        </div>
+        {%endif%}
+
+        {%- render 'footer'-%}
+        {%- section 'menu-mobile-bottom'-%}
+        <a class="back-to-top" href="#">
+            <i class="icon-chevrons-up"></i>
+        </a>
+        {% if settings.show_button_rtl %}
+        <a class="switch-rtl-ltr" href="#">
+            <span class="rtl-text">{{ 'homepage.onboarding.rtl' | t }}</span>
+            <span class="ltr-text">{{ 'homepage.onboarding.ltr' | t }}</span>
+        </a>
+        {% endif %}
+        {% liquid
+
+
+        if type_name=="product" or type_name == "index" or type_name == 'cart'
+        section 'cross-sell-popup'
+        endif
+        if type_name == 'product' and settings.sticky_atc and product.available
+        section 'sticky_add_to_cart'
+        endif
+        if type_name != 'blog' and type_name !='article' and type_name !='page'
+        section 'promotion-product-popup'
+        endif
+        if type_name == "index"
+        section 'promotion-newsletter-popup'
+        endif
+        include 'popups'
+
+        %}
+    </div>
+    <script defer src="{{ 'custom-creation.min.js' | asset_url }}"></script>
+    <script defer src="{{ 'mansory-cultureaisle.min.js' | asset_url }}"></script>
+    <script> document.addEventListener('click', function (e) {
+            // Check if click is on the "Add to Cart" button area
+            if (e.target.closest('.product-collection[data-js-product] .product-collection__image')) {
+                const card = e.target.closest('.product-collection[data-js-product]');
+                const titleLink = card.querySelector('.product-collection__title a');
+                if (titleLink) {
+                    titleLink.click();
+                }
+            }
+        });</script>
+
+    <script>
+        (function () {
+
+            function normalizeDiscount(text) {
+                // "Save 11%" → "-11%"
+                const match = text.match(/(\d+(\.\d+)?)\s*%/);
+                if (!match) return null;
+                return "-" + match[1] + "%";
+            }
+
+            function syncDiscountBadges() {
+                document.querySelectorAll('.product-collection[data-js-product]').forEach(card => {
+                    const saleLabel = card.querySelector('.label--sale');
+                    const compare = card.querySelector('.price--sale .compare');
+
+                    if (!saleLabel || !compare) return;
+
+                    const rawText = saleLabel.textContent.trim();
+                    const discount = normalizeDiscount(rawText);
+
+                    if (!discount) return;
+
+                    // Create a stable per-card key so it doesn’t keep duplicating
+                    if (!card.dataset.discountKey) {
+                        card.dataset.discountKey = Math.random().toString(36).slice(2, 8);
+                    }
+
+                    const key = card.dataset.discountKey;
+                    compare.classList.add(key);
+
+                    // Update or create the style
+                    let style = document.getElementById("discount-style-" + key);
+                    if (!style) {
+                        style = document.createElement("style");
+                        style.id = "discount-style-" + key;
+                        document.head.appendChild(style);
+                    }
+
+                    style.innerHTML = `
+        .${key}::after {
+          content: "${discount}" !important;
+          display: inline-block !important;
+        }
+      `;
+                });
+            }
+
+            syncDiscountBadges();
+
+            // Re-run when Shopify reloads products
+            new MutationObserver(syncDiscountBadges)
+                .observe(document.body, { childList: true, subtree: true });
+
+        })();
+    </script>
+
+    <script>
+        (function () {
+            // Function to center the active tab
+            function centerActiveTab() {
+                const navList = document.querySelector('.shopify-section.tab_product_page .nav.list-nav');
+                const activeTab = document.querySelector('.shopify-section.tab_product_page .nav.list-nav li.active');
+
+                if (navList && activeTab && window.innerWidth <= 768) {
+                    const navListRect = navList.getBoundingClientRect();
+                    const activeTabRect = activeTab.getBoundingClientRect();
+
+                    const scrollPosition = activeTab.offsetLeft - (navListRect.width / 2) + (activeTabRect.width / 2);
+
+                    navList.scrollTo({
+                        left: scrollPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            // Center on page load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', centerActiveTab);
+            } else {
+                centerActiveTab();
+            }
+
+            // Center when tabs are clicked
+            document.addEventListener('click', function (e) {
+                const clickedTab = e.target.closest('.shopify-section.tab_product_page .nav.list-nav li a');
+                if (clickedTab) {
+                    setTimeout(centerActiveTab, 50);
+                }
+            });
+
+            // Re-center on window resize
+            let resizeTimer;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(centerActiveTab, 150);
+            });
+        })();
+    </script>
+
+
+</body>
+
+</html>
+{%- endcapture -%}
+{%- render 'minify-code', htmlContent: htmlContent -%}
