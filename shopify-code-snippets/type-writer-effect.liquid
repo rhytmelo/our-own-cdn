@@ -1,0 +1,57 @@
+<div class="product-block-liquid pt-0 pb-2">
+  <style>
+    .typewriter-text {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 2px solid black; /* Blinking cursor effect */
+        animation: blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes blink-caret {
+        50% { border-color: transparent; }
+    }
+</style>
+
+<!-- Typewriter Container -->
+<div id="typewriter-container" class="typewriter-text">Organic, smooth, and conversion-focused.</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const subtitles = [
+            "Quench your store’s design thirst.",
+            "Luxury shopping experience made simple.",
+            "Bold and trendy online storefront.",
+            "Expert-built stores, ready to launch.",
+            "Urban vibes, modern eCommerce style.",
+            "Elegance for jewelry and fashion.",
+            "Organic, smooth, and conversion-focused.",
+            "Chic, stylish, and conversion-focused.",
+            "Wellness stores with sleek designs.",
+            "Beauty brands, stunning online presence."
+        ];
+
+        let index = 0;
+        const typewriterContainer = document.getElementById("typewriter-container");
+
+        function typeEffect(text, i = 0) {
+            if (i < text.length) {
+                typewriterContainer.textContent = text.substring(0, i + 1);
+                setTimeout(() => typeEffect(text, i + 1), 50); // Typing speed
+            } else {
+                setTimeout(nextSubtitle, 2000); // Wait before switching subtitle
+            }
+        }
+
+        function nextSubtitle() {
+            index = (index + 1) % subtitles.length;
+            typewriterContainer.textContent = ""; // Clear text before new subtitle
+            typeEffect(subtitles[index]);
+        }
+
+        typeEffect(subtitles[index]); // Start typing effect
+    });
+</script>
+</div>
