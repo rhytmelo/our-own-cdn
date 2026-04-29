@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rhytmelo — Salesforce Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #f8f8f6;
+    --light: #f1f0ed;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --accent: #2a6ef5;
+    --accent-soft: #e8efff;
+    --border: #e4e2de;
+    --radius: 12px;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, #eef3ff 0%, transparent 70%),
+      var(--white);
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px 40px;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.04),
+      0 8px 32px rgba(0,0,0,0.06),
+      0 0 0 1px rgba(255,255,255,0.9) inset;
+    animation: slideUp 0.55s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .brand {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--ink);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .logo-name span {
+    color: var(--accent);
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .sf-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 28px;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .sf-cloud {
+    display: flex;
+    align-items: center;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .sf-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 28px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .sf-cloud { display: flex; align-items: center; }
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 0 4px;
+  }
+
+  .form-note strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 11.5px;
+    color: #b0aeaa;
+    line-height: 1.7;
+  }
+
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer a:hover { text-decoration: underline; }
+
+  .wave-bar {
+    width: 100%;
+    max-width: 420px;
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 28px;
+    justify-content: center;
+    opacity: 0.18;
+    animation: fadeIn 1s 0.4s both;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 0.18; } }
+
+  .wave-bar span {
+    display: block;
+    width: 4px;
+    border-radius: 2px;
+    background: var(--accent);
+    animation: pulse 1.4s ease-in-out infinite alternate;
+  }
+
+  .wave-bar span:nth-child(1)  { height: 8px;  animation-delay: 0.0s; }
+  .wave-bar span:nth-child(2)  { height: 14px; animation-delay: 0.1s; }
+  .wave-bar span:nth-child(3)  { height: 20px; animation-delay: 0.2s; }
+  .wave-bar span:nth-child(4)  { height: 26px; animation-delay: 0.3s; }
+  .wave-bar span:nth-child(5)  { height: 18px; animation-delay: 0.4s; }
+  .wave-bar span:nth-child(6)  { height: 10px; animation-delay: 0.5s; }
+  .wave-bar span:nth-child(7)  { height: 22px; animation-delay: 0.6s; }
+  .wave-bar span:nth-child(8)  { height: 16px; animation-delay: 0.7s; }
+  .wave-bar span:nth-child(9)  { height: 28px; animation-delay: 0.8s; }
+  .wave-bar span:nth-child(10) { height: 12px; animation-delay: 0.9s; }
+  .wave-bar span:nth-child(11) { height: 6px;  animation-delay: 1.0s; }
+  .wave-bar span:nth-child(12) { height: 20px; animation-delay: 1.1s; }
+  .wave-bar span:nth-child(13) { height: 14px; animation-delay: 1.2s; }
+
+  @keyframes pulse {
+    from { opacity: 0.4; transform: scaleY(0.7); }
+    to   { opacity: 1;   transform: scaleY(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="card">
+
+    <div class="brand">
+      <div class="logo-mark">
+        <div class="logo-icon">
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1"  y="8"  width="2.5" height="6"  rx="1.25" fill="white"/>
+            <rect x="5"  y="5"  width="2.5" height="12" rx="1.25" fill="white"/>
+            <rect x="9"  y="2"  width="2.5" height="18" rx="1.25" fill="white"/>
+            <rect x="13" y="5"  width="2.5" height="12" rx="1.25" fill="white"/>
+            <rect x="17" y="8"  width="2.5" height="6"  rx="1.25" fill="white"/>
+          </svg>
+        </div>
+        <span class="logo-name">Rhyt<span>melo</span></span>
+      </div>
+      <p class="tagline">Software Solutions</p>
+    </div>
+
+    <div class="divider">Powered by</div>
+
+    <div class="sf-badge">
+      <svg class="sf-cloud" width="20" height="14" viewBox="0 0 40 28" fill="none">
+        <path d="M16.5 5C18.2 2 20.9 0 24 0c4.4 0 8 3.6 8 8 0 .4 0 .8-.1 1.2C33.8 9.9 36 12.3 36 15.2c0 3.3-2.7 6-6 6H10c-3.9 0-7-3.1-7-7 0-3.4 2.4-6.2 5.7-6.9-.1-.5-.2-1-.2-1.5C8.5 2.7 11.2 0 14.5 0c.8 0 1.5.1 2.2.4" fill="#00A1E0"/>
+      </svg>
+      <span>Secured by <strong>Salesforce</strong></span>
+    </div>
+
+    <p class="form-note">
+      Please enter your <strong>Salesforce credentials</strong> to access the<br/>
+      Rhytmelo workspace. Your session is protected by<br/>
+      enterprise-grade encryption.
+    </p>
+
+  </div>
+
+  <div class="wave-bar">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 <strong>Rhytmelo</strong> · <a href="https://rhytmelo.com">rhytmelo.com</a><br/>
+    <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a> · <a href="#">Support</a>
+  </div>
+
+</div>
+
+</body>
+</html>
